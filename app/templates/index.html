@@ -1,7 +1,81 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Hi, {{user.nickname}}!</h1>
-{% for post in posts %}
-<div><p>{{post.author.nickname}} says: <b>{{post.body}}</b></p></div>
-{% endfor %}
+
+
+    <h3><p class="text-center">Автоматизированная система удаленного управления теплицей</p></h3>
+
+    <div class="container" style="margin:15px auto">
+      <div class="row">
+        <div class="col-4">
+          <div class="btn-group" role="group">
+            <button id="btnGroupDrop1" type="button" class="btn btn-primary" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Меню
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+              <a class="dropdown-item" href="index">Главная</a>
+              <a class="dropdown-item" href="table">Таблица значений</a>
+              <a class="dropdown-item" href="about_us">О нас</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4">
+
+        </div>
+      </div>
+    </div>      
+    <div class="container">
+      <div class="row">
+        <div class="col-4">
+          <div class="btn-group" style="margin:5px auto" role="group">
+            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Датчики температуры
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+              <a type="button" class="dropdown-item" href="#">Датчик № 1</a>
+              <a class="dropdown-item" href="#">Датчик № 2</a>
+              <a class="dropdown-item" href="#">Датчик № 3</a>
+              <a class="dropdown-item" href="#">Датчик № 4</a>
+            </div>
+          </div>
+          <div class="btn-group" style="margin:5px auto" role="group">
+            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Датчики влажности
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+              <a class="dropdown-item" href="#">Датчик № 1</a>
+              <a class="dropdown-item" href="#">Датчик № 2</a>
+              <a class="dropdown-item" href="#">Датчик № 3</a>
+              <a class="dropdown-item" href="#">Датчик № 4</a>
+            </div>
+          </div>
+          <div class="btn-group" style="margin:5px auto" role="group">
+            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Датчики влажности почвы
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+              <a class="dropdown-item" href="#">Датчик № 1</a>
+              <a class="dropdown-item" href="#">Датчик № 2</a>
+              <a class="dropdown-item" href="#">Датчик № 3</a>
+              <a class="dropdown-item" href="#">Датчик № 4</a>
+              <a class="dropdown-item" href="#">Датчик № 5</a>
+              <a class="dropdown-item" href="#">Датчик № 6</a>
+            </div>
+          </div>
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" style="margin:5px auto" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Открыть/Закрыть форточки теплицы 
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#">Открыть</a>
+              <a class="dropdown-item" href="#">Закрыть</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-8">       
+          <canvas id="myChart" style="background-image: url(https://kartinkin.net/pics/uploads/posts/2022-08/1660407500_2-kartinkin-net-p-chisto-chernie-oboi-na-telefon-krasivo-2.jpg)"></canvas>
+        </div> 
+      </div>
+    </div>
 {% endblock %}

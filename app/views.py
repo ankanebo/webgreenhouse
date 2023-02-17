@@ -21,3 +21,16 @@ def login():
         title = 'Sign In',
         form = form,
         providers = app.config['OPENID_PROVIDERS'])
+
+@app.route('/table')
+def table():
+    return render_template('table.html',
+        title = 'table')
+
+
+@app.route('/about_us')
+def about_us():
+    return render_template('about_us.html',
+        title = 'about_us')
+
+
