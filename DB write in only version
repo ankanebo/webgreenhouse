@@ -34,7 +34,7 @@ INSERT INTO sens_hum_temp_value
 INSERT INTO hum_earth
     VALUES (0,0.0,0.0,0.0,0.0,0.0,0.0);
 INSERT INTO data
-    VALUES (0, strftime('%s', 'now'));
+    VALUES (0, datetime('now'));
 
 """
 conn.executescript(sql)
@@ -162,7 +162,7 @@ async def write():
         conn.executescript(sql)
         sql = f"""\
         INSERT INTO data
-            VALUES ({maxID}, strftime('%s', 'now'));
+            VALUES ({maxID}, datetime('now'));
         """
         conn.executescript(sql)
         maxID+=1
