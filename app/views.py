@@ -31,10 +31,13 @@ def about_us():
     return render_template('about_us.html',
         title = 'about_us')
 
-@app.route('/getDataGraph')
-def getit():
-    
+@app.route('/getDataTempGraph')
+def gettemp():
     return [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+@app.route('/getDataHumGraph')
+def gethum():
+    return [9, 8, 7, 8, 5, 4, 3, 7, 4]
 
 @app.route('/bd')
 def getbd():
