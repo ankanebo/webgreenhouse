@@ -51,14 +51,10 @@
     //});
 let xhr = new XMLHttpRequest();
 let temp = [];
-let hum = []
 xhr.open('GET', '/getDataTempGraph');
-
 xhr.send();
 var paramsString = document.location.href.split("/");
 console.log(paramsString[paramsString.length-1]);
-
-
 xhr.onload = function() {
   temp = [];
   temp = eval(xhr.response);
