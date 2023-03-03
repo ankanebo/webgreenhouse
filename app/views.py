@@ -1,6 +1,7 @@
 from flask import render_template, flash, redirect
 from app import app
-from app.forms import LoginForm
+from bd import bd
+#from templates.getpost import getpost
 
 
 @app.route('/')
@@ -11,19 +12,16 @@ def index():
         title = 'Home',
         user = user)
 
-@app.route('/login', methods = ['GET', 'POST'])
-def login():
-    form = LoginForm()
-    if form.validate():
-        flash('Login requested for OpenID="' + form.openid.data + '", remember_me=' + str(form.remember_me.data))
-        return redirect('/index')
-    return render_template('login.html', 
-        title = 'Sign In',
-        form = form,
-        providers = app.config['OPENID_PROVIDERS'])
+#def get_db_connection():
+ #   conn = sqlite3.connect('greenhouse.db')
+  #  conn.row_factory = sqlite3.Row
+   # return conn
 
 @app.route('/table')
 def table():
+    #conn = get_db_connection()
+    #posts = conn.execute('SELECT * FROM posts').fetchall()
+    #conn.close()
     return render_template('table.html',
         title = 'table')
 
@@ -33,4 +31,12 @@ def about_us():
     return render_template('about_us.html',
         title = 'about_us')
 
+@app.route('/getDataGraph')
+def getit():
+    
+    return [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+@app.route('/bd')
+def getbd():
+    bd()
 
