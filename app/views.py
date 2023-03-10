@@ -32,73 +32,47 @@ def table():
     b5 = requests.get(urlhum5).json()
     b6 = requests.get(urlhum6).json()
     
-    global temp_1 
-    global hum_1
     s1 = []
     for k in a1.values():
         s1.append(str(k))
-    temp_1 = s1[1:2:]
-    hum_1 = s1[-1:-2:-1]
     
-    global temp_2
-    global hum_2
+
     s2 = []
     for k in a2.values():
         s2.append(str(k))
-    temp_2 = s2[1:2:]
-    hum_2 = s2[2::]
     
-    global temp_3
-    global hum_3
     s3 = []
     for k in a3.values():
         s3.append(str(k))
-    temp_3 = s3[1:2:]
-    hum_3 = s3[2::]
     
-    global temp_4
-    global hum_4
     s4 = []
     for k in a4.values():
         s4.append(str(k))
-    temp_4 = s4[1:2:]
-    hum_4 = s4[2::]
     
-    global hum_earth_1
     s5 = []
     for k in b1.values():
         s5.append(str(k))
-    hum_earth_1 = s5[2::]
 
-    global hum_earth_2
     s6 = []
     for k in b2.values():
         s6.append(str(k))
-    hum_earth_2 = s6[2::] 
 
-    global hum_earth_3
     s7 = []
     for k in b3.values():
         s7.append(str(k))
-    hum_earth_3 = s7[2::]
 
-    global hum_earth_4
     s8 = []
     for k in b4.values():
         s8.append(str(k))
-    hum_earth_4 = s8[2::]
 
-    global hum_earth_5
     s9 = []
     for k in b5.values():
         s9.append(str(k))
-    hum_earth_5 = s9[2::]
 
-    global hum_earth_6
     s10 = []
     for k in b6.values():
         s10.append(str(k))
-    hum_earth_6 = s10[2::]
+        
     return render_template('table.html',
         title = 'table',
         temp_1 = s1[1],
