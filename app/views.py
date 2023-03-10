@@ -26,81 +26,97 @@ def table():
     a3 = requests.get(urlth3).json()
     a4 = requests.get(urlth4).json()
     b1 = requests.get(urlhum1).json()
-    b2= requests.get(urlhum2).json()
-    b3= requests.get(urlhum3).json()
+    b2 = requests.get(urlhum2).json()
+    b3 = requests.get(urlhum3).json()
     b4 = requests.get(urlhum4).json()
     b5 = requests.get(urlhum5).json()
     b6 = requests.get(urlhum6).json()
     
     global temp_1 
     global hum_1
-    s1 = ''
+    s1 = []
     for k in a1.values():
-        s1 += str(k)
+        s1.append(str(k))
     temp_1 = s1[1:2:]
-    hum_1 = s1[2::]
+    hum_1 = s1[-1:-2:-1]
     
     global temp_2
     global hum_2
-    s1 = ''
+    s2 = []
     for k in a2.values():
-        s1 += str(k)
-    temp_2 = s1[1:2:]
-    hum_2 = s1[2::]
+        s2.append(str(k))
+    temp_2 = s2[1:2:]
+    hum_2 = s2[2::]
     
     global temp_3
     global hum_3
-    s1 = ''
+    s3 = []
     for k in a3.values():
-        s1 += str(k)
-    temp_3 = s1[1:2:]
-    hum_3 = s1[2::]
+        s3.append(str(k))
+    temp_3 = s3[1:2:]
+    hum_3 = s3[2::]
     
     global temp_4
     global hum_4
-    s1 = ''
+    s4 = []
     for k in a4.values():
-        s1 += str(k)
-    temp_4 = s1[1:2:]
-    hum_4 = s1[2::]
+        s4.append(str(k))
+    temp_4 = s4[1:2:]
+    hum_4 = s4[2::]
     
     global hum_earth_1
-    s1 = ''
+    s5 = []
     for k in b1.values():
-        s1 += str(k)
-    hum_earth_1 = s1[2::]
+        s5.append(str(k))
+    hum_earth_1 = s5[2::]
 
     global hum_earth_2
-    s1 = ''
+    s6 = []
     for k in b2.values():
-        s1 += str(k)
-    hum_earth_2 = s1[2::] 
+        s6.append(str(k))
+    hum_earth_2 = s6[2::] 
 
     global hum_earth_3
-    s1 = ''
+    s7 = []
     for k in b3.values():
-        s1 += str(k)
-    hum_earth_3 = s1[2::]
+        s7.append(str(k))
+    hum_earth_3 = s7[2::]
 
     global hum_earth_4
-    s1 = ''
+    s8 = []
     for k in b4.values():
-        s1 += str(k)
-    hum_earth_4 = s1[2::]
+        s8.append(str(k))
+    hum_earth_4 = s8[2::]
 
     global hum_earth_5
-    s1 = ''
+    s9 = []
     for k in b5.values():
-        s1 += str(k)
-    hum_earth_5 = s1[2::]
+        s9.append(str(k))
+    hum_earth_5 = s9[2::]
 
     global hum_earth_6
-    s1 = ''
+    s10 = []
     for k in b6.values():
-        s1 += str(k)
-    hum_earth_6 = s1[2::]
+        s10.append(str(k))
+    hum_earth_6 = s10[2::]
     return render_template('table.html',
-        title = 'table')
+        title = 'table',
+        temp_1 = s1[1],
+        hum_1 = s1[2],
+        temp_2 = s2[1],
+        hum_2 = s2[2],
+        temp_3 = s3[1],
+        hum_3 = s3[2],
+        temp_4 = s4[1],
+        hum_4 = s4[2],
+        hum_earth_1 = s5[1],
+        hum_earth_2 = s6[1],
+        hum_earth_3 = s7[1],
+        hum_earth_4 = s8[1],
+        hum_earth_5 = s9[1],
+        hum_earth_6 = s10[1])
+
+
 
 
 @app.route('/about_us')
@@ -119,4 +135,45 @@ def gettemp():
 # @app.route('/bd')
 # def getbd():
 #     bd()
+@app.route('/index/temp_1')
+def sensor_1():    
+    return render_template('index.html')
+
+@app.route('/index/temp_2')
+def sensor_2():    
+    return render_template('index.html')
+
+@app.route('/index/temp_3')
+def sensor_3():    
+    return render_template('index.html')
+
+@app.route('/index/temp_4')
+def sensor_4():    
+    return render_template('index.html')
+
+@app.route('/index/humearth_1')
+def sensor_5():    
+    return render_template('index.html')
+
+@app.route('/index/humearth_2')
+def sensor_6():    
+    return render_template('index.html')
+
+@app.route('/index/humearth_3')
+def sensor_7():    
+    return render_template('index.html')
+
+@app.route('/index/humearth_4')
+def sensor_8():    
+    return render_template('index.html')
+
+@app.route('/index/humearth_5')
+def sensor_9():    
+    return render_template('index.html')
+
+@app.route('/index/humearth_6')
+def sensor_10():    
+    return render_template('index.html')
+
+
 
