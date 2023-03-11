@@ -3,6 +3,7 @@ from app import app
 # from bd import bd
 import requests
 from bd import urlth1, urlth2, urlth3, urlth4, urlhum1, urlhum2, urlhum3, urlhum4, urlhum5, urlhum6
+import sqlite3
 #from templates.getpost import getpost
 
 
@@ -113,43 +114,153 @@ def gettemp():
 # def getbd():
 #     bd()
 @app.route('/index/temp_1')
-def sensor_1():    
+def sensor_1():   
+    conn = sqlite3.connect("greenhouse.db")
+    zpr = "temp_value_1, hum_value_1"
+    sqlread1 = f"""\
+    SELECT {zpr} FROM data
+    LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
+    LEFT JOIN hum_earth ON hum_earth.ID = data.ID
+    ORDER BY data.ID DESC LIMIT 10
+    """
+    lxlx = list(conn.execute(sqlread1))
+    global smarr1
+    smarr1 = [list(f) for f in lxlx] 
     return render_template('index.html')
 
 @app.route('/index/temp_2')
-def sensor_2():    
+def sensor_2():
+    conn = sqlite3.connect("greenhouse.db")
+    zpr = "temp_value_2, hum_value_2"
+    sqlread1 = f"""\
+    SELECT {zpr} FROM data
+    LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
+    LEFT JOIN hum_earth ON hum_earth.ID = data.ID
+    ORDER BY data.ID DESC LIMIT 10
+    """
+    lxlx = list(conn.execute(sqlread1))
+    global smarr2
+    smarr2 = [list(f) for f in lxlx]    
     return render_template('index.html')
 
 @app.route('/index/temp_3')
 def sensor_3():    
+    conn = sqlite3.connect("greenhouse.db")
+    zpr = "temp_value_3, hum_value_3"
+    sqlread1 = f"""\
+    SELECT {zpr} FROM data
+    LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
+    LEFT JOIN hum_earth ON hum_earth.ID = data.ID
+    ORDER BY data.ID DESC LIMIT 10
+    """
+    lxlx = list(conn.execute(sqlread1))
+    global smarr3
+    smarr3 = [list(f) for f in lxlx]    
     return render_template('index.html')
 
 @app.route('/index/temp_4')
 def sensor_4():    
+    conn = sqlite3.connect("greenhouse.db")
+    zpr = "temp_value_4, hum_value_4"
+    sqlread1 = f"""\
+    SELECT {zpr} FROM data
+    LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
+    LEFT JOIN hum_earth ON hum_earth.ID = data.ID
+    ORDER BY data.ID DESC LIMIT 10
+    """
+    lxlx = list(conn.execute(sqlread1))
+    global smarr4
+    smarr4 = [list(f) for f in lxlx]    
     return render_template('index.html')
 
 @app.route('/index/humearth_1')
 def sensor_5():    
+    conn = sqlite3.connect("greenhouse.db")
+    zpr = "hum_earth_1"
+    sqlread1 = f"""\
+    SELECT {zpr} FROM data
+    LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
+    LEFT JOIN hum_earth ON hum_earth.ID = data.ID
+    ORDER BY data.ID DESC LIMIT 10
+    """
+    lxlx = list(conn.execute(sqlread1))
+    global smarr5
+    smarr5 = [list(f) for f in lxlx]    
     return render_template('index.html')
 
 @app.route('/index/humearth_2')
-def sensor_6():    
+def sensor_6():   
+    conn = sqlite3.connect("greenhouse.db")
+    zpr = "hum_earth_2"
+    sqlread1 = f"""\
+    SELECT {zpr} FROM data
+    LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
+    LEFT JOIN hum_earth ON hum_earth.ID = data.ID
+    ORDER BY data.ID DESC LIMIT 10
+    """
+    lxlx = list(conn.execute(sqlread1))
+    global smarr6
+    smarr6 = [list(f) for f in lxlx]     
     return render_template('index.html')
 
 @app.route('/index/humearth_3')
-def sensor_7():    
+def sensor_7():   
+    conn = sqlite3.connect("greenhouse.db") 
+    zpr = "hum_earth_3"
+    sqlread1 = f"""\
+    SELECT {zpr} FROM data
+    LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
+    LEFT JOIN hum_earth ON hum_earth.ID = data.ID
+    ORDER BY data.ID DESC LIMIT 10
+    """
+    lxlx = list(conn.execute(sqlread1))
+    global smarr7
+    smarr7 = [list(f) for f in lxlx]    
     return render_template('index.html')
 
 @app.route('/index/humearth_4')
 def sensor_8():    
+    conn = sqlite3.connect("greenhouse.db")
+    zpr = "hum_earth_4"
+    sqlread1 = f"""\
+    SELECT {zpr} FROM data
+    LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
+    LEFT JOIN hum_earth ON hum_earth.ID = data.ID
+    ORDER BY data.ID DESC LIMIT 10
+    """
+    lxlx = list(conn.execute(sqlread1))
+    global smarr8
+    smarr8 = [list(f) for f in lxlx]    
     return render_template('index.html')
 
 @app.route('/index/humearth_5')
-def sensor_9():    
+def sensor_9():  
+    conn = sqlite3.connect("greenhouse.db")  
+    zpr = "hum_earth_5"
+    sqlread1 = f"""\
+    SELECT {zpr} FROM data
+    LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
+    LEFT JOIN hum_earth ON hum_earth.ID = data.ID
+    ORDER BY data.ID DESC LIMIT 10
+    """
+    lxlx = list(conn.execute(sqlread1))
+    global smarr9
+    smarr9 = [list(f) for f in lxlx]    
     return render_template('index.html')
 
 @app.route('/index/humearth_6')
 def sensor_10():    
+    conn = sqlite3.connect("greenhouse.db")
+    zpr = "hum_earth_6"
+    sqlread1 = f"""\
+    SELECT {zpr} FROM data
+    LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
+    LEFT JOIN hum_earth ON hum_earth.ID = data.ID
+    ORDER BY data.ID DESC LIMIT 10
+    """
+    lxlx = list(conn.execute(sqlread1))
+    global smarr10
+    smarr10 = [list(f) for f in lxlx] 
     return render_template('index.html')
 
 
