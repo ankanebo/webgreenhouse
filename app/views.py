@@ -71,6 +71,37 @@ def table():
     s10 = []
     for k in b6.values():
         s10.append(str(k))
+    
+    conn = sqlite3.connect("greenhouse.db")
+    zpr0 = "temp_value_1, temp_value_2, temp_value_3, temp_value_4"
+    sqlread1 = f"""\
+    SELECT {zpr0} FROM data
+    LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
+    LEFT JOIN hum_earth ON hum_earth.ID = data.ID
+    ORDER BY data.ID DESC LIMIT 1
+    """
+    
+    lxlx = list(conn.execute(sqlread1))
+    k = [list(f) for f in lxlx] 
+    j = []
+    for i in range(len(k)):
+        for p in range(len(k[i])):
+            j.append(int(k[i][p]))
+
+
+    zpr1 = "hum_value_1, hum_value_2, hum_value_3, hum_value_4, hum_value_5, hum_value_6"
+    sqlread1 = f"""\
+    SELECT {zpr1} FROM data
+    LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
+    LEFT JOIN hum_earth ON hum_earth.ID = data.ID
+    ORDER BY data.ID DESC LIMIT 1
+    """
+    lplp = list(conn.execute(sqlread1))
+    n = [list(f) for f in lplp] 
+    c = []
+    for q in range(len(n)):
+        for t in range(len(n[q])):
+            c.append(int(n[q][t]))
         
     return render_template('table.html',
         title = 'table',
@@ -87,7 +118,9 @@ def table():
         hum_earth_3 = s7[1],
         hum_earth_4 = s8[1],
         hum_earth_5 = s9[1],
-        hum_earth_6 = s10[1])
+        hum_earth_6 = s10[1], 
+        mid_temp = sum(j)/len(j), 
+        mid_hum = sum(c)/len(c))
 
 
 
