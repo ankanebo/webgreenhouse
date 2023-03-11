@@ -89,7 +89,7 @@ def table():
             j.append(int(k[i][p]))
 
 
-    zpr1 = "hum_value_1, hum_value_2, hum_value_3, hum_value_4, hum_value_5, hum_value_6"
+    zpr1 = "hum_value_1, hum_value_2, hum_value_3, hum_value_4"
     sqlread1 = f"""\
     SELECT {zpr1} FROM data
     LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
