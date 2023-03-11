@@ -31,77 +31,88 @@ def table():
     b5 = requests.get(urlhum5).json()
     b6 = requests.get(urlhum6).json()
     
+    f = []
+    h = []
     s1 = []
     for k in a1.values():
-        s1.append(str(k))
-    
+        s1.append(float(k))
+    f.append(int(s1[1]))
+    h.append(int(s1[2]))
 
     s2 = []
     for k in a2.values():
-        s2.append(str(k))
-    
+        s2.append(float(k))
+    f.append(int(s2[1]))
+    h.append(int(s2[2]))
+
     s3 = []
     for k in a3.values():
-        s3.append(str(k))
+        s3.append(float(k))
+    f.append(int(s3[1]))
+    h.append(int(s3[2]))
     
     s4 = []
     for k in a4.values():
-        s4.append(str(k))
+        s4.append(float(k))
+    f.append(int(s4[1]))
+    h.append(int(s4[2]))
     
     s5 = []
     for k in b1.values():
-        s5.append(str(k))
+        s5.append(float(k))
 
     s6 = []
     for k in b2.values():
-        s6.append(str(k))
+        s6.append(float(k))
 
     s7 = []
     for k in b3.values():
-        s7.append(str(k))
+        s7.append(float(k))
 
     s8 = []
     for k in b4.values():
-        s8.append(str(k))
+        s8.append(float(k))
 
     s9 = []
     for k in b5.values():
-        s9.append(str(k))
+        s9.append(float(k))
 
     s10 = []
     for k in b6.values():
-        s10.append(str(k))
+        s10.append(float(k))
     
-    conn = sqlite3.connect("greenhouse.db")
-    zpr0 = "temp_value_1, temp_value_2, temp_value_3, temp_value_4"
-    sqlread1 = f"""\
-    SELECT {zpr0} FROM data
-    LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
-    LEFT JOIN hum_earth ON hum_earth.ID = data.ID
-    ORDER BY data.ID DESC LIMIT 1
-    """
+    # conn = sqlite3.connect("greenhouse.db")
+    # zpr0 = "temp_value_1, temp_value_2, temp_value_3, temp_value_4"
+    # sqlread1 = f"""\
+    # SELECT {zpr0} FROM data
+    # LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
+    # LEFT JOIN hum_earth ON hum_earth.ID = data.ID
+    # ORDER BY data.ID DESC LIMIT 1
+    # """
     
-    lxlx = list(conn.execute(sqlread1))
-    k = [list(f) for f in lxlx] 
-    j = []
-    for i in range(len(k)):
-        for p in range(len(k[i])):
-            j.append(int(k[i][p]))
+    # lxlx = list(conn.execute(sqlread1))
+    # k = [list(f) for f in lxlx] 
+    # j = []
+    # for i in range(len(k)):
+    #     for p in range(len(k[i])):
+    #         j.append(int(k[i][p]))
 
 
-    zpr1 = "hum_value_1, hum_value_2, hum_value_3, hum_value_4"
-    sqlread1 = f"""\
-    SELECT {zpr1} FROM data
-    LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
-    LEFT JOIN hum_earth ON hum_earth.ID = data.ID
-    ORDER BY data.ID DESC LIMIT 1
-    """
-    lplp = list(conn.execute(sqlread1))
-    n = [list(f) for f in lplp] 
-    c = []
-    for q in range(len(n)):
-        for t in range(len(n[q])):
-            c.append(int(n[q][t]))
+    # zpr1 = "hum_value_1, hum_value_2, hum_value_3, hum_value_4"
+    # sqlread1 = f"""\
+    # SELECT {zpr1} FROM data
+    # LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
+    # LEFT JOIN hum_earth ON hum_earth.ID = data.ID
+    # ORDER BY data.ID DESC LIMIT 1
+    # """
+    # lplp = list(conn.execute(sqlread1))
+    # n = [list(f) for f in lplp] 
+    # c = []
+    # for q in range(len(n)):
+    #     for t in range(len(n[q])):
+    #         c.append(int(n[q][t]))
+
+    
         
     return render_template('table.html',
         title = 'table',
@@ -119,8 +130,8 @@ def table():
         hum_earth_4 = s8[1],
         hum_earth_5 = s9[1],
         hum_earth_6 = s10[1], 
-        mid_temp = sum(j)/len(j), 
-        mid_hum = sum(c)/len(c))
+        mid_temp = sum(f)/len(f), 
+        mid_hum = sum(h)/len(h))
 
 
 
