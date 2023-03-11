@@ -7,19 +7,17 @@ from bd import urlth1, urlth2, urlth3, urlth4, urlhum1, urlhum2, urlhum3, urlhum
 
 
 @app.route('/')
-@app.route('/index')
+@app.route('/index/index')
 def index():
-    user = { 'nickname': 'Miguel' } # выдуманный пользователь
     return render_template("index.html",
-        title = 'Home',
-        user = user)
+        title = 'Home')
 
 #def get_db_connection():
  #   conn = sqlite3.connect('greenhouse.db')
   #  conn.row_factory = sqlite3.Row
    # return conn
 
-@app.route('/table')
+@app.route('/index/table')
 def table():
     a1 = requests.get(urlth1).json()
     a2 = requests.get(urlth2).json()
@@ -93,10 +91,15 @@ def table():
 
 
 
-@app.route('/about_us')
+@app.route('/index/about_us')
 def about_us():
     return render_template('about_us.html',
         title = 'about_us')
+
+@app.route('/index/input')
+def input():
+    return render_template('input.html',
+        title = 'Ввод значений')
 
 @app.route('/getDataTempGraph')
 def gettemp():
