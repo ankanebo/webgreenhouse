@@ -49,43 +49,56 @@
     //     ],
     //   },
     //});
-let xhr = new XMLHttpRequest();
-let temp = [];
-xhr.open('GET', '/getDataTempGraph');
-xhr.send();
-var paramsString = document.location.href.split("/");
-console.log(paramsString[paramsString.length-1]);
-xhr.onload = function() {
-  temp = [];
-  temp = eval(xhr.response);
+test1 = []
+function graph(number){    
+  let xhr = new XMLHttpRequest();
+  xhr.open('GET', '/index/temp_hum?number='+number);
+  xhr.send();
+  var paramsString = document.location.href.split("/");
+  console.log(paramsString[paramsString.length-1]);
+  xhr.onload = function() {
+    data = xhr.response;
+    test1.push(data)
+    console.log(data)
+    console.log(data["date"])
+    console.log(data["temp"])
+    console.log(data["hum"])
     var ctx = document.getElementById("myChart").getContext("2d");
-      var myChart = new Chart(ctx, {
-        type: "line",
+    var myChart = new Chart(ctx, {
+      type: "line",
         data: {
-          labels: [
-            "12.00",
-            "13.00",
-            "14.00",
-            "15.00",
-            "16.00",
-            "17.00",
-            "18.00",
-          ],
+          labels: data["date"],
           datasets: [
             {
               label: "Температура, °C",
-              data: temp,
+              data: data["temp"],
               backgroundColor: "rgba(153,205,1,0.6)",
             },
             {
               label: "Влажность, %",
-              data: [2, 2, 5, 5, 2, 1, 10],
+              data: data["hum"],
               backgroundColor: "rgba(155,153,10,0.6)",
             },
           ],
         },
       });
     };
-// [2, 20, 3, 17, 6, 3, 7]
+  }
+function graph_1(){
+  graph(1);
+  return false;
+}
+function graph_2(){
+  graph(2);
+  return false;
+}
+function graph_3(){
+  graph(3);
+  return false;
+}
+function graph_4(){
+  graph(4);
+  return false;
+}
   </script>
 </html>

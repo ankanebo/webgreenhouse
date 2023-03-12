@@ -1,9 +1,11 @@
 from flask import render_template, flash, redirect
 from app import app
+import flask
 # from bd import bd
 import requests
 from bd import urlth1, urlth2, urlth3, urlth4, urlhum1, urlhum2, urlhum3, urlhum4, urlhum5, urlhum6
 import sqlite3
+import json
 #from templates.getpost import getpost
 
 
@@ -141,14 +143,17 @@ def about_us():
     return render_template('about_us.html',
         title = 'about_us')
 
-@app.route('/index/input',methods=["POST", "GET"] )
+@app.route('/index/input', methods = ['GET', 'POST'])
 def input():
-    if requests.method == "POST":
-        temphum = requests.form["list_of_hum_of_earth"]
-        humearth = requests.form["data"]
-    else:
-        return render_template('input.html',
+    return render_template('input.html',
             title = 'Ввод значений')
+
+@app.route('/button_1', methods = ['POST'])
+def buton_1():
+    data = flask.request.get_json()
+    list_of_temp = data['temp']
+    list_of_hum = data['hum']
+    return 'sucsess'
 
 @app.route('/getDataTempGraph')
 def gettemp():
@@ -161,65 +166,31 @@ def gettemp():
 # @app.route('/bd')
 # def getbd():
 #     bd()
-@app.route('/index/temp_1')
-def sensor_1():   
-    conn = sqlite3.connect("greenhouse.db")
-    zpr = "temp_value_1, hum_value_1"
-    sqlread1 = f"""\
-    SELECT {zpr} FROM data
-    LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
-    LEFT JOIN hum_earth ON hum_earth.ID = data.ID
-    ORDER BY data.ID DESC LIMIT 10
-    """
-    lxlx = list(conn.execute(sqlread1))
-    global smarr1
-    smarr1 = [list(f) for f in lxlx] 
-    return render_template('index.html')
 
-@app.route('/index/temp_2')
-def sensor_2():
+@app.route('/index/temp_hum')
+def temp_hum():
+    number = flask.request.args.get("number")
     conn = sqlite3.connect("greenhouse.db")
-    zpr = "temp_value_2, hum_value_2"
+    zpr = "temp_value_"+ number +", hum_value_"+ number
     sqlread1 = f"""\
     SELECT {zpr} FROM data
     LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
     LEFT JOIN hum_earth ON hum_earth.ID = data.ID
     ORDER BY data.ID DESC LIMIT 10
     """
-    lxlx = list(conn.execute(sqlread1))
-    global smarr2
-    smarr2 = [list(f) for f in lxlx]    
-    return render_template('index.html')
+    lxlx = list(conn.execute(sqlread1)) 
+    ret = {"temp": [], "hum": [], "date": []}
+    test = 0
+    for i in lxlx:
+        j = list(i)
+        ret["temp"].append(j[0])
+        ret["hum"].append(j[1])
+        ret["date"].append(test)
+        test += 1
+    conn.close()
+    return json.dumps(ret)
 
-@app.route('/index/temp_3')
-def sensor_3():    
-    conn = sqlite3.connect("greenhouse.db")
-    zpr = "temp_value_3, hum_value_3"
-    sqlread1 = f"""\
-    SELECT {zpr} FROM data
-    LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
-    LEFT JOIN hum_earth ON hum_earth.ID = data.ID
-    ORDER BY data.ID DESC LIMIT 10
-    """
-    lxlx = list(conn.execute(sqlread1))
-    global smarr3
-    smarr3 = [list(f) for f in lxlx]    
-    return render_template('index.html')
 
-@app.route('/index/temp_4')
-def sensor_4():    
-    conn = sqlite3.connect("greenhouse.db")
-    zpr = "temp_value_4, hum_value_4"
-    sqlread1 = f"""\
-    SELECT {zpr} FROM data
-    LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
-    LEFT JOIN hum_earth ON hum_earth.ID = data.ID
-    ORDER BY data.ID DESC LIMIT 10
-    """
-    lxlx = list(conn.execute(sqlread1))
-    global smarr4
-    smarr4 = [list(f) for f in lxlx]    
-    return render_template('index.html')
 
 @app.route('/index/humearth_1')
 def sensor_5():    
