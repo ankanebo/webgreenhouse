@@ -75,18 +75,18 @@
         <div class="col-4">
           <h4>Записать значения датчиков влажности почвы вручную</h4>
           <h6>Значение датчика влажности почвы № 1</h6>
-          <input name="hum_of_earth_1" class="form-control" style="margin:15px auto" type="text" placeholder="Введите значение">
+          <input name="hum_of_earth_1" class="form-control Allhumearth" style="margin:15px auto" type="text" placeholder="Введите значение">
           <h6>Значение датчика влажности почвы № 2</h6>
-          <input name="hum_of_earth_2" class="form-control" style="margin:15px auto" type="text" placeholder="Введите значение">
+          <input name="hum_of_earth_2" class="form-control Allhumearth" style="margin:15px auto" type="text" placeholder="Введите значение">
           <h6>Значение датчика влажности почвы № 3</h6>
-          <input name="hum_of_earth_3" class="form-control" style="margin:15px auto" type="text" placeholder="Введите значение">
+          <input name="hum_of_earth_3" class="form-control Allhumearth" style="margin:15px auto" type="text" placeholder="Введите значение">
           <h6>Значение датчика влажности почвы № 4</h6>
-          <input name="hum_of_earth_4" class="form-control" style="margin:15px auto" type="text" placeholder="Введите значение">
+          <input name="hum_of_earth_4" class="form-control Allhumearth" style="margin:15px auto" type="text" placeholder="Введите значение">
           <h6>Значение датчика влажности почвы № 5</h6>
-          <input name="hum_of_earth_5" class="form-control" style="margin:15px auto" type="text" placeholder="Введите значение">
+          <input name="hum_of_earth_5" class="form-control Allhumearth" style="margin:15px auto" type="text" placeholder="Введите значение">
           <h6>Значение датчика влажности почвы № 6</h6>
-          <input name="hum_of_earth_6" class="form-control" style="margin:15px auto" type="text" placeholder="Введите значение">
-          <button type="button" style="margin:15px auto" class="btn btn-warning" onclick="hum_of_earth()">Записать влажность почвы</button>
+          <input name="hum_of_earth_6" class="form-control Allhumearth" style="margin:15px auto" type="text" placeholder="Введите значение">
+          <button type="button" style="margin:15px auto" class="btn btn-warning" onclick="button_2()">Записать влажность почвы</button>
         </div>
       </div>
     </div>
@@ -139,8 +139,10 @@
       });
       
       list_of_hum = []
-      list_of_hum.push(document.querySelector("input[name='hum_of_oxygen_1']").value, document.querySelector("input[name='hum_of_oxygen_2']").value, document.querySelector("input[name='hum_of_oxygen_3']").value, document.querySelector("input[name='hum_of_oxygen_4']").value)
-
+      Allhum.document.querySelectorAll(".Allhum")
+      Allhum.array.forEach(element => {
+        list_of_hum.push(element.value)
+      });
       call_to_server('/button_1', JSON.stringify({
         temp: list_of_temp,
         hum: list_of_hum
@@ -149,13 +151,22 @@
         });
     }
     
-
-    function hum_of_earth() {
+    function button_2(){
       list_of_hum_of_earth = []
-      list_of_hum_of_earth.push(document.querySelector("input[name='hum_of_earth_1']").value, document.querySelector("input[name='hum_of_earth_2']").value, document.querySelector("input[name='hum_of_earth_3']").value, document.querySelector("input[name='hum_of_earth_4']").value, document.querySelector("input[name='hum_of_earth_5']").value, document.querySelector("input[name='hum_of_earth_6']").value)
+      Allhumearth = document.querySelectorAll(".Allhumearth")
+      Allhumearth.array.forEach(element => {
+        list_of_hum_of_earth.push(element.value)
+      });
 
-      alert("Вы записали данные датчиков влажности почвы: " + list_of_hum_of_earth);
-    } 
+      call_to_server('/button_2', JSON.stringify({
+        humearth: list_of_hum_of_earth
+        }), function(){
+          alert("Вы записали данные датчиков влажности почвы: " + list_of_hum_of_earth);
+        });
+    }
+
+
+    
     function average_temp() {
       alert("Вы записали среднеее значение температуры воздуха: " + document.querySelector("input[name='average_temp']").value);
     } 
