@@ -141,10 +141,14 @@ def about_us():
     return render_template('about_us.html',
         title = 'about_us')
 
-@app.route('/index/input')
+@app.route('/index/input',methods=["POST", "GET"] )
 def input():
-    return render_template('input.html',
-        title = 'Ввод значений')
+    if requests.method == "POST":
+        temphum = requests.form["list_of_hum_of_earth"]
+        humearth = requests.form["data"]
+    else:
+        return render_template('input.html',
+            title = 'Ввод значений')
 
 @app.route('/getDataTempGraph')
 def gettemp():
