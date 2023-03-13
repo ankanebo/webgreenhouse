@@ -160,6 +160,7 @@ def buton_1():
 def buton_2():
     data = flask.request.get_json()
     list_of_hum_of_earth = data['humearth']
+    print(list_of_hum_of_earth)
     return 'sucsess'
 
 

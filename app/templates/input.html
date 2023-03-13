@@ -134,12 +134,17 @@
     function button_1() {
       list_of_temp = [];
       Alltemp = document.querySelectorAll(".Alltemp");
-      Alltemp.array.forEach(element => {
+      Alltemp.forEach(element => {
         list_of_temp.push(element.value)
       });
+      // list_of_temp.push(document.querySelector("input[name='temp_of_oxygen_1']").value, document.querySelector("input[name='temp_of_oxygen_2']").value, document.querySelector("input[name='temp_of_oxygen_3']").value, document.querySelector("input[name='temp_of_oxygen_4']").value);
 
       list_of_hum = []
-      list_of_hum.push(document.querySelector("input[name='hum_of_oxygen_1']").value, document.querySelector("input[name='hum_of_oxygen_2']").value, document.querySelector("input[name='hum_of_oxygen_3']").value, document.querySelector("input[name='hum_of_oxygen_4']").value);
+      Allhum = document.querySelectorAll(".Allhum");
+      Allhum.forEach(element => {
+        list_of_hum.push(element.value)
+      });
+      // list_of_hum.push(document.querySelector("input[name='hum_of_oxygen_1']").value, document.querySelector("input[name='hum_of_oxygen_2']").value, document.querySelector("input[name='hum_of_oxygen_3']").value, document.querySelector("input[name='hum_of_oxygen_4']").value);
 
       call_to_server('/button_1', JSON.stringify({
         temp: list_of_temp,
@@ -152,7 +157,7 @@
     function button_2(){
       list_of_hum_of_earth = []
       Allhumearth = document.querySelectorAll(".Allhumearth")
-      Allhumearth.array.forEach(element => {
+      Allhumearth.forEach(element => {
         list_of_hum_of_earth.push(element.value)
       });
 
