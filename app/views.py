@@ -148,35 +148,64 @@ def input():
     return render_template('input.html',
             title = 'Ввод значений')
 
-@app.route('/button_1', methods = ['POST'])
+@app.route('/button_1', methods=['POST'])
 def buton_1():
     data = flask.request.get_json()
     list_of_temp = data['temp']
     list_of_hum = data['hum']
-    # print(list_of_temp, list_of_hum)
+    list_of_hum_of_earth = data['humearth']
+
+    # conn = sqlite3.connect("greenhouse.db")
+    # global count
+    # log = open('log.txt')
+    # count = int(log.readline())
+    # log.close() 
+    # maxID = count
+    # rs = []
+    # for pr in zip(list_of_temp, list_of_hum):
+    #     rs.extend(pr)
+    # print(rs)
+    # rs = [maxID] + rs
+    # # используем параметры запроса вместо форматирования строк
+    # sqlTH = """INSERT INTO sens_hum_temp_value VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"""
+    # conn.execute(sqlTH, rs)
+    # lh = list_of_hum_of_earth
+    # lh = [maxID] + lh
+    # print(lh)
+    # sqlHE = """INSERT INTO hum_earth VALUES (?, ?, ?, ?, ?, ?)"""
+    # conn.execute(sqlHE, lh)
+    # maxID += 1 
+    # count += 1
+    # log = open('log.txt', 'w')
+    # log.write(str(count))
+    # log.close()
+
+    # print(list_of_temp, list_of_hum, list_of_hum_of_earth )
     return 'sucsess'
+
+
 
 @app.route('/button_2', methods = ['POST'])
 def buton_2():
     data = flask.request.get_json()
-    list_of_hum_of_earth = data['humearth']
-    # print(list_of_hum_of_earth)
+    list_of_average_temp = data['averagetemp']
+    # print(list_of_average_temp)
     return 'sucsess'
 
-# @app.route('/button_3', methods = ['POST'])
-# def buton_2():
-#     data = flask.request.get_json()
-#     list_of_hum_of_earth = data['humearth']
-#     # print(list_of_hum_of_earth)
-#     return 'sucsess'
+@app.route('/button_3', methods = ['POST'])
+def buton_3():
+    data = flask.request.get_json()
+    list_of_average_hum_of_oxygen = data['averagehumofoxygen']
+    # print(list_of_average_hum_of_oxygen)
+    return 'sucsess'
 
+@app.route('/button_4', methods = ['POST'])
+def buton_4():
+    data = flask.request.get_json()
+    list_of_average_hum_of_earth = data['averagehumofearth']
+    # print(list_of_average_hum_of_earth)
+    return 'sucsess'
 
-
-
-
-# @app.route('/getDataHumGraph')
-# def gethum():
-#     return [9, 8, 7, 8, 5, 4, 3, 7, 4]
 
 # @app.route('/bd')
 # def getbd():
@@ -186,7 +215,7 @@ def buton_2():
 def temp_hum():
     number = flask.request.args.get("number")
     conn = sqlite3.connect("greenhouse.db")
-    zpr = "temp_value_"+ number +", hum_value_"+ number
+    zpr = "temp_value_"+ number +", hum_value_"+ number, "dates"
     sqlread1 = f"""\
     SELECT {zpr} FROM data
     LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
@@ -195,13 +224,13 @@ def temp_hum():
     """
     lxlx = list(conn.execute(sqlread1)) 
     ret = {"temp": [], "hum": [], "date": []}
-    test = 0
+    # test = 0
     for i in lxlx:
         j = list(i)
         ret["temp"].append(j[0])
         ret["hum"].append(j[1])
-        ret["date"].append(test)
-        test += 1
+        ret["date"].append(j[2])
+        # test += 1
     conn.close()
     return json.dumps(ret)
 
@@ -223,7 +252,7 @@ def hum_earth():
     test = 0
     for i in lxlx:
         j = list(i)
-        ret_1["hum_erth"].append(j[0])
+        ret_1["hum_earth"].append(j[0])
         ret_1["date"].append(test)
         test += 1
     conn.close()

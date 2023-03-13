@@ -45,12 +45,12 @@
               Датчики влажности почвы
             </button>
             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-              <a class="dropdown-item" href="/index/humearth_1">Датчик № 1</a>
-              <a class="dropdown-item" href="/index/humearth_2">Датчик № 2</a>
-              <a class="dropdown-item" href="/index/humearth_3">Датчик № 3</a>
-              <a class="dropdown-item" href="/index/humearth_4">Датчик № 4</a>
-              <a class="dropdown-item" href="/index/humearth_5">Датчик № 5</a>
-              <a class="dropdown-item" href="/index/humearth_6">Датчик № 6</a>
+              <a class="dropdown-item" onclick="graph_1_1()">Датчик № 1</a>
+              <a class="dropdown-item" onclick="graph_1_2()">Датчик № 2</a>
+              <a class="dropdown-item" onclick="graph_1_3()">Датчик № 3</a>
+              <a class="dropdown-item" onclick="graph_1_4()">Датчик № 4</a>
+              <a class="dropdown-item" onclick="graph_1_5()">Датчик № 5</a>
+              <a class="dropdown-item" onclick="graph_1_6()">Датчик № 6</a>
             </div>
           </div>
           <div class="dropdown">
@@ -148,5 +148,57 @@
         graph(4);
         return false;
       }
+      
+      function graph_hum_earth(number){    
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', '/index/hum_earth?number='+number);      //поменяй юрлку поменяй юрлку поменяй юрлку поменяй юрлку 
+        xhr.send();
+        var paramsString = document.location.href.split("/");
+        console.log(paramsString[paramsString.length-1]);
+        xhr.onload = function() {
+          data = JSON.parse(xhr.response);
+          test1.push(data)
+          var ctx = document.getElementById("myChart").getContext("2d");
+          var myChart = new Chart(ctx, {
+            type: "line",
+              data: {
+                labels: data["date"],
+                datasets: [
+                  {
+                    label: "Влажность почвы, %",
+                    data: data["hum_earth"],
+                    backgroundColor: "rgba(155,153,10,0.6)",
+                  },
+                ],
+              },
+            });
+          };
+        }
+      
+        function graph_1_1(){
+        graph_hum_earth(1);
+        return false;
+      }
+      function graph_1_2(){
+        graph_hum_earth(2);
+        return false;
+      }
+      function graph_1_3(){
+        graph_hum_earth(3);
+        return false;
+      }
+      function graph_1_4(){
+        graph_hum_earth(4);
+        return false;
+      }
+      function graph_1_5(){
+        graph_hum_earth(5);
+        return false;
+      }
+      function graph_1_6(){
+        graph_hum_earth(6);
+        return false;
+      }
+
         </script>
 {% endblock %}

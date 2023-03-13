@@ -19,7 +19,7 @@ class MyTimer(Thread):
 
   def run(self):
 #Если хотите изменить время записи в БД, меняйте значения в скобках(Пока тут 2 секунды)
-    while not self.stopped.wait(2):
+    while not self.stopped.wait(5):
       self.func()
 
 

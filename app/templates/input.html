@@ -59,7 +59,7 @@
           <input name="temp_of_oxygen_3" class="form-control Alltemp" style="margin:15px auto" type="text" placeholder="Введите значение">
           <h6>Значение датчика температуры № 4</h6>
           <input name="temp_of_oxygen_4" class="form-control Alltemp" style="margin:15px auto" type="text" placeholder="Введите значение">
-          <button type="button" style="margin:15px auto" class="btn btn-warning" onclick="button_1()">Записать температуру и влажность воздуха</button>
+          <button type="button" style="margin:15px auto" class="btn btn-warning" onclick="button_1()">Записать температуру, влажность воздуха и влажность почвы</button>
         </div>
         <div class="col-4">
           <h4>Записать значения датчиков влажности воздуха вручную</h4>
@@ -86,7 +86,6 @@
           <input name="hum_of_earth_5" class="form-control Allhumearth" style="margin:15px auto" type="text" placeholder="Введите значение">
           <h6>Значение датчика влажности почвы № 6</h6>
           <input name="hum_of_earth_6" class="form-control Allhumearth" style="margin:15px auto" type="text" placeholder="Введите значение">
-          <button type="button" style="margin:15px auto" class="btn btn-warning" onclick="button_2()">Записать влажность почвы</button>
         </div>
       </div>
     </div>
@@ -96,17 +95,17 @@
         <div class="col-4">
           <h5>Записать среднее значение температуры воздуха</h5>
           <input name="average_temp" class="form-control" style="margin:15px auto" type="text" placeholder="Введите значение">
-          <button type="button" style="margin:15px auto" class="btn btn-warning" onclick="average_temp()">Записать</button>
+          <button type="button" style="margin:15px auto" class="btn btn-warning" onclick="button_3()">Записать</button>
         </div>
         <div class="col-4">
           <h5>Записать среднее значение влажности воздуха</h5>
-          <input name="average_hum_of_air" class="form-control" style="margin:15px auto" type="text" placeholder="Введите значение">
-          <button type="button" style="margin:15px auto" class="btn btn-warning" onclick="average_hum_of_air()">Записать</button>
+          <input name="average_hum_of_oxygen" class="form-control" style="margin:15px auto" type="text" placeholder="Введите значение">
+          <button type="button" style="margin:15px auto" class="btn btn-warning" onclick="button_4()">Записать</button>
         </div>
         <div class="col-4">
           <h5>Записать среднее значение влажности почвы</h5>
           <input name="average_hum_of_earth" class="form-control" style="margin:15px auto" type="text" placeholder="Введите значение">
-          <button type="button" style="margin:15px auto" class="btn btn-warning" onclick="average_hum_of_earth()">Записать</button>
+          <button type="button" style="margin:15px auto" class="btn btn-warning" onclick="button_5()">Записать</button>
 
         </div>
       </div>
@@ -138,6 +137,11 @@
         list_of_temp.push(element.value)
       });
       // list_of_temp.push(document.querySelector("input[name='temp_of_oxygen_1']").value, document.querySelector("input[name='temp_of_oxygen_2']").value, document.querySelector("input[name='temp_of_oxygen_3']").value, document.querySelector("input[name='temp_of_oxygen_4']").value);
+      list_of_hum_of_earth = []
+      Allhumearth = document.querySelectorAll(".Allhumearth")
+      Allhumearth.forEach(element => {
+        list_of_hum_of_earth.push(element.value)
+      });
 
       list_of_hum = []
       Allhum = document.querySelectorAll(".Allhum");
@@ -148,37 +152,60 @@
 
       call_to_server('/button_1', JSON.stringify({
         temp: list_of_temp,
-        hum: list_of_hum
-        }), function(){
-          alert("Вы записали данные датчиков температуры воздуха: " + list_of_temp + "\n" + "Вы записали данные датчиков влажности воздуха: " + list_of_hum);
-        });
-    }
-    
-    function button_2(){
-      list_of_hum_of_earth = []
-      Allhumearth = document.querySelectorAll(".Allhumearth")
-      Allhumearth.forEach(element => {
-        list_of_hum_of_earth.push(element.value)
-      });
-
-      call_to_server('/button_2', JSON.stringify({
+        hum: list_of_hum,
         humearth: list_of_hum_of_earth
         }), function(){
-          alert("Вы записали данные датчиков влажности почвы: " + list_of_hum_of_earth);
+          alert("Вы записали данные датчиков температуры воздуха: " + list_of_temp + "\n" + "Вы записали данные датчиков влажности воздуха: " + list_of_hum, "Вы записали данные датчиков влажности почвы: " + list_of_hum_of_earth);
+        });
+    }
+    
+    // function button_2(){
+    //   list_of_hum_of_earth = []
+    //   Allhumearth = document.querySelectorAll(".Allhumearth")
+    //   Allhumearth.forEach(element => {
+    //     list_of_hum_of_earth.push(element.value)
+    //   });
+
+    //   call_to_server('/button_2', JSON.stringify({
+    //     humearth: list_of_hum_of_earth
+    //     }), function(){
+    //       alert("Вы записали данные датчиков влажности почвы: " + list_of_hum_of_earth);
+    //     });
+    // }
+
+    function button_2(){
+      list_of_average_temp = [];
+      list_of_average_temp.push(document.querySelector("input[name='average_temp']").value);
+
+      call_to_server('/button_2', JSON.stringify({
+        averagetemp: list_of_average_temp
+        }), function(){
+          alert("Вы записали среднее значение температуры воздуха: " + list_of_average_temp);
         });
     }
 
+    function button_3(){
+      list_of_average_hum_of_oxygen = [];
+      list_of_average_hum_of_oxygen.push(document.querySelector("input[name='average_hum_of_oxygen']").value);
 
+      call_to_server('/button_3', JSON.stringify({
+        averagehumofoxygen: list_of_average_hum_of_oxygen
+        }), function(){
+          alert("Вы записали среднее значение влажности воздуха: " + list_of_average_hum_of_oxygen);
+        });
+    }
+
+    function button_4(){
+      list_of_average_hum_of_earth = [];
+      list_of_average_hum_of_earth.push(document.querySelector("input[name='average_hum_of_earth']").value);
+
+      call_to_server('/button_4', JSON.stringify({
+        averagehumofearth: list_of_average_hum_of_earth
+        }), function(){
+          alert("Вы записали среднее значение влажности почвы: " + list_of_average_hum_of_earth);
+        });
+    }
     
-    function average_temp() {
-      alert("Вы записали среднеее значение температуры воздуха: " + document.querySelector("input[name='average_temp']").value);
-    } 
-    function average_hum_of_air() {
-      alert("Вы записали среднеее значение влажности воздуха: " + document.querySelector("input[name='average_hum_of_air']").value);
-    } 
-    function average_hum_of_earth() {
-      alert("Вы записали среднеее значение влажности почвы: " + document.querySelector("input[name='average_hum_of_earth']").value);
-    } 
   </script>
 </html>
 {% endblock %}
