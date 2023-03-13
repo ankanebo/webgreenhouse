@@ -132,22 +132,20 @@
     }
     
     function button_1() {
-      list_of_temp = []
-      Alltemp = document.querySelectorAll(".Alltemp")
+      list_of_temp = [];
+      Alltemp = document.querySelectorAll(".Alltemp");
       Alltemp.array.forEach(element => {
         list_of_temp.push(element.value)
       });
-      
+
       list_of_hum = []
-      Allhum.document.querySelectorAll(".Allhum")
-      Allhum.array.forEach(element => {
-        list_of_hum.push(element.value)
-      });
+      list_of_hum.push(document.querySelector("input[name='hum_of_oxygen_1']").value, document.querySelector("input[name='hum_of_oxygen_2']").value, document.querySelector("input[name='hum_of_oxygen_3']").value, document.querySelector("input[name='hum_of_oxygen_4']").value);
+
       call_to_server('/button_1', JSON.stringify({
         temp: list_of_temp,
         hum: list_of_hum
         }), function(){
-          alert("Вы записали данные датчиков температуры и влажности: " + list_of_temp + "\n" + "Вы записали данные датчиков влажности для воздуха: " + list_of_hum);
+          alert("Вы записали данные датчиков температуры воздуха: " + list_of_temp + "\n" + "Вы записали данные датчиков влажности воздуха: " + list_of_hum);
         });
     }
     

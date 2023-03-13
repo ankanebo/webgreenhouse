@@ -153,6 +153,7 @@ def buton_1():
     data = flask.request.get_json()
     list_of_temp = data['temp']
     list_of_hum = data['hum']
+    print(list_of_temp, list_of_hum)
     return 'sucsess'
 
 @app.route('/button_2', methods = ['POST'])
@@ -162,10 +163,6 @@ def buton_2():
     return 'sucsess'
 
 
-
-@app.route('/getDataTempGraph')
-def gettemp():
-    return [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 # @app.route('/getDataHumGraph')
 # def gethum():
