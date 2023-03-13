@@ -153,14 +153,14 @@ def buton_1():
     data = flask.request.get_json()
     list_of_temp = data['temp']
     list_of_hum = data['hum']
-    print(list_of_temp, list_of_hum)
+    # print(list_of_temp, list_of_hum)
     return 'sucsess'
 
 @app.route('/button_2', methods = ['POST'])
 def buton_2():
     data = flask.request.get_json()
     list_of_hum_of_earth = data['humearth']
-    print(list_of_hum_of_earth)
+    # print(list_of_hum_of_earth)
     return 'sucsess'
 
 
