@@ -92,4 +92,61 @@
         </div> 
       </div>
     </div>
+
+    <script>
+
+      graph_1()
+      
+      test1 = []
+      function graph(number){    
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', '/index/temp_hum?number='+number);
+        xhr.send();
+        var paramsString = document.location.href.split("/");
+        console.log(paramsString[paramsString.length-1]);
+        xhr.onload = function() {
+          data = JSON.parse(xhr.response);
+          test1.push(data)
+          console.log(data)
+          console.log(data["date"])
+          console.log(data["temp"])
+          console.log(data["hum"])
+          var ctx = document.getElementById("myChart").getContext("2d");
+          var myChart = new Chart(ctx, {
+            type: "line",
+              data: {
+                labels: data["date"],
+                datasets: [
+                  {
+                    label: "Температура, °C",
+                    data: data["temp"],
+                    backgroundColor: "rgba(153,205,1,0.6)",
+                  },
+                  {
+                    label: "Влажность, %",
+                    data: data["hum"],
+                    backgroundColor: "rgba(155,153,10,0.6)",
+                  },
+                ],
+              },
+            });
+          };
+        }
+      function graph_1(){
+        graph(1);
+        return false;
+      }
+      function graph_2(){
+        graph(2);
+        return false;
+      }
+      function graph_3(){
+        graph(3);
+        return false;
+      }
+      function graph_4(){
+        graph(4);
+        return false;
+      }
+        </script>
 {% endblock %}

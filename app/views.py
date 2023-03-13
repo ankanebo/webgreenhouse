@@ -163,6 +163,15 @@ def buton_2():
     # print(list_of_hum_of_earth)
     return 'sucsess'
 
+# @app.route('/button_3', methods = ['POST'])
+# def buton_2():
+#     data = flask.request.get_json()
+#     list_of_hum_of_earth = data['humearth']
+#     # print(list_of_hum_of_earth)
+#     return 'sucsess'
+
+
+
 
 
 # @app.route('/getDataHumGraph')
