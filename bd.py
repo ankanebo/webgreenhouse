@@ -1,16 +1,79 @@
 #Предисловие. Этот файл является тестом работы БД, с запросами на запись и на чтение.
 #В нем задействована многопоточность для корректной работы функции на запись в БД.
 
-
 import sqlite3
-
+import requests
 from threading import Thread
 from threading import Event
 import time
 
+bd_start_flag = False
+stopEvent = Event()
+
+def data_base():
+    global bd_start_flag
+    global stopEvent
+    if bd_start_flag == True:
+        bd_start_flag = False
+        stopEvent.set()
+        return
+    bd_start_flag = True
+    conn = sqlite3.connect("greenhouse.db")
+    try:
+        sql = """\
+        CREATE TABLE sens_hum_temp_value(
+            ID INTEGER PRIMARY KEY,
+            temp_value_1 FLOAT,
+            hum_value_1 FLOAT,
+            temp_value_2 FLOAT,
+            hum_value_2 FLOAT,
+            temp_value_3 FLOAT,
+            hum_value_3 FLOAT,
+            temp_value_4 FLOAT,
+            hum_value_4 FLOAT
+        );
+        CREATE TABLE hum_earth(
+            ID INTEGER PRIMARY KEY,
+            hum_earth_1 FLOAT,
+            hum_earth_2 FLOAT,
+            hum_earth_3 FLOAT,
+            hum_earth_4 FLOAT,
+            hum_earth_5 FLOAT,
+            hum_earth_6 FLOAT
+        );
+        CREATE TABLE data(
+            ID INTEGER PRIMARY KEY,
+            dates INTEGER
+        )
+        """
+        conn.executescript(sql)     
+        sql = """\
+        INSERT INTO sens_hum_temp_value
+            VALUES (0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0);
+        INSERT INTO hum_earth
+            VALUES (0,0.0,0.0,0.0,0.0,0.0,0.0);
+        INSERT INTO data
+            VALUES (0, datetime('now'));
+
+        """
+        conn.executescript(sql)
+        sql = """\
+        SELECT MAX(ID) FROM data;
+        """
+    except sqlite3.OperationalError:
+        sql = """\
+            SELECT MAX(ID) FROM data;
+            """    
+    maxID = list(conn.execute(sql))[0][0]
+    stopEvent = Event()
+    timer = MyTimer(stopEvent, write)
+    timer.start()
+    conn.close()
+    print('data_base end!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
 
 
 
+    
 class MyTimer(Thread):
   def __init__(self, event, func):
     Thread.__init__(self)
@@ -19,67 +82,12 @@ class MyTimer(Thread):
 
   def run(self):
 #Если хотите изменить время записи в БД, меняйте значения в скобках(Пока тут 2 секунды)
-    while not self.stopped.wait(5):
+    print('runtimer!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+    while not self.stopped.wait(2):
       self.func()
+    print('end_runtimer!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
 
 
-conn = sqlite3.connect("greenhouse.db")
-
-try:
-    sql = """\
-    CREATE TABLE sens_hum_temp_value(
-        ID INTEGER PRIMARY KEY,
-        temp_value_1 FLOAT,
-        hum_value_1 FLOAT,
-        temp_value_2 FLOAT,
-        hum_value_2 FLOAT,
-        temp_value_3 FLOAT,
-        hum_value_3 FLOAT,
-        temp_value_4 FLOAT,
-        hum_value_4 FLOAT
-    );
-    CREATE TABLE hum_earth(
-        ID INTEGER PRIMARY KEY,
-        hum_earth_1 FLOAT,
-        hum_earth_2 FLOAT,
-        hum_earth_3 FLOAT,
-        hum_earth_4 FLOAT,
-        hum_earth_5 FLOAT,
-        hum_earth_6 FLOAT
-    );
-    CREATE TABLE data(
-        ID INTEGER PRIMARY KEY,
-        dates INTEGER
-    )
-    """
-
-    conn.executescript(sql)
-        
-    sql = """\
-    INSERT INTO sens_hum_temp_value
-        VALUES (0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0);
-    INSERT INTO hum_earth
-        VALUES (0,0.0,0.0,0.0,0.0,0.0,0.0);
-    INSERT INTO data
-        VALUES (0, datetime('now'));
-
-    """
-    conn.executescript(sql)
-
-
-    sql = """\
-    SELECT MAX(ID) FROM data;
-    """
-
-except sqlite3.OperationalError:
-    sql = """\
-        SELECT MAX(ID) FROM data;
-        """    
-
-maxID = list(conn.execute(sql))[0][0]
-
-import requests
-#запрос к API
 global urlth1
 global urlth2
 global urlth3
@@ -169,7 +177,11 @@ def write():
     INSERT INTO sens_hum_temp_value
         VALUES ({s});
     """
-    conn.executescript(sql)
+    try:
+        conn.executescript(sql)
+    except:
+        print('error!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+        print(maxID)
     x = str(maxID)+', '
     x1 = ''
     for k in hum1.values():
@@ -223,12 +235,7 @@ def write():
     log = open('log.txt', 'w')
     log.write(str(count))
     log.close()
+    conn.close()
 
 
-stopEvent = Event()
-timer = MyTimer(stopEvent, write)
-timer.start()
-
-
-conn.close()
 

@@ -1,5 +1,3 @@
 from app import app
-# from bd import bd
-#bd()
+print('run!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
 app.run(debug = True)
-#bd()

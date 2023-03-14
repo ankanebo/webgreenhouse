@@ -1,24 +1,25 @@
 from flask import render_template, flash, redirect
 from app import app
 import flask
-# from bd import bd
 import requests
 from bd import urlth1, urlth2, urlth3, urlth4, urlhum1, urlhum2, urlhum3, urlhum4, urlhum5, urlhum6
 import sqlite3
 import json
+import bd
 #from templates.getpost import getpost
+# print('view!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
 
+
+@app.route('/start_bd',  methods=['POST'])
+def start_end():
+    bd.data_base()
+    return '{"status":"sucses"}'
 
 @app.route('/')
 @app.route('/index/index')
 def index():
     return render_template("index.html",
         title = 'Home')
-
-#def get_db_connection():
- #   conn = sqlite3.connect('greenhouse.db')
-  #  conn.row_factory = sqlite3.Row
-   # return conn
 
 @app.route('/index/table')
 def table():
@@ -32,6 +33,8 @@ def table():
     b4 = requests.get(urlhum4).json()
     b5 = requests.get(urlhum5).json()
     b6 = requests.get(urlhum6).json()
+
+
     
     f = []
     h = []
@@ -83,38 +86,6 @@ def table():
     for k in b6.values():
         s10.append(float(k))
     
-    # conn = sqlite3.connect("greenhouse.db")
-    # zpr0 = "temp_value_1, temp_value_2, temp_value_3, temp_value_4"
-    # sqlread1 = f"""\
-    # SELECT {zpr0} FROM data
-    # LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
-    # LEFT JOIN hum_earth ON hum_earth.ID = data.ID
-    # ORDER BY data.ID DESC LIMIT 1
-    # """
-    
-    # lxlx = list(conn.execute(sqlread1))
-    # k = [list(f) for f in lxlx] 
-    # j = []
-    # for i in range(len(k)):
-    #     for p in range(len(k[i])):
-    #         j.append(int(k[i][p]))
-
-
-    # zpr1 = "hum_value_1, hum_value_2, hum_value_3, hum_value_4"
-    # sqlread1 = f"""\
-    # SELECT {zpr1} FROM data
-    # LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
-    # LEFT JOIN hum_earth ON hum_earth.ID = data.ID
-    # ORDER BY data.ID DESC LIMIT 1
-    # """
-    # lplp = list(conn.execute(sqlread1))
-    # n = [list(f) for f in lplp] 
-    # c = []
-    # for q in range(len(n)):
-    #     for t in range(len(n[q])):
-    #         c.append(int(n[q][t]))
-
-    
         
     return render_template('table.html',
         title = 'table',
@@ -155,30 +126,34 @@ def buton_1():
     list_of_hum = data['hum']
     list_of_hum_of_earth = data['humearth']
 
-    # conn = sqlite3.connect("greenhouse.db")
-    # global count
-    # log = open('log.txt')
-    # count = int(log.readline())
-    # log.close() 
-    # maxID = count
-    # rs = []
-    # for pr in zip(list_of_temp, list_of_hum):
-    #     rs.extend(pr)
-    # print(rs)
-    # rs = [maxID] + rs
-    # # используем параметры запроса вместо форматирования строк
-    # sqlTH = """INSERT INTO sens_hum_temp_value VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"""
-    # conn.execute(sqlTH, rs)
-    # lh = list_of_hum_of_earth
-    # lh = [maxID] + lh
-    # print(lh)
-    # sqlHE = """INSERT INTO hum_earth VALUES (?, ?, ?, ?, ?, ?)"""
-    # conn.execute(sqlHE, lh)
-    # maxID += 1 
-    # count += 1
-    # log = open('log.txt', 'w')
-    # log.write(str(count))
-    # log.close()
+    conn = sqlite3.connect("greenhouse.db")
+    global count
+    log = open('log.txt')
+    count = int(log.readline())
+    log.close() 
+    maxID = count + 1
+    rs = []
+    for pr in zip(list_of_temp, list_of_hum):
+        rs.extend(pr)
+    print(rs)
+    rs = [maxID] + rs
+    for i in range(len(rs)):
+        rs[i] = float(rs[i])
+    # используем параметры запроса вместо форматирования строк
+    sqlTH = """INSERT INTO sens_hum_temp_value VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"""
+    conn.execute(sqlTH, rs)
+    lh = list_of_hum_of_earth
+    lh = [maxID] + lh
+    for i in range(len(lh)):
+        lh[i] = float(lh[i])
+    print(lh)
+    sqlHE = """INSERT INTO hum_earth VALUES (?, ?, ?, ?, ?, ?, ?)"""
+    conn.execute(sqlHE, lh)
+    maxID += 1 
+    count += 1
+    log = open('log.txt', 'w')
+    log.write(str(count))
+    log.close()
 
     # print(list_of_temp, list_of_hum, list_of_hum_of_earth )
     return 'sucsess'
@@ -207,15 +182,11 @@ def buton_4():
     return 'sucsess'
 
 
-# @app.route('/bd')
-# def getbd():
-#     bd()
-
 @app.route('/index/temp_hum')
 def temp_hum():
     number = flask.request.args.get("number")
     conn = sqlite3.connect("greenhouse.db")
-    zpr = "temp_value_"+ number +", hum_value_"+ number, "dates"
+    zpr = "temp_value_"+ number +", hum_value_"+ number + ", dates"
     sqlread1 = f"""\
     SELECT {zpr} FROM data
     LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
@@ -224,13 +195,11 @@ def temp_hum():
     """
     lxlx = list(conn.execute(sqlread1)) 
     ret = {"temp": [], "hum": [], "date": []}
-    # test = 0
     for i in lxlx:
         j = list(i)
         ret["temp"].append(j[0])
         ret["hum"].append(j[1])
         ret["date"].append(j[2])
-        # test += 1
     conn.close()
     return json.dumps(ret)
 
@@ -240,7 +209,7 @@ def temp_hum():
 def hum_earth():    
     number = flask.request.args.get("number")
     conn = sqlite3.connect("greenhouse.db")
-    zpr = "hum_earth_"+ number
+    zpr = "hum_earth_"+ number + ", dates"
     sqlread1 = f"""\
     SELECT {zpr} FROM data
     LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
@@ -249,12 +218,31 @@ def hum_earth():
     """
     lxlx = list(conn.execute(sqlread1)) 
     ret_1 = {"hum_earth": [], "date": []}
-    test = 0
     for i in lxlx:
         j = list(i)
         ret_1["hum_earth"].append(j[0])
-        ret_1["date"].append(test)
-        test += 1
+        ret_1["date"].append(j[1])
     conn.close()
     return json.dumps(ret_1)
+
+
+@app.route('/mid_temp_graph')
+def mid_temp_graph():
+    conn = sqlite3.connect("greenhouse.db")
+    zpr = "temp_value_1, temp_value_2, temp_value_3, temp_value_4"
+    sqlread1 = f"""\
+    SELECT {zpr} FROM data
+    LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
+    LEFT JOIN hum_earth ON hum_earth.ID = data.ID
+    ORDER BY data.ID DESC LIMIT 10
+    """
+    lxlx = list(conn.execute(sqlread1))
+    global smarr1
+    mid = [list(f) for f in lxlx] 
+    k = []
+    for i in range(len(mid)):
+        k.append(sum(mid[i]) / len(mid[i]))
+    print(k)
+    conn.close()
+    return 'sucsess'
 
