@@ -6,6 +6,7 @@ from bd import urlth1, urlth2, urlth3, urlth4, urlhum1, urlhum2, urlhum3, urlhum
 import sqlite3
 import json
 import bd
+
 #from templates.getpost import getpost
 # print('view!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
 
@@ -126,34 +127,41 @@ def buton_1():
     list_of_hum = data['hum']
     list_of_hum_of_earth = data['humearth']
 
-    conn = sqlite3.connect("greenhouse.db")
-    global count
-    log = open('log.txt')
-    count = int(log.readline())
-    log.close() 
-    maxID = count + 1
-    rs = []
-    for pr in zip(list_of_temp, list_of_hum):
-        rs.extend(pr)
-    print(rs)
-    rs = [maxID] + rs
-    for i in range(len(rs)):
-        rs[i] = float(rs[i])
-    # используем параметры запроса вместо форматирования строк
-    sqlTH = """INSERT INTO sens_hum_temp_value VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"""
-    conn.execute(sqlTH, rs)
-    lh = list_of_hum_of_earth
-    lh = [maxID] + lh
-    for i in range(len(lh)):
-        lh[i] = float(lh[i])
-    print(lh)
-    sqlHE = """INSERT INTO hum_earth VALUES (?, ?, ?, ?, ?, ?, ?)"""
-    conn.execute(sqlHE, lh)
-    maxID += 1 
-    count += 1
-    log = open('log.txt', 'w')
-    log.write(str(count))
-    log.close()
+    # conn = sqlite3.connect("greenhouse.db")
+    # global count
+    # log = open('log.txt')
+    # count = int(log.readline())
+    # log.close() 
+    # maxID = count + 1
+    # rs = []
+    # for pr in zip(list_of_temp, list_of_hum):
+    #     rs.extend(pr)
+    # rs = [maxID] + rs
+    # for i in range(len(rs)):
+    #     rs[i] = float(rs[i])
+    # print(rs)
+    # # rs = "'" + ', '.join(lh) + "'"
+    # # используем параметры запроса вместо форматирования строк
+    # sqlTH = """INSERT INTO sens_hum_temp_value VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"""
+    # conn.execute(sqlTH, rs)
+    # lh = list_of_hum_of_earth
+    # lh = [maxID] + lh
+    # for i in range(len(lh)):
+    #     lh[i] = float(lh[i])
+    # print(lh)
+    # # lh = "'" + ', '.join(lh) + "'"
+    # sqlHE = """INSERT INTO hum_earth VALUES (?, ?, ?, ?, ?, ?, ?)"""
+    # conn.execute(sqlHE, lh)
+    # sqlDT = f"""\
+    # INSERT INTO data
+    #     VALUES ({maxID}, datetime('now'));
+    # """
+    # conn.execute(sqlDT)
+    # maxID += 1 
+    # count += 1
+    # log = open('log.txt', 'w')
+    # log.write(str(count))
+    # log.close()
 
     # print(list_of_temp, list_of_hum, list_of_hum_of_earth )
     return 'sucsess'
@@ -163,7 +171,13 @@ def buton_1():
 @app.route('/button_2', methods = ['POST'])
 def buton_2():
     data = flask.request.get_json()
+    global list_of_average_temp
     list_of_average_temp = data['averagetemp']
+    # global input_temp
+    # if len(list_of_average_temp) == 0:
+    #     input_temp = 25
+    # else:
+    #     input_temp = list_of_average_temp[0]
     # print(list_of_average_temp)
     return 'sucsess'
 
@@ -229,20 +243,39 @@ def hum_earth():
 @app.route('/mid_temp_graph')
 def mid_temp_graph():
     conn = sqlite3.connect("greenhouse.db")
-    zpr = "temp_value_1, temp_value_2, temp_value_3, temp_value_4"
+    zpr = "temp_value_1, temp_value_2, temp_value_3, temp_value_4, dates"
     sqlread1 = f"""\
     SELECT {zpr} FROM data
     LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
     LEFT JOIN hum_earth ON hum_earth.ID = data.ID
     ORDER BY data.ID DESC LIMIT 10
     """
-    lxlx = list(conn.execute(sqlread1))
-    global smarr1
-    mid = [list(f) for f in lxlx] 
-    k = []
-    for i in range(len(mid)):
-        k.append(sum(mid[i]) / len(mid[i]))
-    print(k)
+    lsls = list(conn.execute(sqlread1))
+    mid_temp = {"mid_temp": [], "date": []}
+    for i in range(len(lsls)):
+        j = (lsls[i][0] + lsls[i][1] + lsls[i][2] + lsls[i][3]) / 4
+        p = lsls[i][-1]
+        mid_temp["mid_temp"].append(j)
+        mid_temp["date"].append(p)
     conn.close()
-    return 'sucsess'
+    return json.dumps(mid_temp)
 
+@app.route('/mid_hum_graph')
+def mid_hum_graph():
+    conn = sqlite3.connect("greenhouse.db")
+    zpr = "hum_value_1, hum_value_2, hum_value_3, hum_value_4, dates"
+    sqlread1 = f"""\
+    SELECT {zpr} FROM data
+    LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
+    LEFT JOIN hum_earth ON hum_earth.ID = data.ID
+    ORDER BY data.ID DESC LIMIT 10
+    """
+    lsls = list(conn.execute(sqlread1))
+    mid_hum = {"mid_hum": [], "date": []}
+    for i in range(len(lsls)):
+        j = (lsls[i][0] + lsls[i][1] + lsls[i][2] + lsls[i][3]) / 4
+        p = lsls[i][-1]
+        mid_hum["mid_hum"].append(j)
+        mid_hum["date"].append(p)
+    conn.close()
+    return json.dumps(mid_hum)

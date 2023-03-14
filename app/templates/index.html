@@ -31,35 +31,44 @@
     </div>      
     <div class="container">
       <div class="row">
-        <div class="col-4">
+        <div class="col-5">
           <div class="btn-group" style="margin:10px auto" role="group">
             <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Датчики температуры/влажности
+              График датчиков температуры/влажности
             </button>
             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-              <a type="button" class="dropdown-item" onclick="graph_1()">Датчик № 1</a>
-              <a class="dropdown-item" onclick="graph_2()">Датчик № 2</a>
-              <a class="dropdown-item" onclick="graph_3()">Датчик № 3</a>
-              <a class="dropdown-item" onclick="graph_4()">Датчик № 4</a>
+              <a type="button" class="dropdown-item" onclick="graph_1()">График датчика № 1</a>
+              <a class="dropdown-item" onclick="graph_2()">График датчика № 2</a>
+              <a class="dropdown-item" onclick="graph_3()">График датчика № 3</a>
+              <a class="dropdown-item" onclick="graph_4()">График датчика № 4</a>
             </div>
           </div>
           <div class="btn-group" style="margin:5px auto" role="group">
             <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Датчики влажности почвы
+              График датчиков влажности почвы
             </button>
             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-              <a class="dropdown-item" onclick="graph_1_1()">Датчик № 1</a>
-              <a class="dropdown-item" onclick="graph_1_2()">Датчик № 2</a>
-              <a class="dropdown-item" onclick="graph_1_3()">Датчик № 3</a>
-              <a class="dropdown-item" onclick="graph_1_4()">Датчик № 4</a>
-              <a class="dropdown-item" onclick="graph_1_5()">Датчик № 5</a>
-              <a class="dropdown-item" onclick="graph_1_6()">Датчик № 6</a>
+              <a class="dropdown-item" onclick="graph_1_1()">График датчика № 1</a>
+              <a class="dropdown-item" onclick="graph_1_2()">График датчика № 2</a>
+              <a class="dropdown-item" onclick="graph_1_3()">График датчика № 3</a>
+              <a class="dropdown-item" onclick="graph_1_4()">График датчика № 4</a>
+              <a class="dropdown-item" onclick="graph_1_5()">График датчика № 5</a>
+              <a class="dropdown-item" onclick="graph_1_6()">График датчика № 6</a>
+            </div>
+          </div>
+          <div class="btn-group" style="margin:5px auto" role="group">
+            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              График датчиков средней температуры/влажности
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+              <a class="dropdown-item" onclick="graph_2_1()">График средней температуры</a>
+              <a class="dropdown-item" onclick="graph_2_2()">График средней влажности</a>
             </div>
           </div>
 
 
 
-          <h3 style="text-align: center; margin:15px auto">Температура воздуха</h3>
+          <h3 style="margin:15px auto">Температура воздуха</h3>
           <div id="cur_t" class="alert alert-info" role="alert">
           </div>
           <div id="av_t" class="alert alert-info" role="alert">
@@ -72,7 +81,7 @@
 
 
 
-          <h3 style="text-align: center; margin:15px auto">Влажность воздуха</h3>
+          <h3 style="margin:15px auto">Влажность воздуха</h3>
           <div id="cur_h" class="alert alert-info" role="alert">
           </div>
           <div id="av_h" class="alert alert-info" role="alert">
@@ -83,8 +92,22 @@
           </div>
           <h5 id="status_of_water">Статус: полив закрыт</h5>
 
+
+
+          <!-- <h3 style="text-center; margin:15px auto">Влажность почвы</h3>
+          <div id="cur_h_e" class="alert alert-info" role="alert">
+          </div>
+          <div id="av_h_e" class="alert alert-info" role="alert">
+          </div>
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <button onclick="close_water_earht()" type="button" class="btn btn-secondary">Закрыто</button>
+            <button onclick="open_water_earth()" type="button" class="btn btn-secondary">Открыто</button>
+          </div>
+          <h5 id="status_of_water_earth">Статус: Общее увлажнение почвы закрыто</h5>
+        
+ -->
         </div>
-        <div class="col-8">
+        <div class="col-7">
           <h4 id="Name_of_Chart" style="text-align: center"></h4>  
           <canvas id="myChart" style="background-image: url(https://kartinkin.net/pics/uploads/posts/2022-08/1660407500_2-kartinkin-net-p-chisto-chernie-oboi-na-telefon-krasivo-2.jpg)"></canvas>
         </div> 
@@ -192,6 +215,60 @@
             });
           };
         }
+
+      
+        function graph_for_average_temp(){ 
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', '/mid_temp_graph'); 
+        xhr.send();
+        var paramsString = document.location.href.split("/");
+        console.log(paramsString[paramsString.length-1]);
+        xhr.onload = function() {
+          data = JSON.parse(xhr.response);
+          test1.push(data)
+          var ctx = document.getElementById("myChart").getContext("2d");
+          var myChart = new Chart(ctx, {
+            type: "line",
+              data: {
+                labels: data["date"],
+                datasets: [
+                  {
+                    label: "Температура, °C",
+                    data: data["mid_temp"],
+                    backgroundColor: "rgba(153,205,1,0.6)",
+                  },
+                ],
+              },
+            });
+          };
+        }
+
+        function graph_for_average_hum(){     
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', '/mid_hum_graph'); //не знаю, что ты сюда будешт передавать, но для средней темпы number = 1, а для влажности - 2
+        xhr.send();
+        var paramsString = document.location.href.split("/");
+        console.log(paramsString[paramsString.length-1]);
+        xhr.onload = function() {
+          data = JSON.parse(xhr.response);
+          test1.push(data)
+          var ctx = document.getElementById("myChart").getContext("2d");
+          var myChart = new Chart(ctx, {
+            type: "line",
+              data: {
+                labels: data["date"],
+                datasets: [
+                  {
+                    label: "Влажность, %",
+                    data: data["mid_hum"],
+                    backgroundColor: "rgba(153,205,1,0.6)",
+                  },
+                ],
+              },
+            });
+          };
+        }
+
       function graph_1(){
         document.querySelector('#Name_of_Chart').innerHTML = 'График температуры и влажности датчика № 1';
         graph(1);
@@ -213,6 +290,17 @@
         return false;
       }
       
+      function graph_2_1(){
+        document.querySelector('#Name_of_Chart').innerHTML = 'График средней температуры';
+        graph_for_average_temp();
+        return false;
+      }
+      function graph_2_2(){
+        document.querySelector('#Name_of_Chart').innerHTML = 'График средней влажности';
+        graph_for_average_hum();
+        return false;
+      }
+
       function graph_hum_earth(number){    
         let xhr = new XMLHttpRequest();
         xhr.open('GET', '/index/hum_earth?number='+number); 
@@ -271,8 +359,8 @@
       }
 
       function current_temp_and_average_temp() {
-        document.querySelector('#cur_t').innerHTML = 'Текущая температура: '
-        document.querySelector('#av_t').innerHTML = 'Средняя температура: '
+        document.querySelector('#cur_t').innerHTML = 'Текущая средняя температура: '
+        document.querySelector('#av_t').innerHTML = 'Значение температуры управления прветриванием: {{input_temp}}'
       }
       function close_windows() {
         document.querySelector('#status_of_windows').innerHTML = 'Статус: Форточки закрыты'
@@ -285,8 +373,8 @@
 
 
       function current_hum_and_average_hum() {
-        document.querySelector('#cur_h').innerHTML = 'Текущая влажность: '
-        document.querySelector('#av_h').innerHTML = 'Средняя влажность: '
+        document.querySelector('#cur_h').innerHTML = 'Текущая средняя влажность: '
+        document.querySelector('#av_h').innerHTML = 'Значение влажности управления системы увлажнения: '
       }
       function close_water() {
         document.querySelector('#status_of_water').innerHTML = 'Статус: полив закрыт'
@@ -336,6 +424,6 @@
       function open_water_earth_6() {
         document.querySelector('#status_of_water_earth_6').innerHTML = 'Полив включен'
       }
-
+      
         </script>
 {% endblock %}
