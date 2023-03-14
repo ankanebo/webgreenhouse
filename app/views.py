@@ -10,17 +10,84 @@ import bd
 #from templates.getpost import getpost
 # print('view!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
 
+stop_start_data_base = False
 
 @app.route('/start_bd',  methods=['POST'])
 def start_end():
+    global stop_start_data_base
+    stop_start_data_base = not stop_start_data_base
     bd.data_base()
     return '{"status":"sucses"}'
+
+avaragehum = 75
+averagetemp = 25
+averagehumearth = 80
+
+@app.route('/inputvalues', methods=['POST'])
+def button_input():
+    global averagetemp
+    global avaragehum
+    global averagehumearth
+    data = flask.request.get_json()
+    if data["averagetemp"] != None:
+        averagetemp = data["averagetemp"]
+    if data["averagehum"] != None:
+        avaragehum = data["averagehum"]
+    if data["averagehumearth"] != None:
+        averagehumearth = data["averagehumearth"]
 
 @app.route('/')
 @app.route('/index/index')
 def index():
+    global stop_start_data_base
+    global averagetemp
+    global avaragehum
+    global averagehumearth
+
+    a1 = requests.get(urlth1).json()
+    a2 = requests.get(urlth2).json()
+    a3 = requests.get(urlth3).json()
+    a4 = requests.get(urlth4).json()
+    b1 = requests.get(urlhum1).json()
+    b2 = requests.get(urlhum2).json()
+    b3 = requests.get(urlhum3).json()
+    b4 = requests.get(urlhum4).json()
+    b5 = requests.get(urlhum5).json()
+    b6 = requests.get(urlhum6).json()
+
+    f = []
+    h = []
+    s1 = []
+    for k in a1.values():
+        s1.append(float(k))
+    f.append(int(s1[1]))
+    h.append(int(s1[2]))
+
+    s2 = []
+    for k in a2.values():
+        s2.append(float(k))
+    f.append(int(s2[1]))
+    h.append(int(s2[2]))
+
+    s3 = []
+    for k in a3.values():
+        s3.append(float(k))
+    f.append(int(s3[1]))
+    h.append(int(s3[2]))
+    
+    s4 = []
+    for k in a4.values():
+        s4.append(float(k))
+    f.append(int(s4[1]))
+    h.append(int(s4[2]))
     return render_template("index.html",
-        title = 'Home')
+        title = 'Home',
+        mid_temp = sum(f)/len(f),
+        mid_hum = sum(h)/len(h),
+        input_temp = averagetemp,
+        input_hum = avaragehum,
+        )
+
 
 @app.route('/index/table')
 def table():
@@ -120,80 +187,57 @@ def input():
     return render_template('input.html',
             title = 'Ввод значений')
 
-@app.route('/button_1', methods=['POST'])
+@app.route('/button_index', methods=['POST'])
 def buton_1():
     data = flask.request.get_json()
     list_of_temp = data['temp']
     list_of_hum = data['hum']
     list_of_hum_of_earth = data['humearth']
 
-    # conn = sqlite3.connect("greenhouse.db")
-    # global count
-    # log = open('log.txt')
-    # count = int(log.readline())
-    # log.close() 
-    # maxID = count + 1
-    # rs = []
-    # for pr in zip(list_of_temp, list_of_hum):
-    #     rs.extend(pr)
-    # rs = [maxID] + rs
-    # for i in range(len(rs)):
-    #     rs[i] = float(rs[i])
-    # print(rs)
-    # # rs = "'" + ', '.join(lh) + "'"
-    # # используем параметры запроса вместо форматирования строк
-    # sqlTH = """INSERT INTO sens_hum_temp_value VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"""
-    # conn.execute(sqlTH, rs)
-    # lh = list_of_hum_of_earth
-    # lh = [maxID] + lh
-    # for i in range(len(lh)):
-    #     lh[i] = float(lh[i])
-    # print(lh)
-    # # lh = "'" + ', '.join(lh) + "'"
-    # sqlHE = """INSERT INTO hum_earth VALUES (?, ?, ?, ?, ?, ?, ?)"""
-    # conn.execute(sqlHE, lh)
-    # sqlDT = f"""\
-    # INSERT INTO data
-    #     VALUES ({maxID}, datetime('now'));
-    # """
-    # conn.execute(sqlDT)
-    # maxID += 1 
-    # count += 1
-    # log = open('log.txt', 'w')
-    # log.write(str(count))
-    # log.close()
-
-    # print(list_of_temp, list_of_hum, list_of_hum_of_earth )
+    conn = sqlite3.connect("greenhouse.db")
+    global count
+    try:
+        log = open('log.txt')
+        count = int(log.readline())
+        log.close()
+    except FileNotFoundError:
+        log = open('log.txt', 'w')
+        count = 0
+        log.write(str(count))
+        log.close()
+    maxID = count + 1
+    rs = []
+    for pr in zip(list_of_temp, list_of_hum):
+        rs.extend(pr)
+    for i in range(len(rs)):
+        rs[i] = float(rs[i])
+    rs = [maxID] + rs
+    print(rs)
+    # rs = "'" + ', '.join(lh) + "'"
+    # используем параметры запроса вместо форматирования строк
+    sqlTH = """INSERT INTO sens_hum_temp_value VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"""
+    conn.execute(sqlTH, rs)
+    lh = list_of_hum_of_earth
+    for i in range(len(lh)):
+        lh[i] = float(lh[i])
+    lh = [maxID] + lh
+    print(lh)
+    # lh = "'" + ', '.join(lh) + "'"
+    sqlHE = """INSERT INTO hum_earth VALUES (?, ?, ?, ?, ?, ?, ?)"""
+    conn.execute(sqlHE, lh)
+    sqlDT = f"""\
+    INSERT INTO data
+        VALUES ({maxID}, datetime('now'));
+    """
+    conn.execute(sqlDT)
+    count += 1
+    log = open('log.txt', 'w')
+    log.write(str(count))
+    log.close()
+    conn.commit()
+    conn.close
     return 'sucsess'
 
-
-
-@app.route('/button_2', methods = ['POST'])
-def buton_2():
-    data = flask.request.get_json()
-    global list_of_average_temp
-    list_of_average_temp = data['averagetemp']
-    # global input_temp
-    # if len(list_of_average_temp) == 0:
-    #     input_temp = 25
-    # else:
-    #     input_temp = list_of_average_temp[0]
-    # print(list_of_average_temp)
-    return 'sucsess'
-
-@app.route('/button_3', methods = ['POST'])
-def buton_3():
-    data = flask.request.get_json()
-    list_of_average_hum_of_oxygen = data['averagehumofoxygen']
-    # print(list_of_average_hum_of_oxygen)
-    return 'sucsess'
-
-@app.route('/button_4', methods = ['POST'])
-def buton_4():
-    data = flask.request.get_json()
-    list_of_average_hum_of_earth = data['averagehumofearth']
-    # print(list_of_average_hum_of_earth)
-    return 'sucsess'
 
 
 @app.route('/index/temp_hum')
@@ -253,7 +297,7 @@ def mid_temp_graph():
     lsls = list(conn.execute(sqlread1))
     mid_temp = {"mid_temp": [], "date": []}
     for i in range(len(lsls)):
-        j = (lsls[i][0] + lsls[i][1] + lsls[i][2] + lsls[i][3]) / 4
+        j = round(((lsls[i][0] + lsls[i][1] + lsls[i][2] + lsls[i][3]) / 4), 2)
         p = lsls[i][-1]
         mid_temp["mid_temp"].append(j)
         mid_temp["date"].append(p)
@@ -273,7 +317,7 @@ def mid_hum_graph():
     lsls = list(conn.execute(sqlread1))
     mid_hum = {"mid_hum": [], "date": []}
     for i in range(len(lsls)):
-        j = (lsls[i][0] + lsls[i][1] + lsls[i][2] + lsls[i][3]) / 4
+        j = round(((lsls[i][0] + lsls[i][1] + lsls[i][2] + lsls[i][3]) / 4), 2)
         p = lsls[i][-1]
         mid_hum["mid_hum"].append(j)
         mid_hum["date"].append(p)

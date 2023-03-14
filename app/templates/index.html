@@ -92,20 +92,6 @@
           </div>
           <h5 id="status_of_water">Статус: полив закрыт</h5>
 
-
-
-          <!-- <h3 style="text-center; margin:15px auto">Влажность почвы</h3>
-          <div id="cur_h_e" class="alert alert-info" role="alert">
-          </div>
-          <div id="av_h_e" class="alert alert-info" role="alert">
-          </div>
-          <div class="btn-group" role="group" aria-label="Basic example">
-            <button onclick="close_water_earht()" type="button" class="btn btn-secondary">Закрыто</button>
-            <button onclick="open_water_earth()" type="button" class="btn btn-secondary">Открыто</button>
-          </div>
-          <h5 id="status_of_water_earth">Статус: Общее увлажнение почвы закрыто</h5>
-        
- -->
         </div>
         <div class="col-7">
           <h4 id="Name_of_Chart" style="text-align: center"></h4>  
@@ -156,10 +142,28 @@
         </div>
       </div>
     </div>
-    
+
+    <div class="container" style="margin:30px auto">
+      <div class="row">
+        <div class="col-4">
+          <h5>Записать среднее значение температуры воздуха</h5>
+          <input name="average_temp" class="form-control Inputvalue" style="margin:15px auto" type="text" placeholder="Введите значение">
+        </div>
+        <div class="col-4">
+          <h5>Записать среднее значение влажности воздуха</h5>
+          <input name="average_hum_of_oxygen" class="form-control Inputvalue" style="margin:15px auto" type="text" placeholder="Введите значение">
+        </div>
+        <div class="col-4">
+          <h5>Записать среднее значение влажности почвы</h5>
+          <input name="average_hum_of_earth" class="form-control Inputvalue" style="margin:15px auto" type="text" placeholder="Введите значение">
+
+        </div>
+        <button type="button" style="margin:15px auto" class="btn btn-warning" onclick="button_1()">Записать</button>
+      </div>
+
 
     <script>
-      function call_to_server(url, data, onload) {
+    function call_to_server(url, data, onload) {
       var xhr = new XMLHttpRequest();
       xhr.open("POST", url, true);
       xhr.setRequestHeader('Content-Type', 'application/json');
@@ -171,6 +175,21 @@
         if (onload != null){onload(data_1);}
       };
     }
+    function button_1(){
+      input_temp = document.querySelector("input[name='average_temp']").value;
+      
+      input_hum = document.querySelector("input[name='average_hum_of_oxygen']").value;
+
+      input_hum_earth = document.querySelector("input[name='average_hum_of_earth']").value;
+      
+      call_to_server('/inputvalues', JSON.stringify({
+        averagetemp: input_temp,
+        averagehum: input_hum,
+        averagehumearth: input_hum_earth}), function(){
+          alert ("Вы записали данные датчиков влажности почвы: ")
+        });
+    }
+      
       function start_bd(){
         call_to_server('/start_bd', [], null)
       }
@@ -359,7 +378,7 @@
       }
 
       function current_temp_and_average_temp() {
-        document.querySelector('#cur_t').innerHTML = 'Текущая средняя температура: '
+        document.querySelector('#cur_t').innerHTML = 'Текущая средняя температура: {{mid_temp}}'
         document.querySelector('#av_t').innerHTML = 'Значение температуры управления прветриванием: {{input_temp}}'
       }
       function close_windows() {
@@ -373,8 +392,8 @@
 
 
       function current_hum_and_average_hum() {
-        document.querySelector('#cur_h').innerHTML = 'Текущая средняя влажность: '
-        document.querySelector('#av_h').innerHTML = 'Значение влажности управления системы увлажнения: '
+        document.querySelector('#cur_h').innerHTML = 'Текущая средняя влажность: {{mid_hum}}'
+        document.querySelector('#av_h').innerHTML = 'Значение влажности управления системы увлажнения: {{input_hum}}'
       }
       function close_water() {
         document.querySelector('#status_of_water').innerHTML = 'Статус: полив закрыт'
@@ -425,5 +444,5 @@
         document.querySelector('#status_of_water_earth_6').innerHTML = 'Полив включен'
       }
       
-        </script>
+    </script>
 {% endblock %}
