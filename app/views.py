@@ -22,19 +22,31 @@ def start_end():
 avaragehum = 75
 averagetemp = 25
 averagehumearth = 80
+averagetempinput = []
+averagetempinput.append(averagetemp)
+# averagetemp = averagetempinput[-1]
 
 @app.route('/inputvalues', methods=['POST'])
 def button_input():
     global averagetemp
     global avaragehum
     global averagehumearth
+    global mid_hum_earh_1_value
+    averagehuminput = []
+    global averagetempinput
     data = flask.request.get_json()
+    averagetempinput.append(averagetemp)
     if data["averagetemp"] != None:
         averagetemp = data["averagetemp"]
+        # averagetempinput.append(averagetemp)
+    # else:
+    #     averagetemp = averagetempinput[-2]
+    # print(averagetempinput)
     if data["averagehum"] != None:
         avaragehum = data["averagehum"]
     if data["averagehumearth"] != None:
         averagehumearth = data["averagehumearth"]
+    return 'sucsees'
 
 @app.route('/')
 @app.route('/index/index')
@@ -43,6 +55,12 @@ def index():
     global averagetemp
     global avaragehum
     global averagehumearth
+    global mid_hum_earth_1_value
+    global mid_hum_earth_2_value
+    global mid_hum_earth_3_value
+    global mid_hum_earth_4_value
+    global mid_hum_earth_5_value
+    global mid_hum_earth_6_value
 
     a1 = requests.get(urlth1).json()
     a2 = requests.get(urlth2).json()
@@ -86,7 +104,13 @@ def index():
         mid_hum = sum(h)/len(h),
         input_temp = averagetemp,
         input_hum = avaragehum,
-        )
+        input_hum_earth = averagehumearth,
+        average_hum_earth_1 = mid_hum_earth_1_value,
+        average_hum_earth_2 = mid_hum_earth_2_value,
+        average_hum_earth_3 = mid_hum_earth_3_value,
+        average_hum_earth_4 = mid_hum_earth_4_value,
+        average_hum_earth_5 = mid_hum_earth_5_value,
+        average_hum_earth_6 = mid_hum_earth_6_value)
 
 
 @app.route('/index/table')
@@ -213,7 +237,6 @@ def buton_1():
         rs[i] = float(rs[i])
     rs = [maxID] + rs
     print(rs)
-    # rs = "'" + ', '.join(lh) + "'"
     # используем параметры запроса вместо форматирования строк
     sqlTH = """INSERT INTO sens_hum_temp_value VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"""
     conn.execute(sqlTH, rs)
@@ -222,7 +245,6 @@ def buton_1():
         lh[i] = float(lh[i])
     lh = [maxID] + lh
     print(lh)
-    # lh = "'" + ', '.join(lh) + "'"
     sqlHE = """INSERT INTO hum_earth VALUES (?, ?, ?, ?, ?, ?, ?)"""
     conn.execute(sqlHE, lh)
     sqlDT = f"""\
@@ -235,7 +257,7 @@ def buton_1():
     log.write(str(count))
     log.close()
     conn.commit()
-    conn.close
+    conn.close()
     return 'sucsess'
 
 
@@ -323,3 +345,48 @@ def mid_hum_graph():
         mid_hum["date"].append(p)
     conn.close()
     return json.dumps(mid_hum)
+
+mid_hum_earth_1_value = 0
+mid_hum_earth_2_value = 0
+mid_hum_earth_3_value = 0
+mid_hum_earth_4_value = 0
+mid_hum_earth_5_value = 0
+mid_hum_earth_6_value = 0
+
+@app.route('/mid_hum_earth')
+def mid_hum_earth_1():
+    global mid_hum_earth_1_value
+    global mid_hum_earth_2_value
+    global mid_hum_earth_3_value
+    global mid_hum_earth_4_value
+    global mid_hum_earth_5_value
+    global mid_hum_earth_6_value
+    conn = sqlite3.connect("greenhouse.db")
+    zpr = "hum_earth_1, hum_earth_2, hum_earth_3, hum_earth_4, hum_earth_5, hum_earth_6"
+    sqlread1 = f"""\
+    SELECT {zpr} FROM data
+    LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
+    LEFT JOIN hum_earth ON hum_earth.ID = data.ID
+    ORDER BY data.ID DESC LIMIT 10
+    """
+    lsls = list(conn.execute(sqlread1))
+    midhumearth1 = []
+    midhumearth2 = []
+    midhumearth3 = []
+    midhumearth4 = []
+    midhumearth5 = []
+    midhumearth6 = []
+    for i in range(len(lsls)):
+        midhumearth1.append(lsls[i][0])
+        midhumearth2.append(lsls[i][1])
+        midhumearth3.append(lsls[i][2])
+        midhumearth4.append(lsls[i][3])
+        midhumearth5.append(lsls[i][4])
+        midhumearth6.append(lsls[i][5])
+    mid_hum_earth_1_value = sum(midhumearth1) / len(midhumearth1)
+    mid_hum_earth_2_value = sum(midhumearth2) / len(midhumearth2)
+    mid_hum_earth_3_value = sum(midhumearth3) / len(midhumearth3)
+    mid_hum_earth_4_value = sum(midhumearth4) / len(midhumearth4)
+    mid_hum_earth_5_value = sum(midhumearth5) / len(midhumearth5)
+    mid_hum_earth_6_value = sum(midhumearth6) / len(midhumearth6)
+    return 'sucsees'

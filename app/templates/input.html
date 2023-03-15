@@ -39,7 +39,6 @@
           <input name="temp_of_oxygen_3" class="form-control Alltemp" style="margin:15px auto" type="text" placeholder="Введите значение">
           <h6>Значение датчика температуры № 4</h6>
           <input name="temp_of_oxygen_4" class="form-control Alltemp" style="margin:15px auto" type="text" placeholder="Введите значение">
-          <button type="button" style="margin:15px auto" class="btn btn-warning" onclick="button_1()">Записать температуру, влажность воздуха и влажность почвы</button>
         </div>
         <div class="col-4">
           <h4>Записать значения датчиков влажности воздуха вручную</h4>
@@ -69,29 +68,8 @@
         </div>
       </div>
     </div>
-
-    <!-- <div class="container" style="margin:30px auto">
-      <div class="row">
-        <div class="col-4">
-          <h5>Записать среднее значение температуры воздуха</h5>
-          <input name="average_temp" class="form-control" style="margin:15px auto" type="text" placeholder="Введите значение">
-          <button type="button" style="margin:15px auto" class="btn btn-warning" onclick="button_3()">Записать</button>
-        </div>
-        <div class="col-4">
-          <h5>Записать среднее значение влажности воздуха</h5>
-          <input name="average_hum_of_oxygen" class="form-control" style="margin:15px auto" type="text" placeholder="Введите значение">
-          <button type="button" style="margin:15px auto" class="btn btn-warning" onclick="button_4()">Записать</button>
-        </div>
-        <div class="col-4">
-          <h5>Записать среднее значение влажности почвы</h5>
-          <input name="average_hum_of_earth" class="form-control" style="margin:15px auto" type="text" placeholder="Введите значение">
-          <button type="button" style="margin:15px auto" class="btn btn-warning" onclick="button_5()">Записать</button>
-
-        </div>
-      </div> -->
-
-      
-        
+    <div class="text-center" style="margin-bottom: 40px;">
+      <button type="button" style="text-align: center;" class="btn btn-warning" onclick="button_1()">Записать температуру, влажность воздуха и влажность почвы</button>
     </div>
       
 
@@ -114,31 +92,42 @@
       list_of_temp = [];
       Alltemp = document.querySelectorAll(".Alltemp");
       Alltemp.forEach(element => {
-        list_of_temp.push(element.value)
+        if (element.value != "") {
+          list_of_temp.push(element.value)
+        }
       });
-      // list_of_temp.push(document.querySelector("input[name='temp_of_oxygen_1']").value, document.querySelector("input[name='temp_of_oxygen_2']").value, document.querySelector("input[name='temp_of_oxygen_3']").value, document.querySelector("input[name='temp_of_oxygen_4']").value);
+      
       list_of_hum_of_earth = []
       Allhumearth = document.querySelectorAll(".Allhumearth")
       Allhumearth.forEach(element => {
-        list_of_hum_of_earth.push(element.value)
+        if (element.value != "") {
+          list_of_hum_of_earth.push(element.value)
+        }
       });
 
       list_of_hum = []
       Allhum = document.querySelectorAll(".Allhum");
       Allhum.forEach(element => {
-        list_of_hum.push(element.value)
+        if (element.value != "") {
+          list_of_hum.push(element.value)
+        }
       });
-      // list_of_hum.push(document.querySelector("input[name='hum_of_oxygen_1']").value, document.querySelector("input[name='hum_of_oxygen_2']").value, document.querySelector("input[name='hum_of_oxygen_3']").value, document.querySelector("input[name='hum_of_oxygen_4']").value);
-
-      call_to_server('/button_index', JSON.stringify({
-        temp: list_of_temp,
-        hum: list_of_hum,
-        humearth: list_of_hum_of_earth
-        }), function(){
-          alert("Вы записали данные датчиков температуры воздуха: " + list_of_temp + "\n" + "Вы записали данные датчиков влажности воздуха: " + list_of_hum, "Вы записали данные датчиков влажности почвы: " + list_of_hum_of_earth);
-        });
+      if ((list_of_temp.length == 4) & (list_of_hum.length == 4) & (list_of_hum_of_earth.length == 6)) {
+        call_to_server('/button_index', JSON.stringify({
+          temp: list_of_temp,
+          hum: list_of_hum,
+          humearth: list_of_hum_of_earth
+          })
+        )
+        alert("Вы записали данные датчиков температуры воздуха: " + list_of_temp + "\n" + "Вы записали данные датчиков влажности воздуха: " + list_of_hum, + '\n' + "Вы записали данные датчиков влажности почвы: " + list_of_hum_of_earth);
+      }
+      else  {
+        alert('Не все значения записаны! Пожалуйста, запишите все значения!')
+      }
+      console.log(list_of_hum)
+      console.log(list_of_temp)
+      console.log(list_of_hum_of_earth)
     }
-    
   </script>
 </html>
 {% endblock %}

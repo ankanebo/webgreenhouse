@@ -23,145 +23,172 @@
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-4">
-
+      <div class="container">
+        <div class="row">
+          <div class="col-5">
+            <div class="btn-group" style="margin:10px auto" role="group">
+              <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                График датчиков температуры/влажности
+              </button>
+              <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a type="button" class="dropdown-item" onclick="graph_1()">График датчика № 1</a>
+                <a class="dropdown-item" onclick="graph_2()">График датчика № 2</a>
+                <a class="dropdown-item" onclick="graph_3()">График датчика № 3</a>
+                <a class="dropdown-item" onclick="graph_4()">График датчика № 4</a>
+              </div>
+            </div>
+            <div class="btn-group" style="margin:5px auto" role="group">
+              <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                График датчиков влажности почвы
+              </button>
+              <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" onclick="graph_1_1()">График датчика № 1</a>
+                <a class="dropdown-item" onclick="graph_1_2()">График датчика № 2</a>
+                <a class="dropdown-item" onclick="graph_1_3()">График датчика № 3</a>
+                <a class="dropdown-item" onclick="graph_1_4()">График датчика № 4</a>
+                <a class="dropdown-item" onclick="graph_1_5()">График датчика № 5</a>
+                <a class="dropdown-item" onclick="graph_1_6()">График датчика № 6</a>
+              </div>
+            </div>
+            <div class="btn-group" style="margin:5px auto" role="group">
+              <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                График датчиков средней температуры/влажности
+              </button>
+              <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" onclick="graph_2_1()">График средней температуры</a>
+                <a class="dropdown-item" onclick="graph_2_2()">График средней влажности</a>
+              </div>
+            </div>
+  
+  
+  
+            <h3 style="margin:15px auto">Температура воздуха</h3>
+            <div id="cur_t" class="alert alert-info" role="alert">
+            </div>
+            <div id="av_t" class="alert alert-info" role="alert">
+            </div>
+            <button id="button_close_windows" onclick="close_windows()" type="button" class="btn btn-light">Закрыть</button>
+            <button id="button_open_windows" onclick="open_windows()" type="button" class="btn btn-light">Открыть</button>
+            <h5 id="status_of_windows">Статус: Форточки закрыты</h5>
+  
+  
+  
+            <h3 style="margin:15px auto">Влажность воздуха</h3>
+            <div id="cur_h" class="alert alert-info" role="alert">
+            </div>
+            <div id="av_h" class="alert alert-info" role="alert">
+            </div>
+            <button id="button_close_water" onclick="close_water()" type="button" class="btn btn-light">Закрыть</button>
+            <button id="button_open_water" onclick="open_water()" type="button" class="btn btn-light">Открыть</button>
+            <h5 id="status_of_water">Статус: полив закрыт</h5>
+  
+          </div>
+          <div class="col-7">
+            <h4 id="Name_of_Chart" style="text-align: center"></h4>  
+            <canvas id="myChart" style="background-image: url(https://kartinkin.net/pics/uploads/posts/2022-08/1660407500_2-kartinkin-net-p-chisto-chernie-oboi-na-telefon-krasivo-2.jpg)"></canvas>
+            <div style="margin: 40px" class="text-center">
+              <button id="button_stop_bd" onclick="stop_bd()" type="button" class="btn btn-danger">Выключить базу данных</button>
+              <button id="button_start_bd" onclick="start_bd()" type="button" class="btn btn-danger">Включить базу данных</button>
+              
+            </div>
+            <h3 class="text-center" id="text_start_bd">База данных выключена</h3>
+          </div> 
         </div>
       </div>
-    </div>      
-    <div class="container">
-      <div class="row">
-        <div class="col-5">
-          <div class="btn-group" style="margin:10px auto" role="group">
-            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              График датчиков температуры/влажности
-            </button>
-            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-              <a type="button" class="dropdown-item" onclick="graph_1()">График датчика № 1</a>
-              <a class="dropdown-item" onclick="graph_2()">График датчика № 2</a>
-              <a class="dropdown-item" onclick="graph_3()">График датчика № 3</a>
-              <a class="dropdown-item" onclick="graph_4()">График датчика № 4</a>
+      <h2 style="text-align: center; margin:55px auto">Полив бороздок в теплице</h2>
+      <div class="container">
+        <div class="row">
+          <div class="col-3">
+          </div>
+          <div class="col-6">
+            <div style="text-align: center;" id="cur_h_e" class="alert alert-info" role="alert">
+            </div>
+            <div style="text-align: center;" id="av_h_e" class="alert alert-info" role="alert">
             </div>
           </div>
-          <div class="btn-group" style="margin:5px auto" role="group">
-            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              График датчиков влажности почвы
-            </button>
-            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-              <a class="dropdown-item" onclick="graph_1_1()">График датчика № 1</a>
-              <a class="dropdown-item" onclick="graph_1_2()">График датчика № 2</a>
-              <a class="dropdown-item" onclick="graph_1_3()">График датчика № 3</a>
-              <a class="dropdown-item" onclick="graph_1_4()">График датчика № 4</a>
-              <a class="dropdown-item" onclick="graph_1_5()">График датчика № 5</a>
-              <a class="dropdown-item" onclick="graph_1_6()">График датчика № 6</a>
-            </div>
+          <div class="col-3">
           </div>
-          <div class="btn-group" style="margin:5px auto" role="group">
-            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              График датчиков средней температуры/влажности
-            </button>
-            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-              <a class="dropdown-item" onclick="graph_2_1()">График средней температуры</a>
-              <a class="dropdown-item" onclick="graph_2_2()">График средней влажности</a>
-            </div>
-          </div>
-
-
-
-          <h3 style="margin:15px auto">Температура воздуха</h3>
-          <div id="cur_t" class="alert alert-info" role="alert">
-          </div>
-          <div id="av_t" class="alert alert-info" role="alert">
-          </div>
-          <div class="btn-group" role="group" aria-label="Basic example">
-            <button onclick="close_windows()" type="button" class="btn btn-secondary">Закрыто</button>
-            <button onclick="open_windows()" type="button" class="btn btn-secondary">Открыто</button>
-          </div>
-          <h5 id="status_of_windows">Статус: Форточки закрыты</h5>
-
-
-
-          <h3 style="margin:15px auto">Влажность воздуха</h3>
-          <div id="cur_h" class="alert alert-info" role="alert">
-          </div>
-          <div id="av_h" class="alert alert-info" role="alert">
-          </div>
-          <div class="btn-group" role="group" aria-label="Basic example">
-            <button onclick="close_water()" type="button" class="btn btn-secondary">Закрыто</button>
-            <button onclick="open_water()" type="button" class="btn btn-secondary">Открыто</button>
-          </div>
-          <h5 id="status_of_water">Статус: полив закрыт</h5>
-
         </div>
-        <div class="col-7">
-          <h4 id="Name_of_Chart" style="text-align: center"></h4>  
-          <canvas id="myChart" style="background-image: url(https://kartinkin.net/pics/uploads/posts/2022-08/1660407500_2-kartinkin-net-p-chisto-chernie-oboi-na-telefon-krasivo-2.jpg)"></canvas>
-        </div> 
+        
       </div>
-    </div>
-    <h2 style="text-align: center; margin:55px auto">Полив бороздок в теплице</h2>
-    <div style="margin-bottom: 40px;" class="container">
-      <div class="row">
-        <div class="col-4">
-          <h5>Полив бороздки № 1</h5>
-          <button onclick="close_water_earht_1()" type="button" class="btn btn-secondary">Закрыто</button>
-          <button onclick="open_water_earth_1()" type="button" class="btn btn-secondary">Открыто</button>
-          <h6 id="status_of_water_earth_1">Полив выключен</h6>
+      <div style="margin-bottom: 40px;" class="container">
+        <div class="row">
+          <div class="col-4">
+            <h5>Полив бороздки № 1</h5>
+            <div id="aver_hum_earth_1" class="alert alert-success" role="alert"></div>
+            <button id="button_close_water_earth_1" onclick="close_water_earth_1()" type="button" class="btn btn-light">Закрыть</button>
+            <button id="button_open_water_earth_1" onclick="open_water_earth_1()" type="button" class="btn btn-light">Открыть</button>
+            <h6 id="status_of_water_earth_1">Полив выключен</h6>
+          </div>
+          <div class="col-4">
+            <h5>Полив бороздки № 2</h5>
+            <div id="aver_hum_earth_2" class="alert alert-success" role="alert"></div>
+            <button id="button_close_water_earth_2" onclick="close_water_earth_2()" type="button" class="btn btn-light">Закрыть</button>
+            <button id="button_open_water_earth_2" onclick="open_water_earth_2()" type="button" class="btn btn-light">Открыть</button>
+            <h6 id="status_of_water_earth_2">Полив выключен</h6>
+          </div>
+          <div class="col-4">
+            <h5>Полив бороздки № 3</h5>
+            <div id="aver_hum_earth_3" class="alert alert-success" role="alert"></div>
+            <button id="button_close_water_earth_3" onclick="close_water_earth_3()" type="button" class="btn btn-light">Закрыть</button>
+            <button id="button_open_water_earth_3" onclick="open_water_earth_3()" type="button" class="btn btn-light">Открыть</button>
+            <h6 id="status_of_water_earth_3">Полив выключен</h6>
+          </div>
         </div>
-        <div class="col-4">
-          <h5>Полив бороздки № 2</h5>
-          <button onclick="close_water_earht_2()" type="button" class="btn btn-secondary">Закрыто</button>
-          <button onclick="open_water_earth_2()" type="button" class="btn btn-secondary">Открыто</button>
-          <h6 id="status_of_water_earth_2">Полив выключен</h6>
-        </div>
-        <div class="col-4">
-          <h5>Полив бороздки № 3</h5>
-          <button onclick="close_water_earht_3()" type="button" class="btn btn-secondary">Закрыто</button>
-          <button onclick="open_water_earth_3()" type="button" class="btn btn-secondary">Открыто</button>
-          <h6 id="status_of_water_earth_3">Полив выключен</h6>
+        <div class="row">
+          <div class="col-4">
+            <h5>Полив бороздки № 4</h5>
+            <div id="aver_hum_earth_4" class="alert alert-success" role="alert"></div>
+            <button id="button_close_water_earth_4" onclick="close_water_earth_4()" type="button" class="btn btn-light">Закрыть</button>
+            <button id="button_open_water_earth_4" onclick="open_water_earth_4()" type="button" class="btn btn-light">Открыть</button>
+            <h6 id="status_of_water_earth_4">Полив выключен</h6>
+          </div>
+          <div class="col-4">
+            <h5>Полив бороздки № 5</h5>
+            <div id="aver_hum_earth_5" class="alert alert-success" role="alert"></div>
+            <button id="button_close_water_earth_5" onclick="close_water_earth_5()" type="button" class="btn btn-light">Закрыть</button>
+            <button id="button_open_water_earth_5" onclick="open_water_earth_5()" type="button" class="btn btn-light">Открыть</button>
+            <h6 id="status_of_water_earth_5">Полив выключен</h6>
+          </div>
+          <div class="col-4">
+            <h5>Полив бороздки № 6</h5>
+            <div id="aver_hum_earth_6" class="alert alert-success" role="alert"></div>
+            <button id="button_close_water_earth_6" onclick="close_water_earth_6()" type="button" class="btn btn-light">Закрыть</button>
+            <button id="button_open_water_earth_6" onclick="open_water_earth_6()" type="button" class="btn btn-light">Открыть</button>
+            <h6 id="status_of_water_earth_6">Полив выключен</h6>
+          </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-4">
-          <h5>Полив бороздки № 4</h5>
-          <button onclick="close_water_earht_4()" type="button" class="btn btn-secondary">Закрыто</button>
-          <button onclick="open_water_earth_4()" type="button" class="btn btn-secondary">Открыто</button>
-          <h6 id="status_of_water_earth_4">Полив выключен</h6>
-        </div>
-        <div class="col-4">
-          <h5>Полив бороздки № 5</h5>
-          <button onclick="close_water_earht_5()" type="button" class="btn btn-secondary">Закрыто</button>
-          <button onclick="open_water_earth_5()" type="button" class="btn btn-secondary">Открыто</button>
-          <h6 id="status_of_water_earth_5">Полив выключен</h6>
-        </div>
-        <div class="col-4">
-          <h5>Полив бороздки № 6</h5>
-          <button onclick="close_water_earht_6()" type="button" class="btn btn-secondary">Закрыто</button>
-          <button onclick="open_water_earth_6()" type="button" class="btn btn-secondary">Открыто</button>
-          <h6 id="status_of_water_earth_6">Полив выключен</h6>
+  
+      <div class="container" style="margin:30px auto">
+        <div class="row">
+          <div class="col-4">
+            <h5>Записать среднее значение температуры воздуха</h5>
+            <input name="average_temp" class="form-control Inputvalue" style="margin:15px auto" type="text" placeholder="Введите значение">
+          </div>
+          <div class="col-4">
+            <h5>Записать среднее значение влажности воздуха</h5>
+            <input name="average_hum_of_oxygen" class="form-control Inputvalue" style="margin:15px auto" type="text" placeholder="Введите значение">
+          </div>
+          <div class="col-4">
+            <h5>Записать среднее значение влажности почвы</h5>
+            <input name="average_hum_of_earth" class="form-control Inputvalue" style="margin:15px auto" type="text" placeholder="Введите значение">
+  
+          </div>
+          <button type="button" style="margin:15px auto" class="btn btn-warning" onclick="button_1()">Записать</button>
         </div>
       </div>
-    </div>
-
-    <div class="container" style="margin:30px auto">
-      <div class="row">
-        <div class="col-4">
-          <h5>Записать среднее значение температуры воздуха</h5>
-          <input name="average_temp" class="form-control Inputvalue" style="margin:15px auto" type="text" placeholder="Введите значение">
-        </div>
-        <div class="col-4">
-          <h5>Записать среднее значение влажности воздуха</h5>
-          <input name="average_hum_of_oxygen" class="form-control Inputvalue" style="margin:15px auto" type="text" placeholder="Введите значение">
-        </div>
-        <div class="col-4">
-          <h5>Записать среднее значение влажности почвы</h5>
-          <input name="average_hum_of_earth" class="form-control Inputvalue" style="margin:15px auto" type="text" placeholder="Введите значение">
-
-        </div>
-        <button type="button" style="margin:15px auto" class="btn btn-warning" onclick="button_1()">Записать</button>
-      </div>
-
-
+      <!-- <h2 id="text_emer_manag" style="text-align: center;">Экстренное управление теплицей выключено</h2>
+      <div style="margin-bottom: 40px" class="container">
+        <div class="row">
+          <div style="text-align: center;" class="col-4">
+            <button id="button_turn_off_manag" disabled  onclick="turn_off_emer_manag()" type="button" class="btn btn-danger">Выключить экстренное управление</button>
+          </div>
+          <div style="text-align: center;" class="col-4">
+            <button id="button_turn_on_manag"  onclick="turn_on_emer_manag()" type="button" class="btn btn-danger">Включить экстренное управление</button>
+          </div>
+          <div class="col-4"></div>
+        </div> -->
     <script>
     function call_to_server(url, data, onload) {
       var xhr = new XMLHttpRequest();
@@ -443,6 +470,5 @@
       function open_water_earth_6() {
         document.querySelector('#status_of_water_earth_6').innerHTML = 'Полив включен'
       }
-      
     </script>
 {% endblock %}
