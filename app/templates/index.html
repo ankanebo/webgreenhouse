@@ -426,11 +426,13 @@
       function graph_1(){
         document.querySelector('#Name_of_Chart').innerHTML = 'График температуры и влажности датчика № 1';
         graph(1);
+        reloud_graph = graph_1;
         return false;
       }
       function graph_2(){
         document.querySelector('#Name_of_Chart').innerHTML = 'График температуры и влажности датчика № 2';
         graph(2);
+        reloud_graph = graph_2;
         return false;
       }
       function graph_3(){
@@ -441,17 +443,20 @@
       function graph_4(){
         document.querySelector('#Name_of_Chart').innerHTML = 'График температуры и влажности датчика № 4';
         graph(4);
+        reloud_graph = graph_4;
         return false;
       }
       
       function graph_2_1(){
         document.querySelector('#Name_of_Chart').innerHTML = 'График средней температуры';
         graph_for_average_temp();
+        reloud_graph = graph_2_1;
         return false;
       }
       function graph_2_2(){
         document.querySelector('#Name_of_Chart').innerHTML = 'График средней влажности';
         graph_for_average_hum();
+        reloud_graph = graph_2_2;
         return false;
       }
 
@@ -484,31 +489,37 @@
       function graph_1_1(){
         document.querySelector('#Name_of_Chart').innerHTML = 'График влажности почвы датчика № 1';
         graph_hum_earth(1);
+        reloud_graph = graph_1_1;
         return false;
       }
       function graph_1_2(){
         document.querySelector('#Name_of_Chart').innerHTML = 'График влажности почвы датчика № 2';
         graph_hum_earth(2);
+        reloud_graph = graph_1_2;
         return false;
       }
       function graph_1_3(){
         document.querySelector('#Name_of_Chart').innerHTML = 'График влажности почвы датчика № 3';
         graph_hum_earth(3);
+        reloud_graph = graph_1_3;
         return false;
       }
       function graph_1_4(){
         document.querySelector('#Name_of_Chart').innerHTML = 'График влажности почвы датчика № 4';
         graph_hum_earth(4);
+        reloud_graph = graph_1_4;
         return false;
       }
       function graph_1_5(){
         document.querySelector('#Name_of_Chart').innerHTML = 'График влажности почвы датчика № 5';
         graph_hum_earth(5);
+        reloud_graph = graph_1_5;
         return false;
       }
       function graph_1_6(){
         document.querySelector('#Name_of_Chart').innerHTML = 'График влажности почвы датчика № 6';
         graph_hum_earth(6);
+        reloud_graph = graph_1_6;
         return false;
       }
 
@@ -698,21 +709,25 @@
       function graph_date_1(){
         document.querySelector('#Name_of_Chart').innerHTML = 'График температуры и влажности датчика № 1 указанного промежутка';
         graph_date(1);
+        reloud_graph = graph_date_1;
         return false;
       }
       function graph_date_2(){
         document.querySelector('#Name_of_Chart').innerHTML = 'График температуры и влажности датчика № 2 указанного промежутка';
         graph_date(2);
+        reloud_graph = graph_date_2;
         return false;
       }
       function graph_date_3(){
         document.querySelector('#Name_of_Chart').innerHTML = 'График температуры и влажности датчика № 3 указанного промежутка';
         graph_date(3);
+        reloud_graph = graph_date_3;
         return false;
       }
       function graph_date_4(){
         document.querySelector('#Name_of_Chart').innerHTML = 'График температуры и влажности датчика № 4 указанного промежутка';
         graph_date(4);
+        reloud_graph = graph_date_4;
         return false;
       }
 
@@ -748,31 +763,37 @@
       function graph_date_1_1(){
         document.querySelector('#Name_of_Chart').innerHTML = 'График влажности почвы датчика № 1';
         graph_date_hum_earth(1);
+        reloud_graph = graph_date_1_1;
         return false;
       }
       function graph_date_1_2(){
         document.querySelector('#Name_of_Chart').innerHTML = 'График влажности почвы датчика № 2';
         graph_date_hum_earth(2);
+        reloud_graph = graph_date_1_2;
         return false;
       }
       function graph_date_1_3(){
         document.querySelector('#Name_of_Chart').innerHTML = 'График влажности почвы датчика № 3';
         graph_date_hum_earth(3);
+        reloud_graph = graph_date_1_3;
         return false;
       }
       function graph_date_1_4(){
         document.querySelector('#Name_of_Chart').innerHTML = 'График влажности почвы датчика № 4';
         graph_date_hum_earth(4);
+        reloud_graph = graph_date_1_4;
         return false;
       }
       function graph_date_1_5(){
         document.querySelector('#Name_of_Chart').innerHTML = 'График влажности почвы датчика № 5';
         graph_date_hum_earth(5);
+        reloud_graph = graph_date_1_5;
         return false;
       }
       function graph_date_1_6(){
         document.querySelector('#Name_of_Chart').innerHTML = 'График влажности почвы датчика № 6';
         graph_date_hum_earth(6);
+        reloud_graph = graph_date_1_6;
         return false;
       }
       function write_dates() {
@@ -783,9 +804,9 @@
           date_from: input_date_from,
           date_to: input_date_to
         }), function(){
-          alert('Временной промежуток записан!');
-          reloud_graph()
-        })
+          reloud_graph();
+        }, reloud_graph())
+        alert('Временной промежуток записан!')
       } else {alert('Пожалуйса, запишите даты в формате: ' + '\n' + 'Дата начала графика: 2023-03-09 14:03:00' + '\n' + 'Дата  конца графика: 2023-03-09 17:25:30')}
         
       }
