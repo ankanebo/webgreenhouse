@@ -53,6 +53,7 @@ def button_input():
 @app.route('/')
 @app.route('/index/index')
 def index():
+    mid_hum_earth_1()
     global stop_start_data_base
     global averagetemp
     global avaragehum
@@ -112,7 +113,11 @@ def index():
         average_hum_earth_3 = mid_hum_earth_3_value,
         average_hum_earth_4 = mid_hum_earth_4_value,
         average_hum_earth_5 = mid_hum_earth_5_value,
-        average_hum_earth_6 = mid_hum_earth_6_value)
+        average_hum_earth_6 = mid_hum_earth_6_value,
+        stop_start_data_base = ("true" if stop_start_data_base else "false"),
+        text_bd_false = 'Включить запись информации с датчиков',
+        text_bd_true = 'Выключить запись информации с датчиков',
+        text_bd_core = ("Выключить запись информации с датчиков" if stop_start_data_base  else "Включить запись информации с датчиков"))
 
 
 @app.route('/index/table')
@@ -288,8 +293,9 @@ def temp_hum():
 date_1 = "2023-03-14 10:23:54"
 date_2 = "2023-03-14 10:24:18"
 
-@app.route('/input_dates')
+@app.route('/input_dates', methods=["POST"])
 def input_dates():
+    print('input!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
     global date_1
     global date_2
     data = flask.request.get_json()
@@ -299,48 +305,48 @@ def input_dates():
     print(date_2)
     return 'sucsees'
 
-# @app.route('/input_dates_temp_hum')
-# def input_dates_temp_hum():
-#     global date_1
-#     global date_2
-#     number = flask.request.args.get("number")
-#     zprd = "temp_value_"+ number +", hum_value_"+ number + ", dates"
-#     conn = sqlite3.connect("greenhouse.db")
-#     sqlread= f"""\
-#     SELECT {zprd} FROM data
-#     LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
-#     LEFT JOIN hum_earth ON hum_earth.ID = data.ID
-#     WHERE data.dates > '{date_1}' AND data.dates < '{date_2}'
-#     """
-#     xxxx = list(conn.execute(sqlread))
-#     ret2 = {"temp": [], "hum": [], "date": []}
-#     for i in range(len(xxxx)):
-#         ret2["temp"].append(xxxx[i][0])
-#         ret2["hum"].append(xxxx[i][1])
-#         ret2["date"].append(xxxx[i][2])
-#     conn.close()
-#     return json.dumps(ret2)
+@app.route('/input_dates_temp_hum')
+def input_dates_temp_hum():
+    global date_1
+    global date_2
+    number = flask.request.args.get("number")
+    zprd = "temp_value_"+ number +", hum_value_"+ number + ", dates"
+    conn = sqlite3.connect("greenhouse.db")
+    sqlread= f"""\
+    SELECT {zprd} FROM data
+    LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
+    LEFT JOIN hum_earth ON hum_earth.ID = data.ID
+    WHERE data.dates > '{date_1}' AND data.dates < '{date_2}'
+    """
+    xxxx = list(conn.execute(sqlread))
+    ret2 = {"temp": [], "hum": [], "date": []}
+    for i in range(len(xxxx)):
+        ret2["temp"].append(xxxx[i][0])
+        ret2["hum"].append(xxxx[i][1])
+        ret2["date"].append(xxxx[i][2])
+    conn.close()
+    return json.dumps(ret2)
 
-# @app.route('/input_dates_hum_earth')
-# def hum_earth(): 
-#     global date_1
-#     global date_2
-#     number = flask.request.args.get("number")
-#     conn = sqlite3.connect("greenhouse.db")
-#     zprd = "hum_earth_"+ number + ", dates"
-#     sqlread1 = f"""\
-#     SELECT {zprd} FROM data
-#     LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
-#     LEFT JOIN hum_earth ON hum_earth.ID = data.ID
-#     WHERE data.dates > '{date_1}' AND data.dates < '{date_2}'
-#     """
-#     lxlx = list(conn.execute(sqlread1)) 
-#     ret3 = {"hum_earth": [], "date": []}
-#     for i in lxlx:
-#         ret3["hum_earth"].append(lxlx[i][0])
-#         ret3["date"].append(lxlx[i][1])
-#     conn.close()
-#     return json.dumps(ret3)
+@app.route('/input_dates_hum_earth')
+def input_dates_hum_earth(): 
+    global date_1
+    global date_2
+    number = flask.request.args.get("number")
+    conn = sqlite3.connect("greenhouse.db")
+    zprd = "hum_earth_"+ number + ", dates"
+    sqlread1 = f"""\
+    SELECT {zprd} FROM data
+    LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
+    LEFT JOIN hum_earth ON hum_earth.ID = data.ID
+    WHERE data.dates > '{date_1}' AND data.dates < '{date_2}'
+    """
+    lxlx = list(conn.execute(sqlread1)) 
+    ret3 = {"hum_earth": [], "date": []}
+    for i in range(len(lxlx)):
+        ret3["hum_earth"].append(lxlx[i][0])
+        ret3["date"].append(lxlx[i][1])
+    conn.close()
+    return json.dumps(ret3)
 
 
 @app.route('/index/hum_earth')
@@ -441,10 +447,12 @@ def mid_hum_earth_1():
         midhumearth4.append(lsls[i][3])
         midhumearth5.append(lsls[i][4])
         midhumearth6.append(lsls[i][5])
-    mid_hum_earth_1_value = sum(midhumearth1) / len(midhumearth1)
-    mid_hum_earth_2_value = sum(midhumearth2) / len(midhumearth2)
-    mid_hum_earth_3_value = sum(midhumearth3) / len(midhumearth3)
-    mid_hum_earth_4_value = sum(midhumearth4) / len(midhumearth4)
-    mid_hum_earth_5_value = sum(midhumearth5) / len(midhumearth5)
-    mid_hum_earth_6_value = sum(midhumearth6) / len(midhumearth6)
+    mid_hum_earth_1_value = round((sum(midhumearth1) / len(midhumearth1)), 2)
+    mid_hum_earth_2_value = round((sum(midhumearth2) / len(midhumearth2)), 2)
+    mid_hum_earth_3_value = round((sum(midhumearth3) / len(midhumearth3)), 2)
+    mid_hum_earth_4_value = round((sum(midhumearth4) / len(midhumearth4)), 2)
+    mid_hum_earth_5_value = round((sum(midhumearth5) / len(midhumearth5)), 2)
+    mid_hum_earth_6_value = round((sum(midhumearth6) / len(midhumearth6)), 2)
+    print(mid_hum_earth_1_value)
+    conn.close()
     return 'sucsees'

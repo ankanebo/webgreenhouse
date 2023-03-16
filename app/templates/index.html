@@ -17,8 +17,9 @@
           <a class="dropdown-item" href="about_us">О нас</a>
           <a class="dropdown-item" href="input">Введение значений</a>
         </div>
-        <button type="button" class="btn btn-secondary" onclick="start_bd()">
-          Старт/стоп базы данных
+        <button id="start_stop_data_base" type="button" class="btn btn-secondary" is_start="{{stop_start_data_base}}" style="
+        left: 10px;" onclick="start_bd()">
+          {{text_bd_core}}
         </button>
       </div>
     </div>
@@ -102,24 +103,29 @@
       <div style="margin-top: 20px;" class="container">
         <div class="row">
           <div class="col-6">
-            <input name="date_from" class="form-control" type="text" placeholder="Дата начала графика">
+            <input name="text_date_from" class="form-control" type="text" placeholder="Дата начала графика">
           </div>
           <div class="col-6">
-            <input name="date_to" class="form-control" type="text" placeholder="Дата  конца графика">
+            <input name="text_date_to" class="form-control" type="text" placeholder="Дата  конца графика">
           </div>
         </div>
       </div>
-      <div class="text-center"><div class="btn-group" style="margin:10px auto" role="group">
-        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Показать графики датчиков температуры/влажности
-        </button>
-        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-          <a type="button" class="dropdown-item" onclick="graph_date_1()">График датчика № 1</a>
-          <a class="dropdown-item" onclick="graph_date_2()">График датчика № 2</a>
-          <a class="dropdown-item" onclick="graph_date_3()">График датчика № 3</a>
-          <a class="dropdown-item" onclick="graph_date_4()">График датчика № 4</a>
+      <div class="text-center">
+        <button style="margin-top: 20px;" onclick="write_dates()" type="button" class="btn btn-info">Записать временной промежуток</button>
+      </div>
+      <div class="text-center">
+        <div class="btn-group" style="margin:20px auto" role="group">
+          <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Показать графики датчиков температуры/влажности
+          </button>
+          <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+            <a type="button" class="dropdown-item" onclick="graph_date_1()">График датчика № 1</a>
+            <a class="dropdown-item" onclick="graph_date_2()">График датчика № 2</a>
+            <a class="dropdown-item" onclick="graph_date_3()">График датчика № 3</a>
+            <a class="dropdown-item" onclick="graph_date_4()">График датчика № 4</a>
+          </div>
         </div>
-      </div></div>
+      </div>
       <div class="text-center"><div class="btn-group" style="margin:5px auto" role="group">
         <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Показать графики датчиков влажности почвы
@@ -246,8 +252,23 @@
             <button id="button_turn_on_manag"  onclick="turn_on_emer_manag()" type="button" class="btn btn-danger">Включить экстренное управление</button>
           </div>
           <div class="col-4"></div>
+</div>
+      <!-- <h2 id="text_emer_manag" style="text-align: center;">Экстренное управление теплицей выключено</h2>
+      <div style="margin-bottom: 40px" class="container">
+        <div class="row">
+          <div style="text-align: center;" class="col-4">
+            <button id="button_turn_off_manag" disabled  onclick="turn_off_emer_manag()" type="button" class="btn btn-danger">Выключить экстренное управление</button>
+          </div>
+          <div style="text-align: center;" class="col-4">
+            <button id="button_turn_on_manag"  onclick="turn_on_emer_manag()" type="button" class="btn btn-danger">Включить экстренное управление</button>
+          </div>
+          <div class="col-4"></div>
         </div> -->
     <script>
+    var reloud_graph = graph_1 
+    var mid_temp_input = {{input_temp}}
+    var mid_hum_input = {{input_hum}}
+    var mid_hum_earth_input = {{input_hum_earth}}
     function call_to_server(url, data, onload) {
       var xhr = new XMLHttpRequest();
       xhr.open("POST", url, true);
@@ -271,12 +292,26 @@
         averagetemp: input_temp,
         averagehum: input_hum,
         averagehumearth: input_hum_earth}), function(){
-          alert ("Вы записали данные датчиков влажности почвы: ")
+          alert ("Вы записали данные датчиков влажности почвы: ");
+          mid_temp_input = input_temp;
+          mid_hum_input = input_hum;
+          mid_hum_earth_input = input_hum_earth;
         });
     }
       
-      function start_bd(){
-        call_to_server('/start_bd', [], null)
+    function start_bd(){
+        call_to_server('/start_bd', [], function(){
+          data_bd = document.querySelector("#start_stop_data_base");
+          is_start = data_bd.getAttribute("is_start") == "true"?false:true;
+          data_bd.setAttribute("is_start", is_start.toString());
+          if (is_start){
+            data_bd.textContent = "{{text_bd_true}}"
+          }
+          else {
+            data_bd.textContent = "{{text_bd_false}}"
+          }
+          
+        })
       }
 
       graph_1()
@@ -661,45 +696,21 @@
 
 
       function graph_date_1(){
-        input_date_from = document.querySelector("input[name='date_from']").value;
-        input_date_to = document.querySelector("input[name='date_to']").value;
-        call_to_server('/inputvalues', JSON.stringify({
-          date_from: input_date_from,
-          date_to: input_date_to,
-        }))
         document.querySelector('#Name_of_Chart').innerHTML = 'График температуры и влажности датчика № 1 указанного промежутка';
         graph_date(1);
         return false;
       }
       function graph_date_2(){
-        input_date_from = document.querySelector("input[name='date_from']").value;
-        input_date_to = document.querySelector("input[name='date_to']").value;
-        call_to_server('/input_dates', JSON.stringify({
-          date_from: input_date_from,
-          date_to: input_date_to,
-        }))
         document.querySelector('#Name_of_Chart').innerHTML = 'График температуры и влажности датчика № 2 указанного промежутка';
         graph_date(2);
         return false;
       }
       function graph_date_3(){
-        input_date_from = document.querySelector("input[name='date_from']").value;
-        input_date_to = document.querySelector("input[name='date_to']").value;
-        call_to_server('/input_dates', JSON.stringify({
-          date_from: input_date_from,
-          date_to: input_date_to,
-        }))
         document.querySelector('#Name_of_Chart').innerHTML = 'График температуры и влажности датчика № 3 указанного промежутка';
         graph_date(3);
         return false;
       }
       function graph_date_4(){
-        input_date_from = document.querySelector("input[name='date_from']").value;
-        input_date_to = document.querySelector("input[name='date_to']").value;
-        call_to_server('/input_dates', JSON.stringify({
-          date_from: input_date_from,
-          date_to: input_date_to,
-        }))
         document.querySelector('#Name_of_Chart').innerHTML = 'График температуры и влажности датчика № 4 указанного промежутка';
         graph_date(4);
         return false;
@@ -735,70 +746,48 @@
       }
 
       function graph_date_1_1(){
-        input_date_from = document.querySelector("input[name='date_from']").value;
-        input_date_to = document.querySelector("input[name='date_to']").value;
-        call_to_server('/inputvalues', JSON.stringify({
-          date_from: input_date_from,
-          date_to: input_date_to,
-        }))
         document.querySelector('#Name_of_Chart').innerHTML = 'График влажности почвы датчика № 1';
         graph_date_hum_earth(1);
         return false;
       }
       function graph_date_1_2(){
-        input_date_from = document.querySelector("input[name='date_from']").value;
-        input_date_to = document.querySelector("input[name='date_to']").value;
-        call_to_server('/input_dates', JSON.stringify({
-          date_from: input_date_from,
-          date_to: input_date_to,
-        }))
         document.querySelector('#Name_of_Chart').innerHTML = 'График влажности почвы датчика № 2';
         graph_date_hum_earth(2);
         return false;
       }
       function graph_date_1_3(){
-        input_date_from = document.querySelector("input[name='date_from']").value;
-        input_date_to = document.querySelector("input[name='date_to']").value;
-        call_to_server('/input_dates', JSON.stringify({
-          date_from: input_date_from,
-          date_to: input_date_to,
-        }))
         document.querySelector('#Name_of_Chart').innerHTML = 'График влажности почвы датчика № 3';
         graph_date_hum_earth(3);
         return false;
       }
       function graph_date_1_4(){
-        input_date_from = document.querySelector("input[name='date_from']").value;
-        input_date_to = document.querySelector("input[name='date_to']").value;
-        call_to_server('/input_dates', JSON.stringify({
-          date_from: input_date_from,
-          date_to: input_date_to,
-        }))
         document.querySelector('#Name_of_Chart').innerHTML = 'График влажности почвы датчика № 4';
         graph_date_hum_earth(4);
         return false;
       }
       function graph_date_1_5(){
-        input_date_from = document.querySelector("input[name='date_from']").value;
-        input_date_to = document.querySelector("input[name='date_to']").value;
-        call_to_server('/input_dates', JSON.stringify({
-          date_from: input_date_from,
-          date_to: input_date_to,
-        }))
         document.querySelector('#Name_of_Chart').innerHTML = 'График влажности почвы датчика № 5';
         graph_date_hum_earth(5);
         return false;
       }
       function graph_date_1_6(){
-        input_date_from = document.querySelector("input[name='date_from']").value;
-        input_date_to = document.querySelector("input[name='date_to']").value;
-        call_to_server('/input_dates', JSON.stringify({
-          date_from: input_date_from,
-          date_to: input_date_to,
-        }))
         document.querySelector('#Name_of_Chart').innerHTML = 'График влажности почвы датчика № 6';
         graph_date_hum_earth(6);
         return false;
+      }
+      function write_dates() {
+        input_date_from = document.querySelector("input[name='text_date_from']").value;
+        input_date_to = document.querySelector("input[name='text_date_to']").value;
+        if ((input_date_to != '') & (input_date_from != '')) {
+          call_to_server('/input_dates', JSON.stringify({
+          date_from: input_date_from,
+          date_to: input_date_to
+        }), function(){
+          alert('Временной промежуток записан!');
+          reloud_graph()
+        })
+      } else {alert('Пожалуйса, запишите даты в формате: ' + '\n' + 'Дата начала графика: 2023-03-09 14:03:00' + '\n' + 'Дата  конца графика: 2023-03-09 17:25:30')}
+        
       }
     </script>
 {% endblock %}
