@@ -48,6 +48,8 @@ def button_input():
         averagehumearth = data["averagehumearth"]
     return 'sucsees'
 
+
+
 @app.route('/')
 @app.route('/index/index')
 def index():
@@ -283,6 +285,62 @@ def temp_hum():
     conn.close()
     return json.dumps(ret)
 
+date_1 = "2023-03-14 10:23:54"
+date_2 = "2023-03-14 10:24:18"
+
+@app.route('/input_dates')
+def input_dates():
+    global date_1
+    global date_2
+    data = flask.request.get_json()
+    date_1 = data['date_from']
+    date_2 = data['date_to']
+    print(date_1)
+    print(date_2)
+    return 'sucsees'
+
+# @app.route('/input_dates_temp_hum')
+# def input_dates_temp_hum():
+#     global date_1
+#     global date_2
+#     number = flask.request.args.get("number")
+#     zprd = "temp_value_"+ number +", hum_value_"+ number + ", dates"
+#     conn = sqlite3.connect("greenhouse.db")
+#     sqlread= f"""\
+#     SELECT {zprd} FROM data
+#     LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
+#     LEFT JOIN hum_earth ON hum_earth.ID = data.ID
+#     WHERE data.dates > '{date_1}' AND data.dates < '{date_2}'
+#     """
+#     xxxx = list(conn.execute(sqlread))
+#     ret2 = {"temp": [], "hum": [], "date": []}
+#     for i in range(len(xxxx)):
+#         ret2["temp"].append(xxxx[i][0])
+#         ret2["hum"].append(xxxx[i][1])
+#         ret2["date"].append(xxxx[i][2])
+#     conn.close()
+#     return json.dumps(ret2)
+
+# @app.route('/input_dates_hum_earth')
+# def hum_earth(): 
+#     global date_1
+#     global date_2
+#     number = flask.request.args.get("number")
+#     conn = sqlite3.connect("greenhouse.db")
+#     zprd = "hum_earth_"+ number + ", dates"
+#     sqlread1 = f"""\
+#     SELECT {zprd} FROM data
+#     LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
+#     LEFT JOIN hum_earth ON hum_earth.ID = data.ID
+#     WHERE data.dates > '{date_1}' AND data.dates < '{date_2}'
+#     """
+#     lxlx = list(conn.execute(sqlread1)) 
+#     ret3 = {"hum_earth": [], "date": []}
+#     for i in lxlx:
+#         ret3["hum_earth"].append(lxlx[i][0])
+#         ret3["date"].append(lxlx[i][1])
+#     conn.close()
+#     return json.dumps(ret3)
 
 
 @app.route('/index/hum_earth')
