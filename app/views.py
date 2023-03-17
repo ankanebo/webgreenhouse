@@ -46,7 +46,7 @@ def button_input():
         avaragehum = data["averagehum"]
     if data["averagehumearth"] != None:
         averagehumearth = data["averagehumearth"]
-    return 'sucsees'
+    return '{"status":"sucses"}'
 
 mid_hum_earth_post_1_value = 0
 mid_hum_earth_post_2_value = 0
@@ -92,7 +92,35 @@ def average_temp_post():
 
     mid_temp_post = sum(f)/len(f)
 
+flag_window = False
 
+@app.route('/close_open_window', methods=['PATCH', 'POST'])
+def close_open_window():
+    global flag_window
+    flag_window = not flag_window
+    requests.patch('https://dt.miet.ru/ppo_it/api/fork_drive/', data = {"state": 1 if flag_window else 0})
+    return flag_window
+
+flag_hydration = False
+
+@app.route('/close_open_hydration', methods=['PATCH', 'POST'])
+def close_open_hydration():
+    global flag_hydration
+    flag_hydration = not flag_hydration
+    requests.patch('https://dt.miet.ru/ppo_it/api/fork_drive/', data = {"state": 1 if flag_hydration else 0})
+    return flag_hydration
+
+flag_water = [False, False, False, False, False, False]
+
+@app.route('/close_open_water', methods=['PATCH', 'POST'])
+def close_open_water():
+    data = flask.request.get_json()
+    number = data["number"]
+    global flag_water
+    flag_water[number - 1] = not flag_water[number - 1]
+    requests.patch('https://dt.miet.ru/ppo_it/api/fork_drive/', data = {"id": number, "state": 1 if flag_water[number - 1] else 0})
+    return flag_water
+    
 
 @app.route('/average_hum_earth_post_1', methods=['POST'])
 def average_hum_earth_post_1():
@@ -262,7 +290,14 @@ def index():
         average_hum_earth_post_5 = mid_hum_earth_post_5_value,
         average_hum_earth_post_6 = mid_hum_earth_post_6_value,
         average_temp_earth_input_alert = averagetemp,
-        )
+        flag_window = 'true' if flag_window else 'false',
+        flag_hydration = 'true' if flag_hydration else 'false',
+        flag_water_1 = 'true' if flag_water[0] else 'false',
+        flag_water_2 = 'true' if flag_water[1] else 'false',
+        flag_water_3 = 'true' if flag_water[2] else 'false',
+        flag_water_4 = 'true' if flag_water[3] else 'false',
+        flag_water_5 = 'true' if flag_water[4] else 'false',
+        flag_water_6 = 'true' if flag_water[5] else 'false')
 
 
 @app.route('/index/table')
@@ -410,7 +445,7 @@ def buton_1():
     log.close()
     conn.commit()
     conn.close()
-    return 'sucsess'
+    return '{"status":"sucses"}'
 
 
 
@@ -448,7 +483,7 @@ def input_dates():
     date_2 = data['date_to']
     print(date_1)
     print(date_2)
-    return 'sucsees'
+    return '{"status":"sucses"}'
 
 @app.route('/input_dates_temp_hum')
 def input_dates_temp_hum():
@@ -601,4 +636,4 @@ def mid_hum_earth_1():
     
     print(mid_hum_earth_1_value)
     conn.close()
-    return 'sucsees'
+    return '{"status":"sucses"}'
