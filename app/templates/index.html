@@ -71,8 +71,7 @@
       </div>
       <div id="av_t" class="alert alert-info" role="alert">
       </div>
-      <button id="button_close_windows" onclick="close_windows()" type="button" class="btn btn-light">Закрыть</button>
-      <button id="button_open_windows" onclick="open_windows()" type="button" class="btn btn-light">Открыть</button>
+      <button id="button_open_windows" onclick="open_windows()" type="button" class="btn btn-light">Открыть/закрыть</button>
       <button id="button_update_earth_1" onclick="average_hum_earth_post_1()" type="button" class="btn btn-info">Обновить</button>
       <h5 id="status_of_windows">Статус: Форточки закрыты</h5>
 
@@ -83,8 +82,7 @@
       </div>
       <div id="av_h" class="alert alert-info" role="alert">
       </div>
-      <button id="button_close_water" onclick="close_water()" type="button" class="btn btn-light">Закрыть</button>
-      <button id="button_open_water" onclick="open_water()" type="button" class="btn btn-light">Открыть</button>
+      <button id="button_open_water" onclick="open_water()" type="button" class="btn btn-light">Открыть/Закрыть</button>
       <button id="button_update_earth_1" onclick="average_hum_earth_post_1()" type="button" class="btn btn-info">Обновить</button>
       <h5 id="status_of_water">Статус: полив закрыт</h5>
 
@@ -105,10 +103,10 @@
       <div style="margin-top: 20px;" class="container">
         <div class="row">
           <div class="col-6">
-            <input name="text_date_from" type="datetime-local">
+            <input name="date_from" class="form-control" type="text" placeholder="Дата начала графика">
           </div>
           <div class="col-6">
-            <input name="text_date_to" type="datetime-local">
+            <input name="date_to" class="form-control" type="text" placeholder="Дата  конца графика">
           </div>
         </div>
       </div>
@@ -171,24 +169,21 @@
     <div class="col-4">
       <h5>Полив бороздки № 1</h5>
       <div id="aver_hum_earth_1" class="alert alert-success" role="alert"></div>
-      <button id="button_close_water_earth_1" onclick="close_water_earth_1()" type="button" class="btn btn-light">Закрыть</button>
-      <button id="button_open_water_earth_1" onclick="open_water_earth_1()" type="button" class="btn btn-light">Открыть</button>
+      <button id="button_open_water_earth_1" onclick="open_water_earth_1()" type="button" class="btn btn-light">Открыть/Закрыть</button>
       <button id="button_update_earth_1" onclick="average_hum_earth_post_1()" type="button" class="btn btn-info">Обновить</button>
       <h6 id="status_of_water_earth_1">Полив выключен</h6>
     </div>
     <div class="col-4">
       <h5>Полив бороздки № 2</h5>
       <div id="aver_hum_earth_2" class="alert alert-success" role="alert"></div>
-      <button id="button_close_water_earth_2" onclick="close_water_earth_2()" type="button" class="btn btn-light">Закрыть</button>
-      <button id="button_open_water_earth_2" onclick="open_water_earth_2()" type="button" class="btn btn-light">Открыть</button>
+      <button id="button_open_water_earth_2" onclick="open_water_earth_2()" type="button" class="btn btn-light">Открыть/Закрыть</button>
       <button id="button_update_earth_1" onclick="average_hum_earth_post_1()" type="button" class="btn btn-info">Обновить</button>
       <h6 id="status_of_water_earth_2">Полив выключен</h6>
     </div>
     <div class="col-4">
       <h5>Полив бороздки № 3</h5>
       <div id="aver_hum_earth_3" class="alert alert-success" role="alert"></div>
-      <button id="button_close_water_earth_3" onclick="close_water_earth_3()" type="button" class="btn btn-light">Закрыть</button>
-      <button id="button_open_water_earth_3" onclick="open_water_earth_3()" type="button" class="btn btn-light">Открыть</button>
+      <button id="button_open_water_earth_3" onclick="open_water_earth_3()" type="button" class="btn btn-light">Открыть/Закрыть</button>
       <button id="button_update_earth_1" onclick="average_hum_earth_post_1()" type="button" class="btn btn-info">Обновить</button>
       <h6 id="status_of_water_earth_3">Полив выключен</h6>
     </div>
@@ -197,24 +192,21 @@
     <div class="col-4">
       <h5>Полив бороздки № 4</h5>
       <div id="aver_hum_earth_4" class="alert alert-success" role="alert"></div>
-      <button id="button_close_water_earth_4" onclick="close_water_earth_4()" type="button" class="btn btn-light">Закрыть</button>
-      <button id="button_open_water_earth_4" onclick="open_water_earth_4()" type="button" class="btn btn-light">Открыть</button>
+      <button id="button_open_water_earth_4" onclick="open_water_earth_4()" type="button" class="btn btn-light">Открыть/Закрыть</button>
       <button id="button_update_earth_1" onclick="average_hum_earth_post_1()" type="button" class="btn btn-info">Обновить</button>
       <h6 id="status_of_water_earth_4">Полив выключен</h6>
     </div>
     <div class="col-4">
       <h5>Полив бороздки № 5</h5>
       <div id="aver_hum_earth_5" class="alert alert-success" role="alert"></div>
-      <button id="button_close_water_earth_5" onclick="close_water_earth_5()" type="button" class="btn btn-light">Закрыть</button>
-      <button id="button_open_water_earth_5" onclick="open_water_earth_5()" type="button" class="btn btn-light">Открыть</button>
+      <button id="button_open_water_earth_5" onclick="open_water_earth_5()" type="button" class="btn btn-light">Открыть/Закрыть</button>
       <button id="button_update_earth_1" onclick="average_hum_earth_post_1()" type="button" class="btn btn-info">Обновить</button>
       <h6 id="status_of_water_earth_5">Полив выключен</h6>
     </div>
     <div class="col-4">
       <h5>Полив бороздки № 6</h5>
       <div id="aver_hum_earth_6" class="alert alert-success" role="alert"></div>
-      <button id="button_close_water_earth_6" onclick="close_water_earth_6()" type="button" class="btn btn-light">Закрыть</button>
-      <button id="button_open_water_earth_6" onclick="open_water_earth_6()" type="button" class="btn btn-light">Открыть</button>
+      <button id="button_open_water_earth_6" onclick="open_water_earth_6()" type="button" class="btn btn-light">Открыть/Закрыть</button>
       <button id="button_update_earth_1" onclick="average_hum_earth_post_1()" type="button" class="btn btn-info">Обновить</button>
       <h6 id="status_of_water_earth_6">Полив выключен</h6>
     </div>
@@ -285,37 +277,20 @@
     }
 
     document.querySelector('#status_of_windows').innerHTML = ('Форточки '+(global_flag1?"открыты":"закрыты"))
-    button_disabled(document.querySelector('#button_close_windows'), !global_flag1)
-    button_disabled(document.querySelector('#button_open_windows'), global_flag1)
 
     document.querySelector('#status_of_water').innerHTML = ('Увлажнение '+(global_flag2?"включено":"выключено"))
-    button_disabled(document.querySelector('#button_close_water'), !global_flag2)
-    button_disabled(document.querySelector('#button_open_water'), global_flag2)
 
     document.querySelector('#status_of_water_earth_1').innerHTML = ('Полив '+(global_flag3?"включен":"выключен"))
-    button_disabled(document.querySelector('#button_close_water_earth_1'), !global_flag3)
-    button_disabled(document.querySelector('#button_open_water_earth_1'), global_flag3)
 
     document.querySelector('#status_of_water_earth_2').innerHTML = ('Полив '+(global_flag4?"включен":"выключен"))
-    button_disabled(document.querySelector('#button_close_water_earth_2'), !global_flag4)
-    button_disabled(document.querySelector('#button_open_water_earth_2'), global_flag4)
-
+  
     document.querySelector('#status_of_water_earth_3').innerHTML = ('Полив '+(global_flag5?"включен":"выключен"))
-    button_disabled(document.querySelector('#button_close_water_earth_3'), !global_flag5)
-    button_disabled(document.querySelector('#button_open_water_earth_3'), global_flag5)
 
     document.querySelector('#status_of_water_earth_4').innerHTML = ('Полив '+(global_flag6?"включен":"выключен"))
-    button_disabled(document.querySelector('#button_close_water_earth_4'), !global_flag6)
-    button_disabled(document.querySelector('#button_open_water_earth_4'), global_flag6)
-
+  
     document.querySelector('#status_of_water_earth_5').innerHTML = ('Полив '+(global_flag7?"включен":"выключен"))
-    button_disabled(document.querySelector('#button_close_water_earth_5'), !global_flag7)
-    button_disabled(document.querySelector('#button_open_water_earth_5'), global_flag7)
 
     document.querySelector('#status_of_water_earth_6').innerHTML = ('Полив '+(global_flag8?"включен":"выключен"))
-    button_disabled(document.querySelector('#button_close_water_earth_6'), !global_flag8)
-    button_disabled(document.querySelector('#button_open_water_earth_6'), global_flag8)
-
     
 
 
@@ -395,6 +370,7 @@
           average_hum_post_alert = document.querySelector('#cur_h')
           average_hum_post_alert.textContent = 'Текущая средняя влажность за последние 10 измерений: '+g[7]
           average_hum_ox_post_alert_var = g[7]
+          compare_values()
           if (funcSuccess != null){
             funcSuccess()
           }
@@ -617,20 +593,6 @@
         document.querySelector('#av_h').innerHTML = 'Значение влажности управления системы увлажнения: {{input_hum}}'
       }
 
-      function close_windows() {
-        average_hum_earth_post_1(function(){
-          if(compare_values(0)){
-            alert('Доступ запрещен! Включите экстренное управление')
-            return;
-          }
-        document.querySelector('#status_of_windows').innerHTML = 'Статус: Форточки закрыты'
-        document.querySelector('#button_close_windows').setAttribute('disabled', true)
-        document.querySelector('#button_open_windows').removeAttribute('disabled')
-        global_flag1 = false
-        call_to_server('/close_open_window', '')
-        })
-      }
-
 
       function open_windows() {
         average_hum_earth_post_1(function(){
@@ -638,10 +600,8 @@
             alert('Доступ запрещен! Включите экстренное управление')
             return;
           }
-        document.querySelector('#status_of_windows').innerHTML = 'Статус: Форточки открыты'
-        document.querySelector('#button_open_windows').setAttribute('disabled', true)
-        document.querySelector('#button_close_windows').removeAttribute('disabled')
-        global_flag1 = true
+        global_flag1 = !global_flag1
+        document.querySelector('#status_of_windows').innerHTML = (global_flag1?'Форточки открыты':'Форточки закрыты')
         call_to_server('/close_open_window', '')
         })
       }
@@ -653,50 +613,18 @@
       }
 
 
-      function close_water() {
-        average_hum_earth_post_1(function(){
-          if(compare_values(1)){
-            alert('Доступ запрещен! Включите экстренное управление')
-            return;
-          }
-        document.querySelector('#status_of_water').innerHTML = 'Статус: полив закрыт'
-        document.querySelector('#button_close_water').setAttribute('disabled', true)
-        document.querySelector('#button_open_water').removeAttribute('disabled')
-        global_flag2 = false
-        call_to_server('/close_open_hydration', '')
-        })
-      }
-
-
       function open_water() {
         average_hum_earth_post_1(function(){
           if(compare_values(1)){
             alert('Доступ запрещен! Включите экстренное управление')
             return;
             }
-          document.querySelector('#status_of_water').innerHTML = 'Статус: полив открыт'
-          document.querySelector('#button_open_water').setAttribute('disabled', true)
-          document.querySelector('#button_close_water').removeAttribute('disabled')
-          global_flag2 = true
+          global_flag2 = !global_flag2
+          document.querySelector('#status_of_water').innerHTML = (global_flag2?'Увлажнение включено':'Увлажнение закрыто')
           call_to_server('/close_open_hydration', '')
           })
       }
 
-      
-      function close_water_earth_1() {
-        average_hum_earth_post_1(function(){
-          if(compare_values(2)){
-            alert('Доступ запрещен! Включите экстренное управление')
-            return;
-            }
-          document.querySelector('#status_of_water_earth_1').innerHTML = 'Полив выключен'
-          document.querySelector('#button_close_water_earth_1').setAttribute('disabled', true)
-          document.querySelector('#button_open_water_earth_1').removeAttribute('disabled')
-          global_flag3 = false
-          call_to_server('/close_open_water', JSON.stringify({
-            number: 1}))
-          })
-      }
 
       function open_water_earth_1() {
         average_hum_earth_post_1(function(){
@@ -704,29 +632,13 @@
             alert('Доступ запрещен! Включите экстренное управление')
             return;
             }
-          document.querySelector('#status_of_water_earth_1').innerHTML = 'Полив включен'
-          document.querySelector('#button_open_water_earth_1').setAttribute('disabled', true)
-          document.querySelector('#button_close_water_earth_1').removeAttribute('disabled')
-          global_flag3 = true
+          global_flag3 = !global_flag3
+          document.querySelector('#status_of_water_earth_1').innerHTML = (global_flag3?'Полив открыт':'Полив закрыт')
           call_to_server('/close_open_water', JSON.stringify({
             number: 1}))
           })
       }
 
-      function close_water_earth_2() {
-        average_hum_earth_post_1(function(){
-        if(compare_values(3)){
-          alert('Доступ запрещен! Включите экстренное управление')
-          return;
-          }
-        document.querySelector('#status_of_water_earth_2').innerHTML = 'Полив выключен'
-        document.querySelector('#button_close_water_earth_2').setAttribute('disabled', true)
-        document.querySelector('#button_open_water_earth_2').removeAttribute('disabled')
-        global_flag4 = false
-        call_to_server('/close_open_water', JSON.stringify({
-            number: 2}))
-          })
-      }
 
       function open_water_earth_2() {
         average_hum_earth_post_1(function(){
@@ -734,27 +646,10 @@
             alert('Доступ запрещен! Включите экстренное управление')
             return;
             }
-          document.querySelector('#status_of_water_earth_2').innerHTML = 'Полив включен'
-          document.querySelector('#button_open_water_earth_2').setAttribute('disabled', true)
-          document.querySelector('#button_close_water_earth_2').removeAttribute('disabled')
-          global_flag4 = true
+          global_flag4 = !global_flag4
+          document.querySelector('#status_of_water_earth_2').innerHTML =  (global_flag4?'Полив открыт':'Полив закрыт')
           call_to_server('/close_open_water', JSON.stringify({
             number: 2}))
-          })
-      }
-
-      function close_water_earth_3() {
-        average_hum_earth_post_1(function(){
-          if(compare_values(4)){
-            alert('Доступ запрещен! Включите экстренное управление')
-            return;
-            }
-          document.querySelector('#status_of_water_earth_3').innerHTML = 'Полив выключен'
-          document.querySelector('#button_close_water_earth_3').setAttribute('disabled', true)
-          document.querySelector('#button_open_water_earth_3').removeAttribute('disabled')
-          global_flag5 = false
-          call_to_server('/close_open_water', JSON.stringify({
-            number: 3}))
           })
       }
 
@@ -764,27 +659,10 @@
             alert('Доступ запрещен! Включите экстренное управление')
             return;
             }
-          document.querySelector('#status_of_water_earth_3').innerHTML = 'Полив включен'
-          document.querySelector('#button_open_water_earth_3').setAttribute('disabled', true)
-          document.querySelector('#button_close_water_earth_3').removeAttribute('disabled')
-          global_flag5 = true
+          global_flag5 = !global_flag5
+          document.querySelector('#status_of_water_earth_3').innerHTML = (global_flag5?'Полив открыт':'Полив закрыт')
           call_to_server('/close_open_water', JSON.stringify({
             number: 3}))
-          })
-      }
-
-      function close_water_earth_4() {
-        average_hum_earth_post_1(function(){
-          if(compare_values(5)){
-            alert('Доступ запрещен! Включите экстренное управление')
-            return;
-            }
-          document.querySelector('#status_of_water_earth_4').innerHTML = 'Полив выключен'
-          document.querySelector('#button_close_water_earth_4').setAttribute('disabled', true)
-          document.querySelector('#button_open_water_earth_4').removeAttribute('disabled')
-          global_flag6 = false
-          call_to_server('/close_open_water', JSON.stringify({
-            number: 4}))
           })
       }
       
@@ -794,29 +672,13 @@
             alert('Доступ запрещен! Включите экстренное управление')
             return;
             }
-          document.querySelector('#status_of_water_earth_4').innerHTML = 'Полив включен'
-          document.querySelector('#button_open_water_earth_4').setAttribute('disabled', true)
-          document.querySelector('#button_close_water_earth_4').removeAttribute('disabled')
-          global_flag6 = true
+          global_flag6 = !global_flag6
+          document.querySelector('#status_of_water_earth_4').innerHTML = (global_flag6?'Полив открыт':'Полив закрыт')
           call_to_server('/close_open_water', JSON.stringify({
             number: 4}))
           })
       }
 
-      function close_water_earth_5() {
-        average_hum_earth_post_1(function(){
-          if(compare_values(6)){
-            alert('Доступ запрещен! Включите экстренное управление')
-            return;
-            }
-          document.querySelector('#status_of_water_earth_5').innerHTML = 'Полив выключен'
-          document.querySelector('#button_close_water_earth_5').setAttribute('disabled', true)
-          document.querySelector('#button_open_water_earth_5').removeAttribute('disabled')
-          global_flag7 = false
-          call_to_server('/close_open_water', JSON.stringify({
-            number: 5}))
-          })
-      }
 
       function open_water_earth_5() {
         average_hum_earth_post_1(function(){
@@ -824,29 +686,13 @@
             alert('Доступ запрещен! Включите экстренное управление')
             return;
             }
-          document.querySelector('#status_of_water_earth_5').innerHTML = 'Полив включен'
-          document.querySelector('#button_open_water_earth_5').setAttribute('disabled', true)
-          document.querySelector('#button_close_water_earth_5').removeAttribute('disabled')
-          global_flag7 = true
+          global_flag7 = !global_flag7
+          document.querySelector('#status_of_water_earth_5').innerHTML = (global_flag7?'Полив открыт':'Полив закрыт')
           call_to_server('/close_open_water', JSON.stringify({
             number: 5}))
           })
       }
 
-      function close_water_earth_6() {
-        average_hum_earth_post_1(function(){
-          if(compare_values(7)){
-            alert('Доступ запрещен! Включите экстренное управление')
-            return;
-          }
-          document.querySelector('#status_of_water_earth_6').innerHTML = 'Полив выключен'
-          document.querySelector('#button_close_water_earth_6').setAttribute('disabled', true)
-          document.querySelector('#button_open_water_earth_6').removeAttribute('disabled')
-          global_flag8 = false
-          call_to_server('/close_open_water', JSON.stringify({
-            number: 6}))
-          })
-      }
 
       function open_water_earth_6() {
         average_hum_earth_post_1(function(){
@@ -854,10 +700,8 @@
             alert('Доступ запрещен! Включите экстренное управление')
             return;
           }
-          document.querySelector('#status_of_water_earth_6').innerHTML = 'Полив включен'
-          document.querySelector('#button_open_water_earth_6').setAttribute('disabled', true)
-          document.querySelector('#button_close_water_earth_6').removeAttribute('disabled')
-          global_flag8 = true
+          global_flag8 = !global_flag8
+          document.querySelector('#status_of_water_earth_6').innerHTML = (global_flag8?'Полив открыт':'Полив закрыт')
           call_to_server('/close_open_water', JSON.stringify({
             number: 6}))
           })
@@ -886,6 +730,7 @@
         document.querySelector('#button_turn_off_manag').removeAttribute('disabled')
         document.querySelector('#text_emer_manag').innerHTML = 'Экстренное управление теплицей включено'
         is_emerg = true
+        compare_values()
         alert('Вы включили экстренное управление теплицей!' + '\n' + 'Все кнопки активны!')
       }
       function turn_off_emer_manag(argument) {
@@ -893,6 +738,7 @@
         document.querySelector('#button_turn_on_manag').removeAttribute('disabled')
         document.querySelector('#text_emer_manag').innerHTML = 'Экстренное управление теплицей выключено'
         is_emerg = false
+        compare_values()
         alert('Вы выключили экстренное управление теплицей!' + '\n' + 'Некоторые кнопки могут не работать исходя из введенных вами ранее значений!')
       }
 
@@ -1028,51 +874,43 @@
         return false;
       }
       function write_dates() {
-        input_date_from = document.querySelector("input[name='text_date_from']").value;
-        input_date_to = document.querySelector("input[name='text_date_to']").value;
+        input_date_from = document.querySelector("input[name='date_from']").value;
+        input_date_to = document.querySelector("input[name='date_to']").value;
         if ((input_date_to != '') & (input_date_from != '')) {
           call_to_server('/input_dates', JSON.stringify({
           date_from: input_date_from,
           date_to: input_date_to
         }), function(){
           reloud_graph();
-        }, reloud_graph())
+        })
         alert('Временной промежуток записан!')
       } else {alert('Пожалуйста, запишите даты в формате: ' + '\n' + 'Дата начала графика: 2023-03-09 14:03:00' + '\n' + 'Дата  конца графика: 2023-03-09 17:25:30')}
         
       }
       function compare_values(number) {
         var flag0 = !is_emerg & (mid_temp_bd > average_temp_ox_post_alert_var)
-        button_disabled(document.querySelector('#button_close_windows'), flag0 & global_flag1)
-        button_disabled(document.querySelector('#button_open_windows'), flag0 & !global_flag1)
+        button_disabled(document.querySelector('#button_open_windows'), flag0)
 
-        var flag1 = !is_emerg & (mid_hum_bd < average_temp_ox_post_alert_var)
-        button_disabled(document.querySelector('#button_close_water'), flag1 & global_flag2)
-        button_disabled(document.querySelector('#button_open_water'), flag1 & !global_flag2)
+        var flag1 = !is_emerg & (mid_hum_bd < average_hum_ox_post_alert_var)
+        button_disabled(document.querySelector('#button_open_water'), flag1)
         
         var flag2 = !is_emerg & (mid_hum_earth_bd < average_hum_earth_post_alert_var_1)
-        button_disabled(document.querySelector('#button_close_water_earth_1'), flag2 & global_flag3)
-        button_disabled(document.querySelector('#button_open_water_earth_1'), flag2 & !global_flag3)
+        button_disabled(document.querySelector('#button_open_water_earth_1'), flag2)
         
         var flag3 = !is_emerg & (mid_hum_earth_bd < average_hum_earth_post_alert_var_2)
-        button_disabled(document.querySelector('#button_close_water_earth_2'), flag3 & global_flag4)
-        button_disabled(document.querySelector('#button_open_water_earth_2'), flag3 & !global_flag4)
+        button_disabled(document.querySelector('#button_open_water_earth_2'), flag3)
          
         var flag4 = !is_emerg & (mid_hum_earth_bd < average_hum_earth_post_alert_var_3)
-        button_disabled(document.querySelector('#button_close_water_earth_3'), flag4 & global_flag5)
-        button_disabled(document.querySelector('#button_open_water_earth_3'), flag4 & !global_flag5)
+        button_disabled(document.querySelector('#button_open_water_earth_3'), flag4)
           
         var flag5 = !is_emerg & (mid_hum_earth_bd < average_hum_earth_post_alert_var_4)
-        button_disabled(document.querySelector('#button_close_water_earth_4'), flag5 & global_flag6)
-        button_disabled(document.querySelector('#button_open_water_earth_4'), flag5 & !global_flag6)
+        button_disabled(document.querySelector('#button_open_water_earth_4'), flag5)
           
         var flag6 = !is_emerg & (mid_hum_earth_bd < average_hum_earth_post_alert_var_5)
-        button_disabled(document.querySelector('#button_close_water_earth_5'), flag6 & global_flag7)
-        button_disabled(document.querySelector('#button_open_water_earth_5'), flag6 & !global_flag7)
+        button_disabled(document.querySelector('#button_open_water_earth_5'), flag6)
           
         var flag7 = !is_emerg & (mid_hum_earth_bd < average_hum_earth_post_alert_var_6)
-        button_disabled(document.querySelector('#button_close_water_earth_6'), flag7 & global_flag8)
-        button_disabled(document.querySelector('#button_open_water_earth_6'), flag7 & !global_flag8)
+        button_disabled(document.querySelector('#button_open_water_earth_6'), flag7)
         
         switch(number) {
         case 0:
