@@ -73,7 +73,7 @@
       </div>
       <button id="button_close_windows" onclick="close_windows()" type="button" class="btn btn-light">Закрыть</button>
       <button id="button_open_windows" onclick="open_windows()" type="button" class="btn btn-light">Открыть</button>
-      <button id="button_update_earth_1" onclick="average_temp_hum_post()" type="button" class="btn btn-info">Обновить</button>
+      <button id="button_update_earth_1" onclick="average_hum_earth_post_1()" type="button" class="btn btn-info">Обновить</button>
       <h5 id="status_of_windows">Статус: Форточки закрыты</h5>
 
 
@@ -85,7 +85,7 @@
       </div>
       <button id="button_close_water" onclick="close_water()" type="button" class="btn btn-light">Закрыть</button>
       <button id="button_open_water" onclick="open_water()" type="button" class="btn btn-light">Открыть</button>
-      <button id="button_update_earth_1" onclick="average_hum_post()" type="button" class="btn btn-info">Обновить</button>
+      <button id="button_update_earth_1" onclick="average_hum_earth_post_1()" type="button" class="btn btn-info">Обновить</button>
       <h5 id="status_of_water">Статус: полив закрыт</h5>
 
     </div>
@@ -256,6 +256,15 @@
     var mid_temp_bd = {{input_temp}}
     var mid_hum_bd = {{input_hum}}
     var mid_hum_earth_bd = {{input_hum_earth}}
+    var average_hum_earth_post_alert_var_1
+    var average_hum_earth_post_alert_var_2
+    var average_hum_earth_post_alert_var_3
+    var average_hum_earth_post_alert_var_4
+    var average_hum_earth_post_alert_var_5
+    var average_hum_earth_post_alert_var_6
+    var average_temp_ox_post_alert_var
+    var average_hum_ox_post_alert_var
+
     function call_to_server(url, data, onload) {
       var xhr = new XMLHttpRequest();
       xhr.open("POST", url, true);
@@ -304,41 +313,41 @@
         })
       }
       function average_hum_earth_post_1(){
-        call_to_server('/average_hum_earth_post_1', [], function(){
+        call_to_server('/average_hum_earth_post_1', [], function(g){
           average_hum_earth_post_alert_1 = document.querySelector('#aver_hum_earth_1')
-          average_hum_earth_post_alert_1.textContent = "Средняя влажность почвы за последние 10 измерений: {{average_hum_earth_post_1}}"
+          average_hum_earth_post_alert_1.textContent = "Средняя влажность почвы за последние 10 измерений: "+ g[0]
+          average_hum_earth_post_alert_var_1 = g[0]
           average_hum_earth_post_alert_2 = document.querySelector('#aver_hum_earth_2')
-          average_hum_earth_post_alert_2.textContent = "Средняя влажность почвы за последние 10 измерений: {{average_hum_earth_post_2}}"
+          average_hum_earth_post_alert_2.textContent = "Средняя влажность почвы за последние 10 измерений: "+ g[1]
+          average_hum_earth_post_alert_var_2 = g[1]
           average_hum_earth_post_alert_3 = document.querySelector('#aver_hum_earth_3')
-          average_hum_earth_post_alert_3.textContent = "Средняя влажность почвы за последние 10 измерений: {{average_hum_earth_post_3}}"
+          average_hum_earth_post_alert_3.textContent = "Средняя влажность почвы за последние 10 измерений: "+g[2]
+          average_hum_earth_post_alert_var_2 = g[2]
           average_hum_earth_post_alert_4 = document.querySelector('#aver_hum_earth_4')
-          average_hum_earth_post_alert_4.textContent = "Средняя влажность почвы за последние 10 измерений: {{average_hum_earth_post_4}}"
+          average_hum_earth_post_alert_4.textContent = "Средняя влажность почвы за последние 10 измерений: "+g[3]
+          average_hum_earth_post_alert_var_4 = g[3]
           average_hum_earth_post_alert_5 = document.querySelector('#aver_hum_earth_5')
-          average_hum_earth_post_alert_5.textContent = "Средняя влажность почвы за последние 10 измерений: {{average_hum_earth_post_5}}"
+          average_hum_earth_post_alert_5.textContent = "Средняя влажность почвы за последние 10 измерений: "+g[4]
+          average_hum_earth_post_alert_var_5 = g[4]
           average_hum_earth_post_alert_6 = document.querySelector('#aver_hum_earth_6')
-          average_hum_earth_post_alert_6.textContent = "Средняя влажность почвы за последние 10 измерений: {{average_hum_earth_post_6}}"
+          average_hum_earth_post_alert_6.textContent = "Средняя влажность почвы за последние 10 измерений: "+g[5]
+          average_hum_earth_post_alert_var_6 = g[5]
+          average_temp_post_alert = document.querySelector('#cur_t')
+          average_temp_post_alert.textContent = 'Текущая средняя температура за последние 10 измерений: '+ g[6]
+          average_temp_ox_post_alert_var = g[6]
+          average_hum_post_alert = document.querySelector('#cur_h')
+          average_hum_post_alert.textContent = 'Текущая средняя влажность за последние 10 измерений: '+g[7]
+          average_hum_ox_post_alert_var = g[7]
         });
-          average_hum_earth_post_alert_1 = document.querySelector('#aver_hum_earth_1')
-          average_hum_earth_post_alert_1.textContent = "Средняя влажность почвы за последние 10 измерений: {{average_hum_earth_post_1}}"
-          average_hum_earth_post_alert_2 = document.querySelector('#aver_hum_earth_2')
-          average_hum_earth_post_alert_2.textContent = "Средняя влажность почвы за последние 10 измерений: {{average_hum_earth_post_2}}"
-          average_hum_earth_post_alert_3 = document.querySelector('#aver_hum_earth_3')
-          average_hum_earth_post_alert_3.textContent = "Средняя влажность почвы за последние 10 измерений: {{average_hum_earth_post_3}}"
-          average_hum_earth_post_alert_4 = document.querySelector('#aver_hum_earth_4')
-          average_hum_earth_post_alert_4.textContent = "Средняя влажность почвы за последние 10 измерений: {{average_hum_earth_post_4}}"
-          average_hum_earth_post_alert_5 = document.querySelector('#aver_hum_earth_5')
-          average_hum_earth_post_alert_5.textContent = "Средняя влажность почвы за последние 10 измерений: {{average_hum_earth_post_5}}"
-          average_hum_earth_post_alert_6 = document.querySelector('#aver_hum_earth_6')
-          average_hum_earth_post_alert_6.textContent = "Средняя влажность почвы за последние 10 измерений: {{average_hum_earth_post_6}}"
       }
-      function average_temp_hum_post(){
-        call_to_server('/average_hum_earth_post_1', [], function(){
-          average_temp_post = document.querySelector('#cur_t');
-          average_temp_post.textContent = 'Текущая средняя температура за последние 10 измерений: {{average_temp_post}}'
-          average_hum_post = document.querySelector('#cur_h')
-          average_hum_post.textContent = 'Текущая средняя влажность за последние 10 измерений: {{mid_hum}}'
-        })
-      }
+      // function average_temp_hum_post(){
+      //   call_to_server('/average_hum_earth_post_1', [], function(){
+      //     average_temp_post = document.querySelector('#cur_t');
+      //     average_temp_post.textContent = 'Текущая средняя температура за последние 10 измерений: {{average_temp_post}}'
+      //     average_hum_post = document.querySelector('#cur_h')
+      //     average_hum_post.textContent = 'Текущая средняя влажность за последние 10 измерений: {{mid_hum}}'
+      //   })
+      // }
       graph_1()
       current_temp_and_average_temp()
       current_hum_and_average_hum()
@@ -553,7 +562,7 @@
 
       function current_temp_and_average_temp() {
         document.querySelector('#cur_t').innerHTML = 'Текущая средняя температура за последние 10 измерений: {{mid_temp}}'
-        document.querySelector('#av_t').innerHTML = 'Значение температуры управления прветриванием: {{input_temp}}'
+        document.querySelector('#av_t').innerHTML = 'Значение температуры управления прoветриванием: {{input_temp}}'
       }
       function close_windows() {
         document.querySelector('#status_of_windows').innerHTML = 'Статус: Форточки закрыты'

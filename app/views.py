@@ -91,7 +91,7 @@ def average_temp_post():
     h.append(int(s4[2]))
 
     mid_temp_post = sum(f)/len(f)
-    
+
 
 
 @app.route('/average_hum_earth_post_1', methods=['POST'])
@@ -103,6 +103,38 @@ def average_hum_earth_post_1():
     global mid_hum_earth_post_4_value
     global mid_hum_earth_post_5_value
     global mid_hum_earth_post_6_value
+
+    a1 = requests.get(urlth1).json()
+    a2 = requests.get(urlth2).json()
+    a3 = requests.get(urlth3).json()
+    a4 = requests.get(urlth4).json()
+    
+    f = []
+    h = []
+    s1 = []
+    for k in a1.values():
+        s1.append(float(k))
+    f.append(float(s1[1]))
+    h.append(float(s1[2]))
+
+    s2 = []
+    for k in a2.values():
+        s2.append(float(k))
+    f.append(float(s2[1]))
+    h.append(float(s2[2]))
+
+    s3 = []
+    for k in a3.values():
+        s3.append(float(k))
+    f.append(float(s3[1]))
+    h.append(float(s3[2]))
+    
+    s4 = []
+    for k in a4.values():
+        s4.append(float(k))
+    f.append(int(s4[1]))
+    h.append(int(s4[2]))
+
     conn = sqlite3.connect("greenhouse.db")
     zpr = "hum_earth_1, hum_earth_2, hum_earth_3, hum_earth_4, hum_earth_5, hum_earth_6"
     sqlread1 = f"""\
@@ -131,9 +163,23 @@ def average_hum_earth_post_1():
     mid_hum_earth_post_4_value = round((sum(midhumearth4) / len(midhumearth4)), 2)
     mid_hum_earth_post_5_value = round((sum(midhumearth5) / len(midhumearth5)), 2)
     mid_hum_earth_post_6_value = round((sum(midhumearth6) / len(midhumearth6)), 2)
-    print(mid_hum_earth_post_1_value)
+    mid_hum_post = round((sum(h)/len(h)), 2)
+    mid_temp_post = round((sum(f)/len(f)), 2)
+    print(f)
+    print(mid_temp_post)
+    # print(mid_hum_earth_post_1_value)
+    g = []
+    g.append(mid_hum_earth_post_1_value)
+    g.append(mid_hum_earth_post_2_value)
+    g.append(mid_hum_earth_post_3_value)
+    g.append(mid_hum_earth_post_4_value)
+    g.append(mid_hum_earth_post_5_value)
+    g.append(mid_hum_earth_post_6_value)
+    g.append(mid_temp_post)
+    g.append(mid_hum_post)
+    print(g)
     conn.close()
-    return 'sucsees'
+    return g
 
 @app.route('/')
 @app.route('/index/index')
@@ -552,6 +598,7 @@ def mid_hum_earth_1():
     mid_hum_earth_4_value = round((sum(midhumearth4) / len(midhumearth4)), 2)
     mid_hum_earth_5_value = round((sum(midhumearth5) / len(midhumearth5)), 2)
     mid_hum_earth_6_value = round((sum(midhumearth6) / len(midhumearth6)), 2)
+    
     print(mid_hum_earth_1_value)
     conn.close()
     return 'sucsees'
