@@ -73,6 +73,7 @@
       </div>
       <button id="button_close_windows" onclick="close_windows()" type="button" class="btn btn-light">Закрыть</button>
       <button id="button_open_windows" onclick="open_windows()" type="button" class="btn btn-light">Открыть</button>
+      <button id="button_update_earth_1" onclick="average_temp_hum_post()" type="button" class="btn btn-info">Обновить</button>
       <h5 id="status_of_windows">Статус: Форточки закрыты</h5>
 
 
@@ -84,6 +85,7 @@
       </div>
       <button id="button_close_water" onclick="close_water()" type="button" class="btn btn-light">Закрыть</button>
       <button id="button_open_water" onclick="open_water()" type="button" class="btn btn-light">Открыть</button>
+      <button id="button_update_earth_1" onclick="average_hum_post()" type="button" class="btn btn-info">Обновить</button>
       <h5 id="status_of_water">Статус: полив закрыт</h5>
 
     </div>
@@ -171,6 +173,7 @@
       <div id="aver_hum_earth_1" class="alert alert-success" role="alert"></div>
       <button id="button_close_water_earth_1" onclick="close_water_earth_1()" type="button" class="btn btn-light">Закрыть</button>
       <button id="button_open_water_earth_1" onclick="open_water_earth_1()" type="button" class="btn btn-light">Открыть</button>
+      <button id="button_update_earth_1" onclick="average_hum_earth_post_1()" type="button" class="btn btn-info">Обновить</button>
       <h6 id="status_of_water_earth_1">Полив выключен</h6>
     </div>
     <div class="col-4">
@@ -178,6 +181,7 @@
       <div id="aver_hum_earth_2" class="alert alert-success" role="alert"></div>
       <button id="button_close_water_earth_2" onclick="close_water_earth_2()" type="button" class="btn btn-light">Закрыть</button>
       <button id="button_open_water_earth_2" onclick="open_water_earth_2()" type="button" class="btn btn-light">Открыть</button>
+      <button id="button_update_earth_1" onclick="average_hum_earth_post_1()" type="button" class="btn btn-info">Обновить</button>
       <h6 id="status_of_water_earth_2">Полив выключен</h6>
     </div>
     <div class="col-4">
@@ -185,6 +189,7 @@
       <div id="aver_hum_earth_3" class="alert alert-success" role="alert"></div>
       <button id="button_close_water_earth_3" onclick="close_water_earth_3()" type="button" class="btn btn-light">Закрыть</button>
       <button id="button_open_water_earth_3" onclick="open_water_earth_3()" type="button" class="btn btn-light">Открыть</button>
+      <button id="button_update_earth_1" onclick="average_hum_earth_post_1()" type="button" class="btn btn-info">Обновить</button>
       <h6 id="status_of_water_earth_3">Полив выключен</h6>
     </div>
   </div>
@@ -194,6 +199,7 @@
       <div id="aver_hum_earth_4" class="alert alert-success" role="alert"></div>
       <button id="button_close_water_earth_4" onclick="close_water_earth_4()" type="button" class="btn btn-light">Закрыть</button>
       <button id="button_open_water_earth_4" onclick="open_water_earth_4()" type="button" class="btn btn-light">Открыть</button>
+      <button id="button_update_earth_1" onclick="average_hum_earth_post_1()" type="button" class="btn btn-info">Обновить</button>
       <h6 id="status_of_water_earth_4">Полив выключен</h6>
     </div>
     <div class="col-4">
@@ -201,6 +207,7 @@
       <div id="aver_hum_earth_5" class="alert alert-success" role="alert"></div>
       <button id="button_close_water_earth_5" onclick="close_water_earth_5()" type="button" class="btn btn-light">Закрыть</button>
       <button id="button_open_water_earth_5" onclick="open_water_earth_5()" type="button" class="btn btn-light">Открыть</button>
+      <button id="button_update_earth_1" onclick="average_hum_earth_post_1()" type="button" class="btn btn-info">Обновить</button>
       <h6 id="status_of_water_earth_5">Полив выключен</h6>
     </div>
     <div class="col-4">
@@ -208,6 +215,7 @@
       <div id="aver_hum_earth_6" class="alert alert-success" role="alert"></div>
       <button id="button_close_water_earth_6" onclick="close_water_earth_6()" type="button" class="btn btn-light">Закрыть</button>
       <button id="button_open_water_earth_6" onclick="open_water_earth_6()" type="button" class="btn btn-light">Открыть</button>
+      <button id="button_update_earth_1" onclick="average_hum_earth_post_1()" type="button" class="btn btn-info">Обновить</button>
       <h6 id="status_of_water_earth_6">Полив выключен</h6>
     </div>
   </div>
@@ -242,33 +250,12 @@
     <div class="col-4"></div>
   </div>
 </div>
-      <!-- <h2 id="text_emer_manag" style="text-align: center;">Экстренное управление теплицей выключено</h2>
-      <div style="margin-bottom: 40px" class="container">
-        <div class="row">
-          <div style="text-align: center;" class="col-4">
-            <button id="button_turn_off_manag" disabled  onclick="turn_off_emer_manag()" type="button" class="btn btn-danger">Выключить экстренное управление</button>
-          </div>
-          <div style="text-align: center;" class="col-4">
-            <button id="button_turn_on_manag"  onclick="turn_on_emer_manag()" type="button" class="btn btn-danger">Включить экстренное управление</button>
-          </div>
-          <div class="col-4"></div>
-</div>
-      <!-- <h2 id="text_emer_manag" style="text-align: center;">Экстренное управление теплицей выключено</h2>
-      <div style="margin-bottom: 40px" class="container">
-        <div class="row">
-          <div style="text-align: center;" class="col-4">
-            <button id="button_turn_off_manag" disabled  onclick="turn_off_emer_manag()" type="button" class="btn btn-danger">Выключить экстренное управление</button>
-          </div>
-          <div style="text-align: center;" class="col-4">
-            <button id="button_turn_on_manag"  onclick="turn_on_emer_manag()" type="button" class="btn btn-danger">Включить экстренное управление</button>
-          </div>
-          <div class="col-4"></div>
-        </div> -->
+    
     <script>
     var reloud_graph = graph_1 
-    var mid_temp_input = {{input_temp}}
-    var mid_hum_input = {{input_hum}}
-    var mid_hum_earth_input = {{input_hum_earth}}
+    var mid_temp_bd = {{input_temp}}
+    var mid_hum_bd = {{input_hum}}
+    var mid_hum_earth_bd = {{input_hum_earth}}
     function call_to_server(url, data, onload) {
       var xhr = new XMLHttpRequest();
       xhr.open("POST", url, true);
@@ -292,10 +279,13 @@
         averagetemp: input_temp,
         averagehum: input_hum,
         averagehumearth: input_hum_earth}), function(){
-          alert ("Вы записали данные датчиков влажности почвы: ");
-          mid_temp_input = input_temp;
-          mid_hum_input = input_hum;
-          mid_hum_earth_input = input_hum_earth;
+          alert ("Вы записали данные датчиков температуры, влажности воздуха, влажности почвы: ");
+          mid_temp_bd = input_temp;
+          mid_hum_bd = input_hum;
+          mid_hum_earth_bd = input_hum_earth;
+          average_temp_earth_input_alert = document.querySelector('#av_t')
+          average_temp_earth_input_alert = 'Значение температуры управления проветриванием: {{average_temp_earth_input_alert}}'
+          // average_hum_input_alert = document.querySelector('#av_t')
         });
     }
       
@@ -313,7 +303,42 @@
           
         })
       }
-
+      function average_hum_earth_post_1(){
+        call_to_server('/average_hum_earth_post_1', [], function(){
+          average_hum_earth_post_alert_1 = document.querySelector('#aver_hum_earth_1')
+          average_hum_earth_post_alert_1.textContent = "Средняя влажность почвы за последние 10 измерений: {{average_hum_earth_post_1}}"
+          average_hum_earth_post_alert_2 = document.querySelector('#aver_hum_earth_2')
+          average_hum_earth_post_alert_2.textContent = "Средняя влажность почвы за последние 10 измерений: {{average_hum_earth_post_2}}"
+          average_hum_earth_post_alert_3 = document.querySelector('#aver_hum_earth_3')
+          average_hum_earth_post_alert_3.textContent = "Средняя влажность почвы за последние 10 измерений: {{average_hum_earth_post_3}}"
+          average_hum_earth_post_alert_4 = document.querySelector('#aver_hum_earth_4')
+          average_hum_earth_post_alert_4.textContent = "Средняя влажность почвы за последние 10 измерений: {{average_hum_earth_post_4}}"
+          average_hum_earth_post_alert_5 = document.querySelector('#aver_hum_earth_5')
+          average_hum_earth_post_alert_5.textContent = "Средняя влажность почвы за последние 10 измерений: {{average_hum_earth_post_5}}"
+          average_hum_earth_post_alert_6 = document.querySelector('#aver_hum_earth_6')
+          average_hum_earth_post_alert_6.textContent = "Средняя влажность почвы за последние 10 измерений: {{average_hum_earth_post_6}}"
+        });
+          average_hum_earth_post_alert_1 = document.querySelector('#aver_hum_earth_1')
+          average_hum_earth_post_alert_1.textContent = "Средняя влажность почвы за последние 10 измерений: {{average_hum_earth_post_1}}"
+          average_hum_earth_post_alert_2 = document.querySelector('#aver_hum_earth_2')
+          average_hum_earth_post_alert_2.textContent = "Средняя влажность почвы за последние 10 измерений: {{average_hum_earth_post_2}}"
+          average_hum_earth_post_alert_3 = document.querySelector('#aver_hum_earth_3')
+          average_hum_earth_post_alert_3.textContent = "Средняя влажность почвы за последние 10 измерений: {{average_hum_earth_post_3}}"
+          average_hum_earth_post_alert_4 = document.querySelector('#aver_hum_earth_4')
+          average_hum_earth_post_alert_4.textContent = "Средняя влажность почвы за последние 10 измерений: {{average_hum_earth_post_4}}"
+          average_hum_earth_post_alert_5 = document.querySelector('#aver_hum_earth_5')
+          average_hum_earth_post_alert_5.textContent = "Средняя влажность почвы за последние 10 измерений: {{average_hum_earth_post_5}}"
+          average_hum_earth_post_alert_6 = document.querySelector('#aver_hum_earth_6')
+          average_hum_earth_post_alert_6.textContent = "Средняя влажность почвы за последние 10 измерений: {{average_hum_earth_post_6}}"
+      }
+      function average_temp_hum_post(){
+        call_to_server('/average_hum_earth_post_1', [], function(){
+          average_temp_post = document.querySelector('#cur_t');
+          average_temp_post.textContent = 'Текущая средняя температура за последние 10 измерений: {{average_temp_post}}'
+          average_hum_post = document.querySelector('#cur_h')
+          average_hum_post.textContent = 'Текущая средняя влажность за последние 10 измерений: {{mid_hum}}'
+        })
+      }
       graph_1()
       current_temp_and_average_temp()
       current_hum_and_average_hum()
@@ -326,7 +351,6 @@
       close_water_earth_4()
       close_water_earth_5()
       close_water_earth_6()
-      // stop_bd()
       average_hum_earth_1()
       average_hum_earth_6()
       average_hum_earth_5()
@@ -528,7 +552,7 @@
       }
 
       function current_temp_and_average_temp() {
-        document.querySelector('#cur_t').innerHTML = 'Текущая средняя температура: {{mid_temp}}'
+        document.querySelector('#cur_t').innerHTML = 'Текущая средняя температура за последние 10 измерений: {{mid_temp}}'
         document.querySelector('#av_t').innerHTML = 'Значение температуры управления прветриванием: {{input_temp}}'
       }
       function close_windows() {
@@ -546,7 +570,7 @@
 
 
       function current_hum_and_average_hum() {
-        document.querySelector('#cur_h').innerHTML = 'Текущая средняя влажность: {{mid_hum}}'
+        document.querySelector('#cur_h').innerHTML = 'Текущая средняя влажность за последние 10 измерений: {{mid_hum}}'
         document.querySelector('#av_h').innerHTML = 'Значение влажности управления системы увлажнения: {{input_hum}}'
       }
       function close_water() {
@@ -627,22 +651,22 @@
         document.querySelector('#button_close_water_earth_6').removeAttribute('disabled')
       }
       function average_hum_earth_1() {
-        document.querySelector('#aver_hum_earth_1').innerHTML = 'Средняя влажность почвы: {{average_hum_earth_1}}'
+        document.querySelector('#aver_hum_earth_1').innerHTML = 'Средняя влажность почвы за последние 10 измерений: {{average_hum_earth_1}}'
       }
       function average_hum_earth_2() {
-        document.querySelector('#aver_hum_earth_2').innerHTML = 'Средняя влажность почвы: {{average_hum_earth_2}}'
+        document.querySelector('#aver_hum_earth_2').innerHTML = 'Средняя влажность почвы за последние 10 измерений: {{average_hum_earth_2}}'
       }
       function average_hum_earth_3() {
-        document.querySelector('#aver_hum_earth_3').innerHTML = 'Средняя влажность почвы: {{average_hum_earth_3}}'
+        document.querySelector('#aver_hum_earth_3').innerHTML = 'Средняя влажность почвы за последние 10 измерений: {{average_hum_earth_3}}'
       }
       function average_hum_earth_4() {
-        document.querySelector('#aver_hum_earth_4').innerHTML = 'Средняя влажность почвы: {{average_hum_earth_4}}'
+        document.querySelector('#aver_hum_earth_4').innerHTML = 'Средняя влажность почвы за последние 10 измерений: {{average_hum_earth_4}}'
       }
       function average_hum_earth_5() {
-        document.querySelector('#aver_hum_earth_5').innerHTML = 'Средняя влажность почвы: {{average_hum_earth_5}}'
+        document.querySelector('#aver_hum_earth_5').innerHTML = 'Средняя влажность почвы за последние 10 измерений: {{average_hum_earth_5}}'
       }
       function average_hum_earth_6() {
-        document.querySelector('#aver_hum_earth_6').innerHTML = 'Средняя влажность почвы: {{average_hum_earth_6}}'
+        document.querySelector('#aver_hum_earth_6').innerHTML = 'Средняя влажность почвы за последние 10 измерений: {{average_hum_earth_6}}'
       }
       function turn_on_emer_manag() {
         document.querySelector('#button_turn_on_manag').setAttribute('disabled', true)
@@ -807,7 +831,7 @@
           reloud_graph();
         }, reloud_graph())
         alert('Временной промежуток записан!')
-      } else {alert('Пожалуйса, запишите даты в формате: ' + '\n' + 'Дата начала графика: 2023-03-09 14:03:00' + '\n' + 'Дата  конца графика: 2023-03-09 17:25:30')}
+      } else {alert('Пожалуйста, запишите даты в формате: ' + '\n' + 'Дата начала графика: 2023-03-09 14:03:00' + '\n' + 'Дата  конца графика: 2023-03-09 17:25:30')}
         
       }
     </script>

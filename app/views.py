@@ -48,12 +48,103 @@ def button_input():
         averagehumearth = data["averagehumearth"]
     return 'sucsees'
 
+mid_hum_earth_post_1_value = 0
+mid_hum_earth_post_2_value = 0
+mid_hum_earth_post_3_value = 0
+mid_hum_earth_post_4_value = 0
+mid_hum_earth_post_5_value = 0
+mid_hum_earth_post_6_value = 0
+mid_temp_post = 27
 
+@app.route('/average_temp_post', methods=['POST'])
+def average_temp_post():
+    global mid_temp_post 
+    a1 = requests.get(urlth1).json()
+    a2 = requests.get(urlth2).json()
+    a3 = requests.get(urlth3).json()
+    a4 = requests.get(urlth4).json()
+    
+    f = []
+    h = []
+    s1 = []
+    for k in a1.values():
+        s1.append(float(k))
+    f.append(int(s1[1]))
+    h.append(int(s1[2]))
+
+    s2 = []
+    for k in a2.values():
+        s2.append(float(k))
+    f.append(int(s2[1]))
+    h.append(int(s2[2]))
+
+    s3 = []
+    for k in a3.values():
+        s3.append(float(k))
+    f.append(int(s3[1]))
+    h.append(int(s3[2]))
+    
+    s4 = []
+    for k in a4.values():
+        s4.append(float(k))
+    f.append(int(s4[1]))
+    h.append(int(s4[2]))
+
+    mid_temp_post = sum(f)/len(f)
+    
+
+
+@app.route('/average_hum_earth_post_1', methods=['POST'])
+def average_hum_earth_post_1():
+    print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+    global mid_hum_earth_post_1_value
+    global mid_hum_earth_post_2_value
+    global mid_hum_earth_post_3_value
+    global mid_hum_earth_post_4_value
+    global mid_hum_earth_post_5_value
+    global mid_hum_earth_post_6_value
+    conn = sqlite3.connect("greenhouse.db")
+    zpr = "hum_earth_1, hum_earth_2, hum_earth_3, hum_earth_4, hum_earth_5, hum_earth_6"
+    sqlread1 = f"""\
+    SELECT {zpr} FROM data
+    LEFT JOIN sens_hum_temp_value ON sens_hum_temp_value.ID = data.ID
+    LEFT JOIN hum_earth ON hum_earth.ID = data.ID
+    ORDER BY data.ID DESC LIMIT 10
+    """
+    lsls = list(conn.execute(sqlread1))
+    midhumearth1 = []
+    midhumearth2 = []
+    midhumearth3 = []
+    midhumearth4 = []
+    midhumearth5 = []
+    midhumearth6 = []
+    for i in range(len(lsls)):
+        midhumearth1.append(lsls[i][0])
+        midhumearth2.append(lsls[i][1])
+        midhumearth3.append(lsls[i][2])
+        midhumearth4.append(lsls[i][3])
+        midhumearth5.append(lsls[i][4])
+        midhumearth6.append(lsls[i][5])
+    mid_hum_earth_post_1_value = round((sum(midhumearth1) / len(midhumearth1)), 2)
+    mid_hum_earth_post_2_value = round((sum(midhumearth2) / len(midhumearth2)), 2)
+    mid_hum_earth_post_3_value = round((sum(midhumearth3) / len(midhumearth3)), 2)
+    mid_hum_earth_post_4_value = round((sum(midhumearth4) / len(midhumearth4)), 2)
+    mid_hum_earth_post_5_value = round((sum(midhumearth5) / len(midhumearth5)), 2)
+    mid_hum_earth_post_6_value = round((sum(midhumearth6) / len(midhumearth6)), 2)
+    print(mid_hum_earth_post_1_value)
+    conn.close()
+    return 'sucsees'
 
 @app.route('/')
 @app.route('/index/index')
 def index():
     mid_hum_earth_1()
+    global mid_hum_earth_post_1_value
+    global mid_hum_earth_post_2_value
+    global mid_hum_earth_post_3_value
+    global mid_hum_earth_post_4_value
+    global mid_hum_earth_post_5_value
+    global mid_hum_earth_post_6_value
     global stop_start_data_base
     global averagetemp
     global avaragehum
@@ -117,7 +208,15 @@ def index():
         stop_start_data_base = ("true" if stop_start_data_base else "false"),
         text_bd_false = 'Включить запись информации с датчиков',
         text_bd_true = 'Выключить запись информации с датчиков',
-        text_bd_core = ("Выключить запись информации с датчиков" if stop_start_data_base  else "Включить запись информации с датчиков"))
+        text_bd_core = ("Выключить запись информации с датчиков" if stop_start_data_base  else "Включить запись информации с датчиков"),
+        average_hum_earth_post_1 = mid_hum_earth_post_1_value,
+        average_hum_earth_post_2 = mid_hum_earth_post_2_value,
+        average_hum_earth_post_3 = mid_hum_earth_post_3_value,
+        average_hum_earth_post_4 = mid_hum_earth_post_4_value,
+        average_hum_earth_post_5 = mid_hum_earth_post_5_value,
+        average_hum_earth_post_6 = mid_hum_earth_post_6_value,
+        average_temp_earth_input_alert = averagetemp,
+        )
 
 
 @app.route('/index/table')
