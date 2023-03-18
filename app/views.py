@@ -94,21 +94,21 @@ def average_temp_post():
 
 flag_window = False
 
-@app.route('/close_open_window', methods=['PATCH', 'POST'])
+@app.route('/close_open_window', methods=['POST'])
 def close_open_window():
     global flag_window
     flag_window = not flag_window
-    requests.patch('https://dt.miet.ru/ppo_it/api/fork_drive/', data = {"state": 1 if flag_window else 0})
-    return flag_window
+    requests.patch('https://dt.miet.ru/ppo_it/api/fork_drive/', data = {"state": (1 if flag_window else 0)})
+    return '{"status":"sucses"}'
 
 flag_hydration = False
 
-@app.route('/close_open_hydration', methods=['PATCH', 'POST'])
+@app.route('/close_open_hydration', methods=['POST'])
 def close_open_hydration():
     global flag_hydration
     flag_hydration = not flag_hydration
-    requests.patch('https://dt.miet.ru/ppo_it/api/fork_drive/', data = {"state": 1 if flag_hydration else 0})
-    return flag_hydration
+    requests.patch('https://dt.miet.ru/ppo_it/api/fork_drive/', data = {"state": (1 if flag_hydration else 0)})
+    return '{"status":"sucses"}'
 
 flag_water = [False, False, False, False, False, False]
 
@@ -118,8 +118,8 @@ def close_open_water():
     number = data["number"]
     global flag_water
     flag_water[number - 1] = not flag_water[number - 1]
-    requests.patch('https://dt.miet.ru/ppo_it/api/fork_drive/', data = {"id": number, "state": 1 if flag_water[number - 1] else 0})
-    return flag_water
+    requests.patch('https://dt.miet.ru/ppo_it/api/fork_drive/', data = {"id": number, "state": (1 if flag_water[number - 1] else 0)})
+    return '{"status":"sucses"}'
     
 
 @app.route('/average_hum_earth_post_1', methods=['POST'])
